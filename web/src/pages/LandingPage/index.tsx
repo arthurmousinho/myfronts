@@ -11,9 +11,7 @@ export function LandingPage() {
                 Crie seu portifolio online para seus principais projetos e compartilhe com quem quiser
             </p>
             <Link to={''} 
-                className="bg-zinc-default text-md text-muted-foreground hover:text-muted flex justify-center rounded items-center gap-2 h-12 w-[150px]
-                    hover:bg-zinc-900 transition-colors
-                "
+                className="bg-zinc-default text-md text-muted-foreground hover:text-muted flex justify-center rounded items-center gap-2 h-12 hover:bg-zinc-900 transition-colors py-4 px-6"
             >
                 <GithubIcon size={20}/>
                 Vamos lá
