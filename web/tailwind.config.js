@@ -16,7 +16,13 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: 'Roboto, sans-serif;',
+      },
       colors: {
+        zinc: {
+          default: "#141416a3"
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -1,10 +1,7 @@
-import { Button } from "./components/ui/button";
+import { Layout } from "./components/Layout";
 
 export function App() {
   return (
-    <div>
-      <h1>Hello world</h1>
-      <Button>Shadcnui</Button>
-    </div>
+    <Layout />
   )
 }
