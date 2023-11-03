@@ -1,5 +1,4 @@
-import { GithubIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { GithubIcon } from "lucide-react"
 
 export function LandingPage() {
     return (
@@ -10,12 +9,10 @@ export function LandingPage() {
             <p className="text-muted-foreground text-lg">
                 Crie seu portifolio online para seus principais projetos e compartilhe com quem quiser
             </p>
-            <Link to={''} 
-                className="bg-zinc-default text-md text-muted-foreground hover:text-muted flex justify-center rounded items-center gap-2 h-12 hover:bg-zinc-900 transition-colors py-4 px-6"
-            >
-                <GithubIcon size={20}/>
+            <a href="" target="_blank" className="w-[150px] flex items-center justify-center gap-2 bg-zinc-800 transition-all py-2 rounded hover:bg-zinc-700 text-muted-foreground hover:text-muted">
+                <GithubIcon size={20} />
                 Vamos lá
-            </Link>
+            </a>
         </div>
     )
 }

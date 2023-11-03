@@ -19,12 +19,12 @@ npm run dev
 ```
 
 ## References
-### UI
-- [NextJs homepage](https://nextjs.org/)
-- [Shadcn-UI homepage](https://ui.shadcn.com/)
+- [NextJs](https://nextjs.org/)
+- [Shadcn-UI](https://ui.shadcn.com/)
 - [TailwindCSS Colors](https://tailwindcss.com/docs/customizing-colors)
-- [Rocketseat profile page](https://rocketseat.com.br)
-- [LinkedIN profile page](https://rocketseat.com.br)
-- [Desafio Discover: Portfolio](https://rocketseat.com.br)
+- [Rocketseat](https://rocketseat.com.br)
+- [LinkedIN](https://rocketseat.com.br)
 - [Bootstrap Icons](https://icons.getbootstrap.com/)
-- [Boracodar - Rocketseat](https://www.rocketseat.com.br/boracodar)
+- [Medium](https://medium.com/)
+- [Notion](https://www.notion.so)
+- [GitHub](https://github.com)

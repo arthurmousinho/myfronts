@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function ProjectCard() {
     return (
-        <Link to={''} className="flex flex-col gap-4 bg-zinc-default rounded hover:scale-105 transition-transform">
+        <Link to={'/users/arthur/osjfbnvjhs'} className="flex flex-col gap-4 bg-zinc-default rounded hover:scale-105 transition-transform">
             <img src="https://raw.githubusercontent.com/arthurmousinho/twitter-ui-react/main/public/preview.png" alt="" 
                 className="w-full h-50"
             />
