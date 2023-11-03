@@ -22,6 +22,7 @@ model User {
 model Project {
   id            String   @id @default(uuid())
   title         String
+  createdAt     DateTime @default(now())
   imageURL      String
   description   String
   repositoryURL String

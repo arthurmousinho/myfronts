@@ -1,15 +1,18 @@
 import fastify from "fastify";
+import { projectsRoutes } from "./routes/projects";
 
 const app = fastify();
 
-app.get('/', () => {
-    return "Hello World";
+app.get('/status', (request, reply) => {
+    reply.send('status ok')
 })
 
-const PORT = 3333;
+app.register(projectsRoutes);
+
+const PORT = 4000;
 
 app.listen({
-    port: PORT
+    port: 4000
 }).then(() => {
     console.log(`app runnig on http://localhost:${PORT}/`)
 })
