@@ -6,6 +6,7 @@ import { Feed } from "@/pages/Feed";
 import { Profile } from "@/pages/Profile";
 import { Project } from "@/pages/Project";
 import { NewProject } from "@/pages/NewProject";
+import { AuthCallback } from "@/pages/AuthCallback";
 
 export const ROUTES = createBrowserRouter([
     {
@@ -33,5 +34,9 @@ export const ROUTES = createBrowserRouter([
             }
         ],
         element: <Layout />
+    },
+    {
+        path: "/github/auth",
+        element: <AuthCallback />
     }
 ])

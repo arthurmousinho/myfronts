@@ -23,10 +23,12 @@ npm run dev
 ## Documentation
 - [Neon](https://neon.tech/docs/introduction)
 - [Prisma](https://www.prisma.io/docs)
+- [React Router Dom](https://reactrouter.com/)
 
 ## Content
-- [NLW Spacetime: Rocketseat](https://rocketseat.com.br)
+- [NLW Spacetime: Rocketseat](https://github.com/rocketseat-education/nlw-12-spacetime-ignite)
 - [Como sair do ZERO em Node.js em apenas UMA aula: Rocketseat](https://www.youtube.com/watch?v=hHM-hr9q4mo)
+- [How to get parameter value from query string?](https://stackoverflow.com/questions/35352638/how-to-get-parameter-value-from-query-string)
 
 ## UI
 - [NextJs](https://nextjs.org/)

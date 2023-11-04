@@ -114,7 +114,7 @@ export function NewProject() {
                 <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-2 text-base">
                         <Label htmlFor="title" className="text-muted-foreground text-base">
-                            Título do projeto:
+                            Título do projeto
                         </Label>
                         <Input id="title" placeholder="ex: to-do list" required
                             onChange={event => setTitle(event.target.value)} value={title}
