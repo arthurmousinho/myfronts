@@ -1,4 +1,3 @@
-import { Button } from "../ui/button";
 import { Github, LinkIcon, ThumbsUp } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -27,10 +26,10 @@ export function Post() {
 
             <footer className="flex items-center justify-between">
                 <nav className="flex items-center gap-6">
-                    <Button variant={"ghost"} className="flex items-center gap-2 text-muted-foreground hover:text-muted hover:bg-transparent">
+                    <button className="flex items-center gap-2 text-muted-foreground hover:text-muted hover:bg-transparent">
                         <ThumbsUp size={20} />
                         Gostei
-                    </Button>
+                    </button>
 
                     <a href="https://github.com/arthurmousinho" className="flex items-center gap-2 text-muted-foreground hover:text-muted" target="_blank">
                         <Github size={20} />

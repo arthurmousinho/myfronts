@@ -11,6 +11,12 @@ export function Header() {
                 <Link to={'/'} className="font-bold text-2xl text-gray-200">
                     myFronts.dev
                 </Link> 
+                <Link to={'/projects/new'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
+                    Novo Projeto
+                </Link> 
+                <Link to={'/feed'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
+                    Novo Post
+                </Link> 
                 <Link to={'/feed'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
                     Feed
                 </Link> 

@@ -5,6 +5,7 @@ import { LandingPage } from "@/pages/LandingPage";
 import { Feed } from "@/pages/Feed";
 import { Profile } from "@/pages/Profile";
 import { Project } from "@/pages/Project";
+import { NewProject } from "@/pages/NewProject";
 
 export const ROUTES = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ export const ROUTES = createBrowserRouter([
             {
                 path: "/users/:useraname/:projectId",
                 element: <Project />
+            },
+            {
+                path: "/projects/new",
+                element: <NewProject />
             }
         ],
         element: <Layout />
