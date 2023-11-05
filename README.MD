@@ -29,6 +29,8 @@ npm run dev
 - [NLW Spacetime: Rocketseat](https://github.com/rocketseat-education/nlw-12-spacetime-ignite)
 - [Como sair do ZERO em Node.js em apenas UMA aula: Rocketseat](https://www.youtube.com/watch?v=hHM-hr9q4mo)
 - [How to get parameter value from query string?](https://stackoverflow.com/questions/35352638/how-to-get-parameter-value-from-query-string)
+- [ignite-nodejs-03-api-solid-nodejs](https://github.com/rocketseat-education/ignite-nodejs-03-api-solid-nodejs)
+- [Princípios SOLID em uma API REST com Node.js e TypeScript | Code/Drops #44](https://www.youtube.com/watch?v=vAV4Vy4jfkc)
 
 ## UI
 - [NextJs](https://nextjs.org/)

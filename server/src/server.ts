@@ -1,18 +1,7 @@
 import "dotenv/config";
-import fastify from "fastify";
-import { projectsRoutes } from "./routes/projects";
-import { authRoutes } from "./routes/auth";
+import { app } from "./app";
 
-const app = fastify();
-
-app.get('/status', (request, reply) => {
-    reply.send('status ok')
-})
-
-app.register(projectsRoutes);
-app.register(authRoutes);
-
-const PORT = 3333;
+const PORT = process.env.PORT ?? 3333;
 
 app.listen({
     port: 3333
