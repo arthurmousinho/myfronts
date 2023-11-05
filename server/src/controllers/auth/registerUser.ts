@@ -73,7 +73,7 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
     const token = app.jwt.sign(
         {
           name: user.name,
-          avatarUrl: user.avatarURL,
+          avatarURL: user.avatarURL,
         },
         {
           sub: user.id,

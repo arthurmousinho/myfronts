@@ -1,7 +1,9 @@
 import axios from "axios";
+
 import { useEffect, useState } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { CookiesProvider, useCookies } from "react-cookie";
+import { Navigate, useSearchParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { Loader, Loader2 } from "lucide-react";
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -9,43 +11,46 @@ export function AuthCallback() {
 
     const [searchParams] = useSearchParams();
     const [cookies, setCookie] = useCookies(["token"]);
-    const [dateToExpires, setDateToExpires] = useState<Date>();
+    const [loading, setLoading] = useState(true);
 
-    const navigate = useNavigate();
-
-    async function getUser() {
+    async function getUserToken() {
         const code = searchParams.get("code");
-        console.log(API)
         const response = await axios.post(`${API}/register`, { code }, {
             headers: {
                 "Content-Type": "application/json"
             }
         })
 
-        const today = new Date();
-        const future = new Date(today);
-
-        future.setDate(today.getDate() + 30);
-        setDateToExpires(future);
-      
         const { token } = response.data;
-
-        setCookie("token", token, { 
-            path: "/" ,
-            expires: dateToExpires,
-        });
-
-        navigate('/feed');
+       
+        if (token) {
+            setCookie("token", token, { 
+                path: "/" ,
+                maxAge: 864000 // 10 days
+            });
+            setLoading(false);
+        }
     }
     
     useEffect(() => {
-        getUser()
+        getUserToken();
     }, [])
 
     return (
-        <h1 className="text-white text-center">
-            AuthCallback
-        </h1>
+        <div className="flex w-full justify-center items-center">
+            {
+                loading ? (
+                    <div className="flex items-center justify-center gap-4 mt-10">
+                        <Loader2 size={30} className="text-gray-50 animate-spin" />
+                        <span className="text-gray-50 text-2xl font-bold">
+                            Autenticando...
+                        </span>
+                    </div>
+                ) : (
+                    <Navigate to={'/profile'} />
+                )
+            }
+        </div>
     )
 
 }
