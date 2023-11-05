@@ -31,6 +31,8 @@ npm run dev
 - [How to get parameter value from query string?](https://stackoverflow.com/questions/35352638/how-to-get-parameter-value-from-query-string)
 - [ignite-nodejs-03-api-solid-nodejs](https://github.com/rocketseat-education/ignite-nodejs-03-api-solid-nodejs)
 - [Princípios SOLID em uma API REST com Node.js e TypeScript | Code/Drops #44](https://www.youtube.com/watch?v=vAV4Vy4jfkc)
+- [react-cookie](https://github.com/bendotcodes/cookies/tree/main/packages/react-cookie)
+- [Setting and Using Cookies in React](https://clerk.com/blog/setting-and-using-cookies-in-react?utm_source=www.google.com&utm_medium=referral&utm_campaign=none)
 
 ## UI
 - [NextJs](https://nextjs.org/)

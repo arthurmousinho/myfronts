@@ -1,5 +1,24 @@
 import "dotenv/config";
-import { app } from "./app";
+
+import fastify from "fastify";
+import cors from "@fastify/cors";
+import jwt from "@fastify/jwt";
+
+import { projectsRoutes } from "./controllers/projects/routes";
+import { authRoutes } from "./controllers/auth/routes";
+
+export const app = fastify();
+
+app.register(cors, {
+    origin: true,
+})
+
+app.register(jwt, {
+    secret: 'sfojvndsujadsn',
+})
+
+app.register(projectsRoutes);
+app.register(authRoutes);
 
 const PORT = process.env.PORT ?? 3333;
 

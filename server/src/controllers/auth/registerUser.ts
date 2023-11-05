@@ -2,16 +2,27 @@ import axios from "axios";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { prisma } from "../../lib/prisma";
+import { app } from "../../server";
 
-async function getGithubAccessToken(code: string) {
+
+export async function registerUser(request: FastifyRequest, reply: FastifyReply) {
+
+    const bodySchema = z.object({
+        code: z.string()
+    });
+
+    const { code } = bodySchema.parse(request.body);
+
+    console.log("Code: " + code)
+
     const accessTokenResponse = await axios.post(
         'https://github.com/login/oauth/access_token',
-        null /* body */,
+        null,
         {
             params: {
                 client_id: process.env.GITHUB_CLIENT_ID,
                 client_secret: process.env.GITHUB_CLIENT_SECRET,
-                code: code,
+                code,
             },
             headers: {
                 Accept: 'application/json'
@@ -20,16 +31,12 @@ async function getGithubAccessToken(code: string) {
     );
 
     const { access_token } = accessTokenResponse.data;
-    return access_token;
-}
 
-async function getGithubUser(code: string) {
+    console.log("token de acesso: " + access_token);
 
-    const accessToken = getGithubAccessToken(code);
-
-    const response = await axios.get('https://api.github.com/user', {
+    const userResponse = await axios.get('https://api.github.com/user', {
         headers: {
-            Authorization: `Bearer ${accessToken}`
+            Authorization: `Bearer ${access_token}`
         }
     });
 
@@ -41,37 +48,16 @@ async function getGithubUser(code: string) {
         html_url: z.string().url()
     });
 
-    const githubUser = githubUserSchema.parse(response.data);
+    const githubUser = githubUserSchema.parse(userResponse.data);
 
-    return githubUser;
-}
-
-async function userAlreadyExists(githubId: number) {
-    let user = await prisma.user.findFirstOrThrow({
+    let user = await prisma.user.findUnique({
         where: {
-            githubId
+            githubId: githubUser.id,
         }
-    })
-
-    if (!user) {
-        return false;
-    }
-
-    return true;
-}
-
-export async function registerUser(request: FastifyRequest, reply: FastifyReply) {
-
-    const bodySchema = z.object({
-        code: z.string()
     });
 
-    const { code } = bodySchema.parse(request.body);
-
-    const githubUser = await getGithubUser(code);
-
-    if (await userAlreadyExists(githubUser.id) === false) {
-        await prisma.user.create({
+    if (!user) {
+        user = await prisma.user.create({
             data: {
                 githubId: githubUser.id,
                 avatarURL: githubUser.avatar_url,
@@ -81,8 +67,22 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
                 linkedinURL: ""
             }
         })
+    };
 
-        reply.status(201).send(githubUser);
-    }
+
+    const token = app.jwt.sign(
+        {
+          name: user.name,
+          avatarUrl: user.avatarURL,
+        },
+        {
+          sub: user.id,
+          expiresIn: '30 days',
+        },
+    );
+    
+    return {
+        token
+    };
 
 }
