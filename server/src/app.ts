@@ -1,6 +1,6 @@
 import fastify from "fastify";
-import { projectsRoutes } from "./routes/projects";
-import { authRoutes } from "./routes/auth";
+import { projectsRoutes } from "./controllers/projects/routes";
+import { authRoutes } from "./controllers/auth/routes";
 
 export const app = fastify();
 
