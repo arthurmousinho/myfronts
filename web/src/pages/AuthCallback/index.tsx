@@ -2,18 +2,19 @@ import axios from "axios";
 
 import { useEffect, useState } from "react"
 import { Navigate, useSearchParams } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { useToken } from "@/hooks/useToken";
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
 export function AuthCallback() {
 
     const [searchParams] = useSearchParams();
-    const [cookies, setCookie] = useCookies(["token"]);
+    const { setNewToken } = useToken();
     const [loading, setLoading] = useState(true);
 
     async function getUserToken() {
+
         const code = searchParams.get("code");
         const response = await axios.post(`${API}/register`, { code }, {
             headers: {
@@ -24,10 +25,11 @@ export function AuthCallback() {
         const { token } = response.data;
        
         if (token) {
-            setCookie("token", token, { 
-                path: "/" ,
-                maxAge: 864000 // 10 days
-            });
+            setNewToken({
+                key: "token",
+                token: token,
+                maxAge: 864000, // 10 days
+            })
             setLoading(false);
         }
     }
