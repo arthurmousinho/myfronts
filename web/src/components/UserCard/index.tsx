@@ -1,19 +1,22 @@
 import { Link } from "react-router-dom";
 
 interface UserCardProps {
+    name: string;
+    avatarURL: string;
     date?: string;
 }
 
-export function UserCard({ date }: UserCardProps) {
+export function UserCard({ name, avatarURL, date }: UserCardProps) {
+
     return (
         <Link to={'/users/arthurmousinho'}>
              <div className="flex items-center gap-2">
-                 <img src="https://github.com/arthurmousinho.png" alt="" 
+                 <img src={ avatarURL } alt="" 
                      className="w-10 h-10 rounded-full"
                  />
                  <div className="flex flex-col">
                     <span className="text-base text-gray-200">
-                        Arthur Mousinho
+                        { name }
                     </span>
                     {
                         date ? (

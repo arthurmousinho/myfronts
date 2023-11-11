@@ -1,8 +1,14 @@
 import { Cookies, useCookies } from "react-cookie";
+import { jwtDecode } from "jwt-decode";
+
+export interface User {
+    name: string;
+    avatarURL: string;
+}
 
 export function useToken() {
     
-    const [cookies, setCookie] = useCookies();
+    const [, setCookie] = useCookies();
 
     function hasToken() {
         if (getSavedToken()) {
@@ -24,6 +30,14 @@ export function useToken() {
         });
     }
 
-    return { getSavedToken, setNewToken, hasToken };
+    function decodeToken(token: string) {
+        if (!token) {
+            throw new Error('Unauthenticated.')
+        }
+        const user: User = jwtDecode(token);
+        return user;
+    }
+
+    return { getSavedToken, setNewToken, hasToken, decodeToken };
 
 }
