@@ -1,5 +1,12 @@
 # myFronts
 
+## Technologies Architecture
+![techs-arch](./.github/techs-arch.png)
+
+## GitHub OAuth 
+- Reference: [NLW Spacetime Aula 3:](https://github.com/rocketseat-education/nlw-12-spacetime-ignite)
+![github-oauth](./.github/github-oauth.png)
+
 ## Running Guide
 
 ### Web
@@ -33,6 +40,7 @@ npm run dev
 - [Princípios SOLID em uma API REST com Node.js e TypeScript | Code/Drops #44](https://www.youtube.com/watch?v=vAV4Vy4jfkc)
 - [react-cookie](https://github.com/bendotcodes/cookies/tree/main/packages/react-cookie)
 - [Setting and Using Cookies in React](https://clerk.com/blog/setting-and-using-cookies-in-react?utm_source=www.google.com&utm_medium=referral&utm_campaign=none)
+- [jwt-decode](https://github.com/auth0/jwt-decode)
 
 ## UI
 - [NextJs](https://nextjs.org/)
