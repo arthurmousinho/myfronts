@@ -7,6 +7,10 @@ import { deleteProject } from "./deleteProject";
 
 export async function projectsRoutes(app: FastifyInstance) {
 
+    app.addHook('preHandler', async (request) => {
+        await request.jwtVerify()
+    })
+
     app.get('/projects', getAllProjects);
 
     app.get('/projects/:id', getProjectById);
