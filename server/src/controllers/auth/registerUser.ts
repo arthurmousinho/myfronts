@@ -42,6 +42,7 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
 
     const githubUserSchema = z.object({
         id: z.number(),
+        login: z.string(),
         bio: z.string(),
         name: z.string(),
         avatar_url: z.string().url(),
@@ -60,11 +61,12 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
         user = await prisma.user.create({
             data: {
                 githubId: githubUser.id,
+                username: githubUser.login,
                 avatarURL: githubUser.avatar_url,
                 bio: githubUser.bio,
                 name: githubUser.name,
                 githubURL: githubUser.html_url,
-                linkedinURL: ""
+                linkedinURL: "",
             }
         })
     };
@@ -74,6 +76,7 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
         {
           name: user.name,
           avatarURL: user.avatarURL,
+          username: user.username
         },
         {
           sub: user.id,

@@ -9,7 +9,7 @@ export async function getProjectById(request: FastifyRequest, reply: FastifyRepl
 
     const { id } = paramsSchema.parse(request.params);
 
-    const project = await prisma.project.findFirstOrThrow({
+    const project = await prisma.project.findUniqueOrThrow({
         where: {
             id,
         }
