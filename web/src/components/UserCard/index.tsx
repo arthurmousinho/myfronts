@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 
 interface UserCardProps {
-    name: string;
-    avatarURL: string;
+    name: string | undefined;
+    avatarURL: string | undefined;
     date?: string;
+    to: string;
 }
 
-export function UserCard({ name, avatarURL, date }: UserCardProps) {
+export function UserCard({ name, avatarURL, date, to }: UserCardProps) {
 
     return (
-        <Link to={'/users/arthurmousinho'}>
+        <Link to={to}>
              <div className="flex items-center gap-2">
                  <img src={ avatarURL } alt="" 
                      className="w-10 h-10 rounded-full"

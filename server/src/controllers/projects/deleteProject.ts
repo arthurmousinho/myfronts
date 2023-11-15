@@ -3,6 +3,9 @@ import { z } from "zod";
 import { prisma } from "../../lib/prisma";
 
 export async function deleteProject(request: FastifyRequest, reply: FastifyReply) {
+
+    await request.jwtVerify();
+
     const paramsSchema = z.object({
         id: z.string().uuid(),
     })

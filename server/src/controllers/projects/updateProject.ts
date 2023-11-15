@@ -3,6 +3,9 @@ import { prisma } from "../../lib/prisma";
 import { z } from "zod";
 
 export async function updateProject(request: FastifyRequest, reply: FastifyReply) {
+
+    await request.jwtVerify()
+
     const paramsSchema = z.object({
         id: z.string().uuid(),
     })

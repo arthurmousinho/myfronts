@@ -3,6 +3,9 @@ import { prisma } from "../../lib/prisma";
 import { z } from "zod";
 
 export async function createProject(request: FastifyRequest, reply: FastifyReply) {
+
+    await request.jwtVerify();
+
     const bodySchema = z.object({
         title: z.string(),
         imageURL: z.string(),     

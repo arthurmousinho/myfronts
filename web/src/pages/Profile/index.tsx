@@ -33,7 +33,7 @@ export function Profile() {
 
     if(isLoading) {
         return (
-            <Loading message="Carregando..."/>
+            <Loading message="Buscando perfil..."/>
         )
     }
 
@@ -72,7 +72,7 @@ export function Profile() {
                             return (
                                 <ProjectCard 
                                     key={project.title} title={project.title} description={project.description} 
-                                    imageURL={project.imageURL}
+                                    imageURL={project.imageURL} to={project.id}
                                 />
                             )
                         })

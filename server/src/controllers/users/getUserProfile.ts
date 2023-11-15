@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { prisma } from "../../lib/prisma";
-import { getUserProject } from "../projects/getUserProject";
+import { getUserProjects } from "../projects/getUserProjects";
 
 export async function getUserProfile(request: FastifyRequest, reply: FastifyReply) {
     const paramsSchema = z.object({
@@ -23,7 +23,7 @@ export async function getUserProfile(request: FastifyRequest, reply: FastifyRepl
         return;
     };
 
-    const projects = await getUserProject(user.id);
+    const projects = await getUserProjects(user.id);
     const data = {
         ...user,
         projects: projects

@@ -34,7 +34,7 @@ export function useUsers() {
 
     async function getUserInfos(username: string) {
         try {
-            const response = await axios.get(`${API}/users/${username}`);
+            const response = await axios.get(`${API}/users/profile/${username}`);
             return response.data;
         } catch(error) {
             navigate('/');
@@ -49,7 +49,16 @@ export function useUsers() {
         }
     }
 
+    async function getUserInfosById(userId: string) {
+        try {
+            const response = await axios.get(`${API}/users/user/${userId}`);
+            return response.data;
+        } catch(error) {
+            navigate('/');
+        }
+    }
 
-    return { getUserInfos, getUserTokenInfos }
+
+    return { getUserInfos, getUserTokenInfos, getUserInfosById }
 
 }

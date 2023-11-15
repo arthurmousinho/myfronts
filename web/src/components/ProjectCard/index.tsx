@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 interface ProjectCardProps {
+    to: string;
     imageURL: string;
     title: string;
     description: string;
@@ -8,7 +9,7 @@ interface ProjectCardProps {
 
 export function ProjectCard(props: ProjectCardProps) {
     return (
-        <Link to={'/users/arthur/osjfbnvjhs'} className="flex flex-col gap-4 bg-zinc-default rounded hover:scale-105 transition-transform">
+        <Link to={props.to} className="flex flex-col gap-4 bg-zinc-default rounded hover:scale-105 transition-transform">
             <img src={props.imageURL} alt="" 
                 className="w-full h-50"
             />

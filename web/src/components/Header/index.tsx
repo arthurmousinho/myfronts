@@ -9,7 +9,7 @@ import { useUsers } from "@/hooks/useUsers"
 
 export function Header() {
 
-    const [user, setUser] = useState<TokenInfos | any>();
+    const [user, setUser] = useState<TokenInfos>();
     const [tokenExists, setTokenExists] = useState<boolean>();
     const { getUserTokenInfos } = useUsers();
 
@@ -53,7 +53,7 @@ export function Header() {
             {
                 tokenExists ? (
                     <nav className="flex items-center gap-4">
-                        <UserCard  name={user.name} avatarURL={user.avatarURL} />
+                        <UserCard  name={user?.name} avatarURL={user?.avatarURL} to={`/users/${user?.username}`}/>
                         <Separator orientation="vertical" className="h-10 bg-zinc-800" />
                         <Link to={'/'} className="text-red-900 hover:text-red-700 transition-colors">
                             <LogOut size={20} />

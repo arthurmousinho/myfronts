@@ -43,7 +43,7 @@ export function AuthCallback() {
                 loading ? (
                     <Loading message="Autenticando..."/>
                 ) : (
-                    <Navigate to={'/profile'} />
+                    <Navigate to={'/'} />
                 )
             }
         </div>
