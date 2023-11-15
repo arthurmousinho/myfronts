@@ -21,7 +21,7 @@ export const ROUTES = createBrowserRouter([
                 element: <Feed />
             },
             {
-                path: "/profile",
+                path: "/users/:username",
                 element: <Profile />
             },
             {

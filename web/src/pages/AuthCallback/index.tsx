@@ -2,8 +2,8 @@ import axios from "axios";
 
 import { useEffect, useState } from "react"
 import { Navigate, useSearchParams } from "react-router-dom";
-import { Loader2 } from "lucide-react";
 import { useToken } from "@/hooks/useToken";
+import { Loading } from "@/components/Loading";
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -41,13 +41,7 @@ export function AuthCallback() {
         <div className="flex w-full justify-center items-center">
             {
                 loading ? (
-                    
-                    <div className="flex items-center justify-center gap-4 mt-10">
-                        <Loader2 size={30} className="text-gray-50 animate-spin" />
-                        <span className="text-gray-50 text-2xl font-bold">
-                            Autenticando...
-                        </span>
-                    </div>
+                    <Loading message="Autenticando..."/>
                 ) : (
                     <Navigate to={'/profile'} />
                 )

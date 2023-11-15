@@ -1,8 +1,9 @@
 import { Cookies, useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 
-export interface User {
+export interface TokenInfos {
     name: string;
+    username: string;
     avatarURL: string;
 }
 
@@ -34,7 +35,7 @@ export function useToken() {
         if (!token) {
             throw new Error('Unauthenticated.')
         }
-        const user: User = jwtDecode(token);
+        const user: TokenInfos = jwtDecode(token);
         return user;
     }
 

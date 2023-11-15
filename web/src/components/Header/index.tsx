@@ -2,32 +2,27 @@ import { Link } from "react-router-dom"
 import { Separator } from "../ui/separator"
 import { LogOut} from "lucide-react"
 import { UserCard } from "../UserCard"
-import { User, useToken } from "@/hooks/useToken"
+import { TokenInfos } from "@/hooks/useToken"
 import { SignIn } from "../SignIn"
 import { useEffect, useState } from "react"
+import { useUsers } from "@/hooks/useUsers"
 
 export function Header() {
 
-    const [user, setUser] = useState<User>({name: "", avatarURL: ""});
+    const [user, setUser] = useState<TokenInfos | any>();
     const [tokenExists, setTokenExists] = useState<boolean>();
-    const { getSavedToken, decodeToken } = useToken();
-
-    function getUser() {
-        const token = getSavedToken();
-        const user: User = decodeToken(token);
-        setUser(user);
-    }
+    const { getUserTokenInfos } = useUsers();
 
     useEffect(() => {
-        if (hasToken()) {
+        const user = getUserTokenInfos();
+        if (user) {
             setTokenExists(true);
-            getUser();
+            setUser(user);
             return;
         }
         setTokenExists(false);
     }, [])
 
-    const { hasToken } = useToken();
 
     return (
         <header className="fixed top-0 left-0 bg-zinc-default w-full flex items-center justify-between py-4 px-10 ">
