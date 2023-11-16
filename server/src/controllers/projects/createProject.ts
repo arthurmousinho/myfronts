@@ -2,9 +2,22 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from "zod";
 
+
+interface tokenInfos {
+    name: string;
+    avatarURL: string;
+    useranme: string;
+    sub: string;
+    iat: number;
+    exp: number;
+}
+
 export async function createProject(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
+
+    const decoded: tokenInfos = Object(await request.jwtDecode());
+    const userId = decoded.sub;
 
     const bodySchema = z.object({
         title: z.string(),
@@ -19,6 +32,7 @@ export async function createProject(request: FastifyRequest, reply: FastifyReply
 
     const createProject = await prisma.project.create({
         data: {
+            userId: userId,
             title: body.title,
             imageURL: body.imageURL,
             description: body.description,
