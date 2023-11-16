@@ -1,3 +1,4 @@
+import format from "date-fns/format";
 import { Link } from "react-router-dom";
 
 interface UserCardProps {
@@ -8,6 +9,12 @@ interface UserCardProps {
 }
 
 export function UserCard({ name, avatarURL, date, to }: UserCardProps) {
+
+    let formattedDate;
+
+    if(date) {
+        formattedDate = format(new Date(date), 'dd/MM/yyyy');     
+    }
 
     return (
         <Link to={to}>
@@ -22,7 +29,7 @@ export function UserCard({ name, avatarURL, date, to }: UserCardProps) {
                     {
                         date ? (
                             <span className="text-sm text-muted-foreground">
-                                { date }
+                                { formattedDate }
                             </span>
                         ) : <></>
                     }
