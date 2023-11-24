@@ -1,7 +1,7 @@
 # myFronts
 
-## Technologies Architecture
-![techs-arch](./.github/techs-arch.png)
+## Technologies Diagram
+![techs-diagram](./.github/techs-diagram.png)
 
 ## GitHub OAuth 
 - Reference: [NLW Spacetime Aula 3:](https://github.com/rocketseat-education/nlw-12-spacetime-ignite)
