@@ -2,7 +2,6 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from "zod";
 
-
 interface tokenInfos {
     name: string;
     avatarURL: string;

@@ -27,14 +27,16 @@ npm run dev
 
 ## References
 
-## Documentation
+### Documentation
 - [Neon](https://neon.tech/docs/introduction)
 - [Prisma](https://www.prisma.io/docs)
 - [React Router Dom](https://reactrouter.com/)
 - [date-fns](https://date-fns.org/)
 - [jwt-decode](https://github.com/auth0/jwt-decode)
+- [uuid](https://github.com/uuidjs/uuid)
+- [firebase-storage](https://firebase.google.com/docs/storage?hl=pt-br)
 
-## Content
+### Content
 - [NLW Spacetime: Rocketseat](https://github.com/rocketseat-education/nlw-12-spacetime-ignite)
 - [Como sair do ZERO em Node.js em apenas UMA aula: Rocketseat](https://www.youtube.com/watch?v=hHM-hr9q4mo)
 - [How to get parameter value from query string?](https://stackoverflow.com/questions/35352638/how-to-get-parameter-value-from-query-string)
@@ -43,8 +45,9 @@ npm run dev
 - [react-cookie](https://github.com/bendotcodes/cookies/tree/main/packages/react-cookie)
 - [Setting and Using Cookies in React](https://clerk.com/blog/setting-and-using-cookies-in-react?utm_source=www.google.com&utm_medium=referral&utm_campaign=none)
 - [ChatGPT](https://chat.openai.com/)
+- [React Js com TypeScript do zero ao avançado na pratica: Matheus Fraga](https://www.udemy.com/course/react-js-typescript/)
 
-## UI
+### UI
 - [NextJs](https://nextjs.org/)
 - [Shadcn-UI](https://ui.shadcn.com/)
 - [TailwindCSS Colors](https://tailwindcss.com/docs/customizing-colors)

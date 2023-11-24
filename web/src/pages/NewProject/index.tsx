@@ -3,17 +3,15 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
 import { Label } from "@/components/ui/label";
+import { newProjectData, useProject } from "@/hooks/useProject";
+import { useToken } from "@/hooks/useToken";
+import { useUsers } from "@/hooks/useUsers";
+import { storage } from "@/services/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { FileImage, PlusIcon, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import {v4 as uuidV4} from "uuid";
 
-interface ProjectData {
-    title: string;
-    imageFile: File;     
-    description: string;  
-    repositoryURL: string;
-    projectURL: string;  
-    techs: string[];
-}
 
 export function NewProject() {
 
@@ -26,11 +24,15 @@ export function NewProject() {
 
     const [techs, setTechs] = useState<string[]>([]);
 
+    const { getUserTokenInfos } = useUsers();
+    const { getSavedToken } = useToken();
+    const { saveProject } = useProject();
+
     const previewURL = useMemo(() => {
         if (!imgFile) {
           return "";
-        }
-        return URL.createObjectURL(imgFile)
+        };
+        return URL.createObjectURL(imgFile);
     }, [imgFile])
 
     function validFields() {
@@ -70,11 +72,20 @@ export function NewProject() {
                 alert("Envie apenas imagens .png ou .jpeg");
                 return;
             }
-            setImgFile(img)
+            setImgFile(img);
         }
     }
 
-    function handleSubmit(event: FormEvent) {
+    async function getImageUrlFromFirebase(image: File) {
+        const imgUuid = uuidV4();
+        const userInfos = getUserTokenInfos();
+        const uploadRef = ref(storage, `images/${userInfos?.username}/${imgUuid}`);
+        const snapshot = await uploadBytes(uploadRef, image)
+        const url = await getDownloadURL(snapshot.ref)
+        return url;
+    }
+
+    async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
         if (!validFields || techs.length === 0) {
@@ -87,16 +98,20 @@ export function NewProject() {
             return;
         }
         
-        const data: ProjectData = {
+        const imageUrlFromFirebase = await getImageUrlFromFirebase(imgFile);
+
+        const data: newProjectData = {
             title: title,
-            imageFile: imgFile,     
+            imageURL: imageUrlFromFirebase,     
             description: description,  
             repositoryURL: repoURL,
             projectURL: projectURL,  
             techs: techs,
         }
 
-        console.log(data);
+        const token = getSavedToken();
+
+        saveProject(data, token);
         
         resetFields();
         alert("Projeto adicionado com sucesso");

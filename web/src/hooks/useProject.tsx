@@ -15,9 +15,32 @@ export interface ProjectProps {
     techs: string[];
 }
 
+
+export interface newProjectData {
+    title: string;
+    imageURL: string;     
+    description: string;  
+    repositoryURL: string;
+    projectURL: string;  
+    techs: string[];
+}
+
 export function useProject() {
 
     const navigate = useNavigate();
+
+    async function saveProject(data: newProjectData, token: string) {
+        await axios.post(
+            `${API}/projects`, 
+            data,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }    
+        );
+    }
 
     async function getProjectById(id: string) {
         try {
@@ -28,6 +51,6 @@ export function useProject() {
         }
     }
 
-    return { getProjectById }
+    return { getProjectById, saveProject }
 
 }
