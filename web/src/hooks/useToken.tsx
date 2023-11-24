@@ -9,7 +9,8 @@ export interface TokenInfos {
 
 export function useToken() {
     
-    const [, setCookie] = useCookies();
+    const [cookies, setCookie, removeCookie] = useCookies();
+    
 
     function hasToken() {
         if (getSavedToken()) {
@@ -39,6 +40,10 @@ export function useToken() {
         return user;
     }
 
-    return { getSavedToken, setNewToken, hasToken, decodeToken };
+    function deleteToken() {
+        removeCookie('token');
+    }
+
+    return { getSavedToken, setNewToken, hasToken, decodeToken, deleteToken };
 
 }
