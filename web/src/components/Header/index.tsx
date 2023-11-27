@@ -13,7 +13,7 @@ export function Header() {
     const [tokenExists, setTokenExists] = useState<boolean>();
 
     const { getUserTokenInfos } = useUsers();
-    const { deleteToken } = useToken();
+    const { deleteToken, hasToken } = useToken();
 
     useEffect(() => {
         const user = getUserTokenInfos();
@@ -23,10 +23,12 @@ export function Header() {
             return;
         }
         setTokenExists(false);
+        console.log("Tem token: " + hasToken())
     }, [])
 
     function handleSignOut() {
         deleteToken();
+        console.log("Token deletado: " + !!hasToken)
         setTokenExists(false);
     }
 
