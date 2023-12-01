@@ -18,6 +18,7 @@ model User {
   linkedinURL String
 
   projects Project[]
+  posts    Post[]
 }
 
 model Project {
@@ -40,6 +41,10 @@ model Post {
   id    String @id @default(uuid())
   likes Int
 
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId String
+  createdAt   DateTime @default(now())
+  description String
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
 }

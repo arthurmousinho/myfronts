@@ -13,7 +13,7 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
 
     const { code } = bodySchema.parse(request.body);
 
-    console.log("Code: " + code)
+    console.log("Codigo received: " + !!code)
 
     const accessTokenResponse = await axios.post(
         'https://github.com/login/oauth/access_token',
@@ -32,7 +32,7 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
 
     const { access_token } = accessTokenResponse.data;
 
-    console.log("token de acesso: " + access_token);
+    console.log("Github token was got: " + !!access_token);
 
     const userResponse = await axios.get('https://api.github.com/user', {
         headers: {

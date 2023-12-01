@@ -1,15 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from "zod";
-
-interface tokenInfos {
-    name: string;
-    avatarURL: string;
-    useranme: string;
-    sub: string;
-    iat: number;
-    exp: number;
-}
+import { tokenInfos } from "../../server";
 
 export async function createProject(request: FastifyRequest, reply: FastifyReply) {
 
