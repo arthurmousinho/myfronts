@@ -3,8 +3,11 @@ import { jwtDecode } from "jwt-decode";
 
 export interface TokenInfos {
     name: string;
-    username: string;
     avatarURL: string;
+    username: string;
+    sub: string;
+    iat: number;
+    exp: number;
 }
 
 export function useToken() {

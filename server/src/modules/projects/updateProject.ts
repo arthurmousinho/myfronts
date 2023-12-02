@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from "zod";
+import { tokenInfos } from "../../server";
 
 export async function updateProject(request: FastifyRequest, reply: FastifyReply) {
 
@@ -9,6 +10,8 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
     const paramsSchema = z.object({
         id: z.string().uuid(),
     })
+
+    const { id } = paramsSchema.parse(request.params);
 
     const bodySchema = z.object({
         title: z.string(),
@@ -19,18 +22,13 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
         techs: z.string().array(),
     })
 
-    const { id } = paramsSchema.parse(request.params);
     const body = bodySchema.parse(request.body);
 
-    const project = await prisma.project.findUniqueOrThrow({
+    await prisma.project.findUniqueOrThrow({
         where: {
             id
         }
     });
-
-    if (!project) {
-        reply.status(404).send();
-    }
 
     const updatedProject = await prisma.project.update({
         where: {

@@ -10,7 +10,7 @@ export async function getUserProfile(request: FastifyRequest, reply: FastifyRepl
 
     const { username } = paramsSchema.parse(request.params);
 
-    console.log("username: " + username);
+    console.log("Get user by username: " + username);
 
     const user = await prisma.user.findFirst({
         where: {

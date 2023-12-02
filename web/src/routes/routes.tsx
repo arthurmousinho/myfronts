@@ -8,6 +8,7 @@ import { Project } from "@/pages/Project";
 import { NewProject } from "@/pages/NewProject";
 import { AuthCallback } from "@/pages/AuthCallback";
 import { Guard } from "./guard";
+import { EditProfile } from "@/pages/EditProfile";
 
 export const ROUTES = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ export const ROUTES = createBrowserRouter([
                 element: <Feed />
             },
             {
+                path: "/profile/edit",
+                element: <Guard> <EditProfile /> </Guard>
+            },
+            {
                 path: "/users/:username",
                 element: <Profile />
             },
@@ -30,7 +35,7 @@ export const ROUTES = createBrowserRouter([
                 element: <Project />
             },
             {
-                path: "/projects/new",
+                path: "/project/new",
                 element: <Guard>  <NewProject/> </Guard>
             }
         ],

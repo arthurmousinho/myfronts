@@ -42,11 +42,14 @@ export function Header() {
                 {
                     tokenExists ? (
                         <nav className="flex items-center gap-10">
-                            <Link to={'/projects/new'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
+                            <Link to={'/project/new'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
                                 Novo Projeto
                             </Link> 
-                            <Link to={'/feed'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
+                            <Link to={'/post/new'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
                                 Novo Post
+                            </Link> 
+                            <Link to={`/profile/edit`} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
+                                Editar Perfil
                             </Link> 
                             <Link to={'/feed'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
                                 Feed

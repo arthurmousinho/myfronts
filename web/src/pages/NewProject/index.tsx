@@ -123,7 +123,7 @@ export function NewProject() {
 
             <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
                 <h1 className="text-3xl font-bold text-gray-300">
-                    Adicione um novo projeto
+                    Adicionar Projeto
                 </h1>
 
                 <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export function Post() {
     return (
-        <article  className="w-[700px] bg-zinc-default flex flex-col gap-4 rounded p-4 border border-zinc-800" >
+        <article  className="w-[700px] bg-zinc-default flex flex-col gap-4 rounded p-4" >
 
             <Link to={'/users/arthurmousinho'} className="flex items-center gap-3">
                 <img src="https://github.com/arthurmousinho.png" alt="" className="w-10 h-10 rounded-full"/>

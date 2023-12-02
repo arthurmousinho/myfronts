@@ -26,6 +26,13 @@ export interface User {
     projects: Project[];
 }
 
+export interface EditUserData {
+    name: string | undefined;
+    username: string | undefined;
+    githubURL: string | undefined;
+    linkedinURL: string | undefined;
+    bio: string | undefined;
+}
 
 export function useUsers() {
 
@@ -58,7 +65,25 @@ export function useUsers() {
         }
     }
 
+    async function editUser(editUserData: EditUserData) {
+        try {
+            const userId = getUserTokenInfos()?.sub
+            const response = await axios.put(`${API}/users/user/${userId}`, 
+                editUserData,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${getSavedToken()}`,
+                        'Content-Type': 'application/json'
+                    }
+                } 
+            )
+            return response.data;
+        } catch(error) {
+            alert("Erro ao editar usuário")
+        }
+    }
 
-    return { getUserInfos, getUserTokenInfos, getUserInfosById }
+
+    return { getUserInfos, getUserTokenInfos, getUserInfosById, editUser }
 
 }
