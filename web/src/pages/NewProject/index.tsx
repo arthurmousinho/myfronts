@@ -5,7 +5,6 @@ import { Textarea } from "@/components/Textarea";
 import { Label } from "@/components/ui/label";
 import { newProjectData, useProject } from "@/hooks/useProject";
 import { useToken } from "@/hooks/useToken";
-import { useUsers } from "@/hooks/useUsers";
 import { storage } from "@/services/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { FileImage, PlusIcon, X } from "lucide-react";
@@ -24,8 +23,7 @@ export function NewProject() {
 
     const [techs, setTechs] = useState<string[]>([]);
 
-    const { getUserTokenInfos } = useUsers();
-    const { getSavedToken } = useToken();
+    const { getSavedToken, decodeToken } = useToken();
     const { saveProject } = useProject();
 
     const previewURL = useMemo(() => {
@@ -78,7 +76,7 @@ export function NewProject() {
 
     async function getImageUrlFromFirebase(image: File) {
         const imgUuid = uuidV4();
-        const userInfos = getUserTokenInfos();
+        const userInfos = decodeToken(getSavedToken());
         const uploadRef = ref(storage, `images/${userInfos?.username}/${imgUuid}`);
         const snapshot = await uploadBytes(uploadRef, image)
         const url = await getDownloadURL(snapshot.ref)

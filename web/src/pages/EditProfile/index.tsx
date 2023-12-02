@@ -4,18 +4,21 @@ import { Input } from "@/components/Input"
 import { Loading } from "@/components/Loading"
 import { Textarea } from "@/components/Textarea"
 import { Label } from "@/components/ui/label"
+import { useToken } from "@/hooks/useToken"
 import { EditUserData, User, useUsers } from "@/hooks/useUsers"
 import { Frown, Save } from "lucide-react"
 import { FormEvent, useEffect, useState } from "react"
 
 
+
 export function EditProfile() {
+
     const [user, setUser] = useState<User>();
     const [loading, setLoading] = useState(true);
-    
-    const { getUserInfos, getUserTokenInfos, editUser } = useUsers();
-    
 
+    const { getUserInfos, editUser } = useUsers();
+    const { refreshToken, getSavedToken, decodeToken } = useToken();
+    
     const [newName, setNewName] = useState<string | undefined>();
     const [newUsername, setNewUsername] = useState<string | undefined>();
     const [newGithubURL, setNewGithubURL] = useState<string | undefined>();
@@ -23,7 +26,7 @@ export function EditProfile() {
     const [newBio, setNewBio] = useState<string | undefined>();
 
     async function getUserData() {
-        const username = getUserTokenInfos()?.username;
+        const username = decodeToken(getSavedToken()).username;
         if (username) {
             const userInfos = await getUserInfos(username);
             setUser(userInfos);
@@ -64,7 +67,8 @@ export function EditProfile() {
        const editedUser =  await editUser(newUserInfos);
 
         if (editedUser) {
-            alert("Usuário editado com sucesso")
+            alert("Usuário editado com sucesso");
+            refreshToken();
         }
 
     }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TokenInfos, useToken } from "./useToken";
+import { useToken } from "./useToken";
 import { useNavigate } from "react-router-dom";
 
 const API = import.meta.env.VITE_API_BASE_URL;
@@ -36,7 +36,7 @@ export interface EditUserData {
 
 export function useUsers() {
 
-    const { getSavedToken ,decodeToken, hasToken } = useToken();
+    const { getSavedToken, decodeToken } = useToken();
     const navigate = useNavigate();
 
     async function getUserInfos(username: string) {
@@ -45,14 +45,6 @@ export function useUsers() {
             return response.data;
         } catch(error) {
             navigate('/');
-        }
-    }
-
-    function getUserTokenInfos() {
-        if (hasToken()) {
-            const token = getSavedToken();
-            const user: TokenInfos = decodeToken(token);
-            return user;
         }
     }
 
@@ -67,7 +59,7 @@ export function useUsers() {
 
     async function editUser(editUserData: EditUserData) {
         try {
-            const userId = getUserTokenInfos()?.sub
+            const userId = decodeToken(getSavedToken()).sub;
             const response = await axios.put(`${API}/users/user/${userId}`, 
                 editUserData,
                 {
@@ -84,6 +76,6 @@ export function useUsers() {
     }
 
 
-    return { getUserInfos, getUserTokenInfos, getUserInfosById, editUser }
+    return { getUserInfos, getUserInfosById, editUser }
 
 }

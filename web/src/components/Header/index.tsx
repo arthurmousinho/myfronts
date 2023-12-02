@@ -5,30 +5,28 @@ import { UserCard } from "../UserCard"
 import { TokenInfos, useToken } from "@/hooks/useToken"
 import { SignIn } from "../SignIn"
 import { useEffect, useState } from "react"
-import { useUsers } from "@/hooks/useUsers"
 
 export function Header() {
 
     const [user, setUser] = useState<TokenInfos>();
     const [tokenExists, setTokenExists] = useState<boolean>();
 
-    const { getUserTokenInfos } = useUsers();
-    const { deleteToken, hasToken } = useToken();
+    const { deleteToken, decodeToken, getSavedToken, hasToken } = useToken();
 
     useEffect(() => {
-        const user = getUserTokenInfos();
-        if (user) {
-            setTokenExists(true);
-            setUser(user);
-            return;
+        if(hasToken()) {
+            const user = decodeToken(getSavedToken());
+            if (user) {
+                setTokenExists(true);
+                setUser(user);
+                return;
+            }
+            setTokenExists(false);
         }
-        setTokenExists(false);
-        console.log("Tem token: " + hasToken())
-    }, [])
+    }, [user])
 
     function handleSignOut() {
         deleteToken();
-        console.log("Token deletado: " + !!hasToken)
         setTokenExists(false);
     }
 
