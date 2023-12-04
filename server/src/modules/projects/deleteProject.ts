@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { prisma } from "../../lib/prisma";
+import { tokenInfos } from "../../server";
 
 export async function deleteProject(request: FastifyRequest, reply: FastifyReply) {
 
@@ -12,9 +13,13 @@ export async function deleteProject(request: FastifyRequest, reply: FastifyReply
 
     const { id } = paramsSchema.parse(request.params);
 
+    const decoded: tokenInfos = Object(await request.jwtDecode());
+    const userId = decoded.sub;
+
     const project = await prisma.project.findUniqueOrThrow({
         where: {
-            id
+            id,
+            userId,
         }
     });
 

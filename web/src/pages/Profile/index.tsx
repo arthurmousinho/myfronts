@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { User, useUsers } from "@/hooks/useUsers";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@/components/Loading";
+import { ProjectProps } from "@/hooks/useProject";
 
 export function Profile() {
 
     const [isLoading, setIsLoading] = useState(true);    
     const [user, setUser] = useState<User>();
+    const [projects, setProjects] = useState<ProjectProps[]>()
+
     const navigate = useNavigate();
 
     const { getUserInfos } = useUsers();
@@ -17,13 +20,20 @@ export function Profile() {
 
     async function loadUserInfos() {
         if (username) {
-            const user = await getUserInfos(username);
-            console.log(user)
-            setUser(user);
+            const userInfos = await getUserInfos(username);
+            setUser(userInfos);
+            setProjects(userInfos.projects);
             setIsLoading(false);
             return;
         }
         navigate('/');
+    }
+
+    function hasProject() {
+        if (projects?.length! > 0) {
+            return true;
+        }
+        return false;
     }
 
     useEffect(() => {
@@ -67,8 +77,8 @@ export function Profile() {
 
             <div className="w-[1000px] grid grid-cols-3 gap-4">
                 {
-                    user?.projects ? (
-                        user?.projects?.map(project => {
+                    hasProject() ? (
+                        projects?.map(project => {
                             return (
                                 <ProjectCard 
                                     key={project.title} title={project.title} description={project.description} 

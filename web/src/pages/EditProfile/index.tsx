@@ -4,6 +4,7 @@ import { Input } from "@/components/Input"
 import { Loading } from "@/components/Loading"
 import { Textarea } from "@/components/Textarea"
 import { Label } from "@/components/ui/label"
+import { ProjectProps, useProject } from "@/hooks/useProject"
 import { useToken } from "@/hooks/useToken"
 import { EditUserData, User, useUsers } from "@/hooks/useUsers"
 import { Frown, Save } from "lucide-react"
@@ -14,10 +15,12 @@ import { FormEvent, useEffect, useState } from "react"
 export function EditProfile() {
 
     const [user, setUser] = useState<User>();
+    const [projects, setProjects] = useState<ProjectProps[]>()
     const [loading, setLoading] = useState(true);
 
     const { getUserInfos, editUser } = useUsers();
     const { refreshToken, getSavedToken, decodeToken } = useToken();
+    const { deleteProject } = useProject();
     
     const [newName, setNewName] = useState<string | undefined>();
     const [newUsername, setNewUsername] = useState<string | undefined>();
@@ -30,6 +33,7 @@ export function EditProfile() {
         if (username) {
             const userInfos = await getUserInfos(username);
             setUser(userInfos);
+            setProjects(userInfos.projects)
 
             setNewName(userInfos.name);
             setNewUsername(userInfos.username);
@@ -73,6 +77,15 @@ export function EditProfile() {
 
     }
 
+
+    function handleDeleteProject(project: any) {
+        const wantToDelete = confirm(`Tem certeza que deseja deletar o projeto ${project.title}?`);
+        if (wantToDelete) {
+            deleteProject(project.id);
+            const remainingProjects: ProjectProps[] | undefined = projects?.filter(project => project.id != project.id);
+            setProjects(remainingProjects);
+        }
+    }
 
     return (
         <div className="w-full flex flex-col gap-12 items-center justify-center mb-96">
@@ -142,9 +155,11 @@ export function EditProfile() {
 
                 <div className="w-full flex flex-col gap-2">
                     {
-                        user?.projects?.map(project => {
+                        projects?.map(project=> {
                             return (
-                                <DeleteProjectCard name={project.title} key={project.id} />
+                                <DeleteProjectCard name={project.title} key={project.id} id={project.id} 
+                                    onClick={() => { handleDeleteProject(project) }}
+                                />
                             )
                         })
                     }

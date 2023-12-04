@@ -2,29 +2,21 @@ import { Link } from "react-router-dom"
 import { Separator } from "../ui/separator"
 import { LogOut} from "lucide-react"
 import { UserCard } from "../UserCard"
-import { TokenInfos, useToken } from "@/hooks/useToken"
+import { useToken } from "@/hooks/useToken"
 import { SignIn } from "../SignIn"
 import { useEffect, useState } from "react"
 
 export function Header() {
 
-    const [user, setUser] = useState<TokenInfos>();
     const [tokenExists, setTokenExists] = useState<boolean>();
 
     const { deleteToken, decodeToken, getSavedToken, hasToken } = useToken();
 
     useEffect(() => {
-        if(hasToken()) {
-            const user = decodeToken(getSavedToken());
-            if (user) {
-                setTokenExists(true);
-                setUser(user);
-                return;
-            }
-            setTokenExists(false);
-        }
-    }, [user])
-
+        setTokenExists(hasToken());
+      }, [])
+    
+    
     function handleSignOut() {
         deleteToken();
         setTokenExists(false);
@@ -62,7 +54,7 @@ export function Header() {
             {
                 tokenExists ? (
                     <nav className="flex items-center gap-4">
-                        <UserCard  name={user?.name} avatarURL={user?.avatarURL} to={`/users/${user?.username}`}/>
+                        <UserCard  name={decodeToken(getSavedToken()).name} avatarURL={decodeToken(getSavedToken()).avatarURL} to={`/users/${decodeToken(getSavedToken()).username}`}/>
                         <Separator orientation="vertical" className="h-10 bg-zinc-800" />
                         <button onClick={handleSignOut} className="text-red-900 hover:text-red-700 transition-colors">
                             <LogOut size={20} />

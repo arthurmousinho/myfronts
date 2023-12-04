@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useToken } from "./useToken";
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -27,6 +28,8 @@ export interface newProjectData {
 
 export function useProject() {
 
+    const { getSavedToken } = useToken();
+
     const navigate = useNavigate();
 
     async function saveProject(data: newProjectData, token: string) {
@@ -51,6 +54,24 @@ export function useProject() {
         }
     }
 
-    return { getProjectById, saveProject }
+    async function deleteProject(id: string) {
+        
+        const token = getSavedToken();
+
+        try {
+            const response = await axios.delete(
+                `${API}/projects/${id}`, 
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            );
+        } catch (error) {
+            alert("Erro ao deletar o projeto")
+        }
+    }
+
+    return { getProjectById, saveProject, deleteProject }
 
 }
