@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
-import { registerUser } from "./registerUser";
 import { refreshToken } from "./refreshToken";
+import { authUser } from "./authUser";
 
 export async function authRoutes(app: FastifyInstance) {
     
-    app.post('/register', registerUser);
+    app.post('/auth', authUser);
 
     app.post('/refresh-token', refreshToken)
 

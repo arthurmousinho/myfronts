@@ -15,7 +15,7 @@ export function AuthCallback() {
    
     async function getUserToken() {
         const code = searchParams.get("code");
-        const response = await axios.post(`${API}/register`, { code }, {
+        const response = await axios.post(`${API}/auth`, { code }, {
             headers: {
                 "Content-Type": "application/json"
             }
