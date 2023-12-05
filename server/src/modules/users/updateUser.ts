@@ -33,7 +33,7 @@ export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
     await prisma.user.findUniqueOrThrow({
         where: {
             id: decoded.sub,
-            username: decoded.useranme,
+            username: decoded.username,
             name: decoded.name,
         }
     });

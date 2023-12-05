@@ -16,7 +16,7 @@ export function EditProfile() {
     const [projects, setProjects] = useState<ProjectProps[]>()
     const [loading, setLoading] = useState(true);
 
-    const { getUserInfos, editUser } = useUsers();
+    const { getUserInfos, editUser, deleteUser } = useUsers();
     const { getSavedToken, decodeToken, deleteToken, hasToken } = useToken();
     const { deleteProject } = useProject();
     
@@ -28,16 +28,20 @@ export function EditProfile() {
 
     async function getUserData() {
         if (hasToken()) {
-            const username = decodeToken(getSavedToken()).username;
-            const userInfos = await getUserInfos(username);
-            setUser(userInfos);
-            setProjects(userInfos.projects)
-            setNewName(userInfos.name);
-            setNewUsername(userInfos.username);
-            setNewGithubURL(userInfos.githubURL);
-            setNewLinkedinURL(userInfos.linkedinURL);
-            setNewBio(userInfos.bio);
-            setLoading(false);
+            const username = decodeToken(getSavedToken())?.username;
+            
+            if (username) {
+                const userInfos = await getUserInfos(username);
+                setUser(userInfos);
+                setProjects(userInfos.projects)
+                setNewName(userInfos.name);
+                setNewUsername(userInfos.username);
+                setNewGithubURL(userInfos.githubURL);
+                setNewLinkedinURL(userInfos.linkedinURL);
+                setNewBio(userInfos.bio);
+                setLoading(false);
+            }
+
         }
     }
 
@@ -84,6 +88,15 @@ export function EditProfile() {
             deleteProject(project.id);
             const remainingProjects: ProjectProps[] | undefined = projects?.filter(project => project.id != project.id);
             setProjects(remainingProjects);
+        }
+    }
+
+    async function handleDeleteUser() {
+        const wantToDelete = confirm("Tem certeza que deseja excluir sua conta?")
+        if (wantToDelete) {
+            await deleteUser();
+            alert("Usuário deletado com sucesso");
+            deleteToken();
         }
     }
 
@@ -171,7 +184,7 @@ export function EditProfile() {
                     Excluir Conta
                 </h1>
 
-                <Button>
+                <Button onClick={handleDeleteUser}>
                     <Frown size={20} className="text-red-500"/>
                     <span className="text-red-500">
                         Deletar Conta

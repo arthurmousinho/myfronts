@@ -59,7 +59,7 @@ export function useUsers() {
 
     async function editUser(editUserData: EditUserData) {
         try {
-            const userId = decodeToken(getSavedToken()).sub;
+            const userId = decodeToken(getSavedToken())?.sub;
             const response = await axios.put(`${API}/users/user/${userId}`, 
                 editUserData,
                 {
@@ -75,7 +75,23 @@ export function useUsers() {
         }
     }
 
+    async function deleteUser() {
+        try {
+            const userId = decodeToken(getSavedToken())?.sub;
+            await axios.delete(`${API}/users/user/${userId}`, 
+                {
+                    headers: {
+                        'Authorization': `Bearer ${getSavedToken()}`,
+                        'Content-Type': 'application/json'
+                    }
+                } 
+            )
+        } catch(error) {
+            alert("Erro ao excluir usuário")
+        }
+    }
 
-    return { getUserInfos, getUserInfosById, editUser }
+
+    return { getUserInfos, getUserInfosById, editUser, deleteUser }
 
 }
