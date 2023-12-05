@@ -14,10 +14,9 @@ export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
     const { id } = paramsSchema.parse(request.params);
 
     const decoded: tokenInfos = Object(await request.jwtDecode());
-    const userId = decoded.sub;
-
+  
     // when userId from token is different than the userId form url
-    if (id != userId) {
+    if (id != decoded.sub) {
         reply.status(401).send(); 
     }    
 
@@ -33,7 +32,9 @@ export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
 
     await prisma.user.findUniqueOrThrow({
         where: {
-            id,
+            id: decoded.sub,
+            username: decoded.useranme,
+            name: decoded.name,
         }
     });
 

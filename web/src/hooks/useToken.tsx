@@ -17,6 +17,26 @@ export function useToken() {
 
     const [cookies, setCookie, removeCookie] = useCookies();
 
+    async function getUserToken(code: string) {
+        const response = await axios.post(`${API}/auth`, 
+            { code }, 
+            {
+                headers: {
+                "Content-Type": "application/json"
+                }
+            }
+        );
+
+        const { token } = response.data;
+     
+        if (token) {
+            setNewToken({
+                key: "token",
+                token: token,
+                maxAge: 864000, // 10 days in seconds
+            });
+        } 
+    }
 
     function hasToken() {
         if (getSavedToken()) {
@@ -39,41 +59,16 @@ export function useToken() {
     }
 
     function decodeToken(token: string) {
-        if (!token) {
-            throw new Error('Unauthenticated.')
+        if (token) {
+            const user: TokenInfos = jwtDecode(token);
+            return user;            
         }
-        const user: TokenInfos = jwtDecode(token);
-        return user;
     }
 
     function deleteToken() {
         removeCookie('token', { path: '/' }); 
     }
 
-  
-    async function refreshToken() {
-
-        const userId = decodeToken(getSavedToken()).sub
-
-        try {
-            const response = await axios.post(`${API}/refresh-token`, 
-                { userId: userId }
-            )
-
-            const refreshedToken = response.data.token;
-            console.log(refreshedToken)
-
-            setNewToken({
-                key: "token",
-                token: response.data.token,
-                maxAge: 864000, // 10 days
-            })
-
-        } catch(error) {
-            alert("Erro durante o refresh token")
-        }
-    }
-
-    return { getSavedToken, setNewToken, hasToken, decodeToken, deleteToken, refreshToken };
+    return { getSavedToken, hasToken, decodeToken, deleteToken, getUserToken };
 
 }

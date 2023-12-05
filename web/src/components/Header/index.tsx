@@ -4,23 +4,10 @@ import { LogOut} from "lucide-react"
 import { UserCard } from "../UserCard"
 import { useToken } from "@/hooks/useToken"
 import { SignIn } from "../SignIn"
-import { useEffect, useState } from "react"
 
 export function Header() {
 
-    const [tokenExists, setTokenExists] = useState<boolean>();
-
     const { deleteToken, decodeToken, getSavedToken, hasToken } = useToken();
-
-    useEffect(() => {
-        setTokenExists(hasToken());
-      }, [])
-    
-    
-    function handleSignOut() {
-        deleteToken();
-        setTokenExists(false);
-    }
 
     return (
         <header className="fixed top-0 left-0 bg-zinc-default w-full flex items-center justify-between py-4 px-10 ">
@@ -30,7 +17,7 @@ export function Header() {
                     myFronts.dev
                 </Link> 
                 {
-                    tokenExists ? (
+                    hasToken() ? (
                         <nav className="flex items-center gap-10">
                             <Link to={'/project/new'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
                                 Novo Projeto
@@ -52,11 +39,11 @@ export function Header() {
             </nav>
 
             {
-                tokenExists ? (
+                hasToken() ? (
                     <nav className="flex items-center gap-4">
-                        <UserCard  name={decodeToken(getSavedToken()).name} avatarURL={decodeToken(getSavedToken()).avatarURL} to={`/users/${decodeToken(getSavedToken()).username}`}/>
+                        <UserCard  name={decodeToken(getSavedToken())?.name} avatarURL={decodeToken(getSavedToken())?.avatarURL} to={`/users/${decodeToken(getSavedToken())?.username}`}/>
                         <Separator orientation="vertical" className="h-10 bg-zinc-800" />
-                        <button onClick={handleSignOut} className="text-red-900 hover:text-red-700 transition-colors">
+                        <button onClick={deleteToken} className="text-red-900 hover:text-red-700 transition-colors">
                             <LogOut size={20} />
                         </button>
                     </nav>

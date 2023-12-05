@@ -10,8 +10,6 @@ import { EditUserData, User, useUsers } from "@/hooks/useUsers"
 import { Frown, Save } from "lucide-react"
 import { FormEvent, useEffect, useState } from "react"
 
-
-
 export function EditProfile() {
 
     const [user, setUser] = useState<User>();
@@ -19,7 +17,7 @@ export function EditProfile() {
     const [loading, setLoading] = useState(true);
 
     const { getUserInfos, editUser } = useUsers();
-    const { refreshToken, getSavedToken, decodeToken } = useToken();
+    const { getSavedToken, decodeToken, deleteToken, hasToken } = useToken();
     const { deleteProject } = useProject();
     
     const [newName, setNewName] = useState<string | undefined>();
@@ -29,18 +27,16 @@ export function EditProfile() {
     const [newBio, setNewBio] = useState<string | undefined>();
 
     async function getUserData() {
-        const username = decodeToken(getSavedToken()).username;
-        if (username) {
+        if (hasToken()) {
+            const username = decodeToken(getSavedToken()).username;
             const userInfos = await getUserInfos(username);
             setUser(userInfos);
             setProjects(userInfos.projects)
-
             setNewName(userInfos.name);
             setNewUsername(userInfos.username);
             setNewGithubURL(userInfos.githubURL);
             setNewLinkedinURL(userInfos.linkedinURL);
             setNewBio(userInfos.bio);
-
             setLoading(false);
         }
     }
@@ -71,8 +67,12 @@ export function EditProfile() {
        const editedUser =  await editUser(newUserInfos);
 
         if (editedUser) {
-            alert("Usuário editado com sucesso");
-            refreshToken();
+            alert("Usuário editado com sucesso")
+        }
+
+        if (user?.name != newName || user?.username != newUsername) {
+            alert("Faca login novamente")
+            deleteToken();
         }
 
     }

@@ -35,7 +35,7 @@ app.listen({
 export interface tokenInfos {
     name: string;
     avatarURL: string;
-    useranme: string;
+    username: string;
     sub: string;
     iat: number;
     exp: number;
