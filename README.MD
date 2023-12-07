@@ -45,7 +45,6 @@ npm run dev
 - [Setting and Using Cookies in React](https://clerk.com/blog/setting-and-using-cookies-in-react?utm_source=www.google.com&utm_medium=referral&utm_campaign=none)
 - [ChatGPT](https://chat.openai.com/)
 - [React Js com TypeScript do zero ao avançado na pratica: Matheus Fraga](https://www.udemy.com/course/react-js-typescript/)
-- [Como implementar Refresh Token em uma aplicação com Node? - Code/drops #88](https://www.youtube.com/watch?v=RaweREhpBX8)
 - [Estratégias de autenticação, JWT, OAuth, qual usar? | Podcast FalaDev #21](https://www.youtube.com/watch?v=mZrt5R9eZzM)
 
 ### UI

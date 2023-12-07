@@ -22,14 +22,8 @@ export function Header() {
                             <Link to={'/project/new'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
                                 Novo Projeto
                             </Link> 
-                            <Link to={'/post/new'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
-                                Novo Post
-                            </Link> 
                             <Link to={`/profile/edit`} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
                                 Editar Perfil
-                            </Link> 
-                            <Link to={'/feed'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
-                                Feed
                             </Link> 
                         </nav>
                     ) : (
@@ -43,7 +37,7 @@ export function Header() {
                     <nav className="flex items-center gap-4">
                         <UserCard  name={decodeToken(getSavedToken())?.name} avatarURL={decodeToken(getSavedToken())?.avatarURL} to={`/users/${decodeToken(getSavedToken())?.username}`}/>
                         <Separator orientation="vertical" className="h-10 bg-zinc-800" />
-                        <button onClick={deleteToken} className="text-red-900 hover:text-red-700 transition-colors">
+                        <button onClick={deleteToken} className="text-red-900 hover:text-red-500 transition-colors">
                             <LogOut size={20} />
                         </button>
                     </nav>
