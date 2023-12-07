@@ -4,6 +4,7 @@ import { Input } from "@/components/Input"
 import { Loading } from "@/components/Loading"
 import { Textarea } from "@/components/Textarea"
 import { Label } from "@/components/ui/label"
+import { useFirebaseStorage } from "@/hooks/useFirebaseStorage"
 import { ProjectProps, useProject } from "@/hooks/useProject"
 import { useToken } from "@/hooks/useToken"
 import { EditUserData, User, useUsers } from "@/hooks/useUsers"
@@ -16,6 +17,7 @@ export function EditProfile() {
     const [projects, setProjects] = useState<ProjectProps[]>()
     const [loading, setLoading] = useState(true);
 
+    const { deleteImage } = useFirebaseStorage();
     const { getUserInfos, editUser, deleteUser } = useUsers();
     const { getSavedToken, decodeToken, deleteToken, hasToken } = useToken();
     const { deleteProject } = useProject();
@@ -82,10 +84,12 @@ export function EditProfile() {
     }
 
 
-    function handleDeleteProject(project: any) {
+    function handleDeleteProject(project: ProjectProps) {
         const wantToDelete = confirm(`Tem certeza que deseja deletar o projeto ${project.title}?`);
         if (wantToDelete) {
             deleteProject(project.id);
+            deleteImage(project.imageUUID);
+            
             const remainingProjects: ProjectProps[] | undefined = projects?.filter(project => project.id != project.id);
             setProjects(remainingProjects);
         }

@@ -3,14 +3,10 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Textarea } from "@/components/Textarea";
 import { Label } from "@/components/ui/label";
+import { useFirebaseStorage } from "@/hooks/useFirebaseStorage";
 import { newProjectData, useProject } from "@/hooks/useProject";
-import { useToken } from "@/hooks/useToken";
-import { storage } from "@/services/firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { FileImage, PlusIcon, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useMemo, useState } from "react";
-import {v4 as uuidV4} from "uuid";
-
 
 export function NewProject() {
 
@@ -23,7 +19,7 @@ export function NewProject() {
 
     const [techs, setTechs] = useState<string[]>([]);
 
-    const { getSavedToken, decodeToken } = useToken();
+    const { getImageURL, getNewImageUuid } = useFirebaseStorage();
     const { saveProject } = useProject();
 
     const previewURL = useMemo(() => {
@@ -74,15 +70,6 @@ export function NewProject() {
         }
     }
 
-    async function getImageUrlFromFirebase(image: File) {
-        const imgUuid = uuidV4();
-        const userInfos = decodeToken(getSavedToken());
-        const uploadRef = ref(storage, `images/${userInfos?.username}/${imgUuid}`);
-        const snapshot = await uploadBytes(uploadRef, image)
-        const url = await getDownloadURL(snapshot.ref)
-        return url;
-    }
-
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
@@ -96,23 +83,23 @@ export function NewProject() {
             return;
         }
         
-        const imageUrlFromFirebase = await getImageUrlFromFirebase(imgFile);
+        const imageUIID = getNewImageUuid();
+        const imageUrlFromFirebase = await getImageURL(imgFile, imageUIID);
 
-        const data: newProjectData = {
-            title: title,
-            imageURL: imageUrlFromFirebase,     
-            description: description,  
-            repositoryURL: repoURL,
-            projectURL: projectURL,  
-            techs: techs,
+        if(imageUrlFromFirebase) {
+            const data: newProjectData = {
+                title: title,
+                imageURL: imageUrlFromFirebase,     
+                description: description,  
+                repositoryURL: repoURL,
+                imageUUID: imageUIID,
+                projectURL: projectURL,  
+                techs: techs,
+            }
+            saveProject(data);
+            resetFields();
         }
 
-        const token = getSavedToken();
-
-        saveProject(data, token);
-        
-        resetFields();
-        alert("Projeto adicionado com sucesso");
     }
 
 

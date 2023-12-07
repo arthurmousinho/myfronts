@@ -28,6 +28,7 @@ model Project {
   title         String
   createdAt     DateTime @default(now())
   imageURL      String
+  imageUUID     String
   description   String
   repositoryURL String
   projectURL    String

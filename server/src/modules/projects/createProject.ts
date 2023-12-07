@@ -12,7 +12,8 @@ export async function createProject(request: FastifyRequest, reply: FastifyReply
 
     const bodySchema = z.object({
         title: z.string(),
-        imageURL: z.string(),     
+        imageURL: z.string(),  
+        imageUUID: z.string(),   
         description: z.string(),  
         repositoryURL: z.string(),
         projectURL: z.string(),  
@@ -25,6 +26,7 @@ export async function createProject(request: FastifyRequest, reply: FastifyReply
         data: {
             userId: userId,
             title: body.title,
+            imageUUID: body.imageUUID,
             imageURL: body.imageURL,
             description: body.description,
             repositoryURL: body.repositoryURL,

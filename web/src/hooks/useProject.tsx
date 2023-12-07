@@ -14,8 +14,8 @@ export interface ProjectProps {
     repositoryURL: string;
     projectURL: string;
     techs: string[];
+    imageUUID: string;
 }
-
 
 export interface newProjectData {
     title: string;
@@ -24,6 +24,7 @@ export interface newProjectData {
     repositoryURL: string;
     projectURL: string;  
     techs: string[];
+    imageUUID: string;
 }
 
 export function useProject() {
@@ -32,17 +33,23 @@ export function useProject() {
 
     const navigate = useNavigate();
 
-    async function saveProject(data: newProjectData, token: string) {
-        await axios.post(
-            `${API}/projects`, 
-            data,
-            {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            }    
-        );
+    async function saveProject(data: newProjectData) {
+        try {
+            const token = getSavedToken();
+            await axios.post(
+                `${API}/projects`, 
+                data,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                }    
+            );
+            alert("Projeto salvo com sucesso");
+        } catch (error) {
+            alert("Erro ao salvar o projeto");
+        }
     }
 
     async function getProjectById(id: string) {
@@ -55,11 +62,9 @@ export function useProject() {
     }
 
     async function deleteProject(id: string) {
-        
-        const token = getSavedToken();
-
         try {
-            const response = await axios.delete(
+            const token = getSavedToken();
+            await axios.delete(
                 `${API}/projects/${id}`, 
                 {
                     headers: {
@@ -67,8 +72,9 @@ export function useProject() {
                     }
                 }
             );
+            alert("Projeto deletado com sucesso");
         } catch (error) {
-            alert("Erro ao deletar o projeto")
+            alert("Erro ao deletar o projeto");
         }
     }
 
