@@ -61,6 +61,24 @@ export function useProject() {
         }
     }
 
+    async function getAllProjects() {
+        try {
+            const token = getSavedToken();
+            const response = await axios.get(
+                `${API}/projects`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                }    
+            );
+            return response.data;
+        } catch (error) {   
+            navigate('/')
+        }
+    }
+
     async function deleteProject(id: string) {
         try {
             const token = getSavedToken();
@@ -78,6 +96,6 @@ export function useProject() {
         }
     }
 
-    return { getProjectById, saveProject, deleteProject }
+    return { getProjectById, saveProject, deleteProject, getAllProjects }
 
 }

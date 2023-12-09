@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { Separator } from "../ui/separator"
-import { LogOut} from "lucide-react"
+import { LogOut } from "lucide-react"
 import { UserCard } from "../UserCard"
 import { useToken } from "@/hooks/useToken"
 import { SignIn } from "../SignIn"
@@ -10,7 +10,7 @@ export function Header() {
     const { deleteToken, decodeToken, getSavedToken, hasToken } = useToken();
 
     return (
-        <header className="fixed top-0 left-0 bg-zinc-default w-full flex items-center justify-between py-4 px-10 ">
+        <header className="fixed top-0 left-0 bg-zinc-default w-full flex items-center justify-between py-4 px-10 z-50">
 
             <nav className="flex items-center gap-10">
                 <Link to={'/'} className="font-bold text-2xl text-gray-200">
@@ -19,11 +19,11 @@ export function Header() {
                 {
                     hasToken() ? (
                         <nav className="flex items-center gap-10">
-                            <Link to={'/project/new'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
-                                Novo Projeto
+                            <Link to={'/projects'} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
+                                Meus projetos
                             </Link> 
                             <Link to={`/profile/edit`} className="text-base text-muted-foreground hover:text-gray-300 hover:underline transition-all">
-                                Editar Perfil
+                                Minha conta
                             </Link> 
                         </nav>
                     ) : (

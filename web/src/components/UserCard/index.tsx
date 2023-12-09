@@ -13,16 +13,16 @@ export function UserCard({ name, avatarURL, date, to }: UserCardProps) {
     let formattedDate;
 
     if(date) {
-        formattedDate = format(new Date(date), 'dd/MM/yyyy');     
+        formattedDate = format(new Date(date), 'dd/MM/yyyy');  
     }
 
     return (
         <Link to={to}>
-             <div className="flex items-center gap-2">
-                 <img src={ avatarURL } alt="" 
-                     className="w-10 h-10 rounded-full"
-                 />
-                 <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+                <img src={ avatarURL } alt="" 
+                    className="w-10 h-10 rounded-full"
+                />
+                <div className="flex flex-col">
                     <span className="text-base text-gray-200">
                         { name }
                     </span>
@@ -33,9 +33,8 @@ export function UserCard({ name, avatarURL, date, to }: UserCardProps) {
                             </span>
                         ) : <></>
                     }
-                 </div>
-             </div>
-             
+                </div>
+            </div>
         </Link>
     )
 }

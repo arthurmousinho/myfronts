@@ -1,11 +1,8 @@
 import { Button } from "@/components/Button"
-import { DeleteProjectCard } from "@/components/DeleteProjectCard"
 import { Input } from "@/components/Input"
 import { Loading } from "@/components/Loading"
 import { Textarea } from "@/components/Textarea"
 import { Label } from "@/components/ui/label"
-import { useFirebaseStorage } from "@/hooks/useFirebaseStorage"
-import { ProjectProps, useProject } from "@/hooks/useProject"
 import { useToken } from "@/hooks/useToken"
 import { EditUserData, User, useUsers } from "@/hooks/useUsers"
 import { Frown, Save } from "lucide-react"
@@ -14,13 +11,10 @@ import { FormEvent, useEffect, useState } from "react"
 export function EditProfile() {
 
     const [user, setUser] = useState<User>();
-    const [projects, setProjects] = useState<ProjectProps[]>()
     const [loading, setLoading] = useState(true);
 
-    const { deleteImage } = useFirebaseStorage();
     const { getUserInfos, editUser, deleteUser } = useUsers();
     const { getSavedToken, decodeToken, deleteToken, hasToken } = useToken();
-    const { deleteProject } = useProject();
     
     const [newName, setNewName] = useState<string | undefined>();
     const [newUsername, setNewUsername] = useState<string | undefined>();
@@ -35,7 +29,6 @@ export function EditProfile() {
             if (username) {
                 const userInfos = await getUserInfos(username);
                 setUser(userInfos);
-                setProjects(userInfos.projects)
                 setNewName(userInfos.name);
                 setNewUsername(userInfos.username);
                 setNewGithubURL(userInfos.githubURL);
@@ -83,18 +76,6 @@ export function EditProfile() {
 
     }
 
-
-    function handleDeleteProject(project: ProjectProps) {
-        const wantToDelete = confirm(`Tem certeza que deseja deletar o projeto ${project.title}?`);
-        if (wantToDelete) {
-            deleteProject(project.id);
-            deleteImage(project.imageUUID);
-            
-            const remainingProjects: ProjectProps[] | undefined = projects?.filter(project => project.id != project.id);
-            setProjects(remainingProjects);
-        }
-    }
-
     async function handleDeleteUser() {
         const wantToDelete = confirm("Tem certeza que deseja excluir sua conta?")
         if (wantToDelete) {
@@ -108,7 +89,7 @@ export function EditProfile() {
         <div className="w-full flex flex-col gap-12 items-center justify-center mb-96">
             <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
                 <h1 className="text-3xl font-bold text-gray-300">
-                    Alterar Dados
+                    Meus Dados
                 </h1>
 
                 <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -164,24 +145,6 @@ export function EditProfile() {
                         Salvar Alterações
                     </Button>
                 </form>
-            </div>
-            <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <h1 className="text-3xl font-bold text-gray-300">
-                    Excluir Projeto
-                </h1>
-
-                <div className="w-full flex flex-col gap-2">
-                    {
-                        projects?.map(project=> {
-                            return (
-                                <DeleteProjectCard name={project.title} key={project.id} id={project.id} 
-                                    onClick={() => { handleDeleteProject(project) }}
-                                />
-                            )
-                        })
-                    }
-
-                </div>
             </div>
             <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
                 <h1 className="text-3xl font-bold text-gray-300">

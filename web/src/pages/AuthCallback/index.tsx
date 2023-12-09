@@ -10,7 +10,7 @@ export function AuthCallback() {
     
     const { getUserToken } = useToken();
 
-    async function handleAuth() {
+    async function auth() {
         const code = searchParams.get("code");
         if (code) {
             await getUserToken(code);
@@ -19,7 +19,7 @@ export function AuthCallback() {
     }
 
     useEffect(() => {
-        handleAuth()
+        auth()
     }, [])
 
     return (
