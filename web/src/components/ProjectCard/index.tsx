@@ -27,12 +27,12 @@ export function ProjectCard(props: ProjectCardProps) {
     
     if (props.controls && props.id) {
         return (
-            <div className="flex flex-col gap-4 bg-zinc-default rounded transition-transform">
+            <div className="flex flex-col gap-4 bg-zinc-default rounded transition-transform h-[400px]">
                 <img src={props.imageURL} alt="" 
                     className="w-full h-40 object-cover"
                 />
-                <div className="p-4 flex flex-col gap-4">
-                    <h2 className="text-2xl font-bold text-gray-200">
+                <div className="p-4 flex flex-col justify-between gap-4">
+                    <h2 className="text-2xl font-bold text-gray-200 line-clamp-1">
                         {props.title}
                     </h2>
                     <p className="text-base leading-relaxed text-muted-foreground line-clamp-4 h-[100px]">
@@ -63,7 +63,7 @@ export function ProjectCard(props: ProjectCardProps) {
                 className="w-full h-48 object-cover"
             />
             <div className="p-4 flex flex-col gap-2">
-                <h2 className="text-2xl font-bold text-gray-200">
+                <h2 className="text-2xl font-bold text-gray-200 line-clamp-1">
                     {props.title}
                 </h2>
                 <p className="text-base leading-relaxed text-muted-foreground line-clamp-4">

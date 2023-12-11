@@ -55,9 +55,9 @@ export function Projects() {
                     Meus Projetos
                 </h1>
 
-                <div className="w-full grid grid-cols-3 gap-4 min-h-[312px]">
-                    <Link to={"/projects/new"} 
-                        className="bg-zinc-default text-gray-400 hover:text-muted transition-all flex items-center flex-col justify-center gap-2 rounded border border-zinc-800"
+                <div className="w-full grid grid-cols-3 gap-4 min-h-[400px]">
+                    <Link to={"/projects/repos"} 
+                        className="bg-zinc-default text-gray-400 hover:text-muted transition-all flex items-center flex-col justify-center gap-2 rounded border border-zinc-800" 
                     >
                         <Plus size={40} />
                         Adicionar projeto

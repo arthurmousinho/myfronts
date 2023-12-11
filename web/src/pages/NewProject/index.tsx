@@ -1,12 +1,15 @@
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { Loading } from "@/components/Loading";
 import { Textarea } from "@/components/Textarea";
 import { Label } from "@/components/ui/label";
 import { useFirebaseStorage } from "@/hooks/useFirebaseStorage";
+import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
 import { newProjectData, useProject } from "@/hooks/useProject";
 import { FileImage, PlusIcon, X } from "lucide-react";
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function NewProject() {
 
@@ -16,11 +19,19 @@ export function NewProject() {
     const [repoURL, setRepoURL] = useState("");
     const [projectURL, setProjectURL] = useState("");
     const [tech, setTech] = useState("");
-
     const [techs, setTechs] = useState<string[]>([]);
+
+
+    const [loading, setLoading] = useState(true);
+    const [repo, setRepo] = useState<GithubRepositoryData>();
+
 
     const { getImageURL, getNewImageUuid } = useFirebaseStorage();
     const { saveProject } = useProject();
+    const { getRepoInfos } = useGithub();
+    const { repoName } = useParams();
+
+    const navigate = useNavigate();
 
     const previewURL = useMemo(() => {
         if (!imgFile) {
@@ -100,8 +111,36 @@ export function NewProject() {
             resetFields();
         }
 
+        navigate('/projects', { replace: true })
+
     }
 
+    async function loadRepoInfos() {
+
+        if (repoName) {
+            const repoInfos = await getRepoInfos(repoName); 
+            setRepo(repoInfos);
+            
+            if (repoInfos) {
+                setTitle(repoInfos.name);
+                setDescription(repoInfos.description)
+                setRepoURL(repoInfos.html_url);
+                setLoading(false);
+            }
+        }
+
+    }
+
+    useEffect(() => {
+        loadRepoInfos();
+    }, [])
+
+    
+    if (loading) {
+        return (
+            <Loading message="Buscando dados do repositório..." />
+        )
+    }
 
     return (
         <div className="w-full flex items-center justify-center mb-96">
@@ -117,7 +156,8 @@ export function NewProject() {
                             Título do projeto
                         </Label>
                         <Input id="title" placeholder="ex: to-do list" required
-                            onChange={event => setTitle(event.target.value)} value={title}
+                            onChange={event => setTitle(event.target.value)}
+                            defaultValue={ repo?.name }
                         />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -125,7 +165,8 @@ export function NewProject() {
                             Descrição do projeto
                         </Label>
                         <Textarea id="description" placeholder="descreva seu projeto..." required
-                            onChange={event => setDescription(event.target.value)} value={description}
+                            onChange={event => setDescription(event.target.value)}
+                            defaultValue={ repo?.description }
                         />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -133,7 +174,8 @@ export function NewProject() {
                             URL do repositório
                         </Label>
                         <Input id="repo" type="url" placeholder="https://..." required
-                            onChange={event => setRepoURL(event.target.value)} value={repoURL}
+                            onChange={event => setRepoURL(event.target.value)}
+                            defaultValue={ repo?.html_url }
                         />
                     </div>
                     <div className="flex flex-col gap-2">

@@ -46,7 +46,6 @@ export function useProject() {
                     }
                 }    
             );
-            alert("Projeto salvo com sucesso");
         } catch (error) {
             alert("Erro ao salvar o projeto");
         }
@@ -90,7 +89,6 @@ export function useProject() {
                     }
                 }
             );
-            alert("Projeto deletado com sucesso");
         } catch (error) {
             alert("Erro ao deletar o projeto");
         }

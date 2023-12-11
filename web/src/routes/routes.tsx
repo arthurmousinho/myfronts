@@ -9,6 +9,7 @@ import { AuthCallback } from "@/pages/AuthCallback";
 import { Guard } from "./guard";
 import { EditProfile } from "@/pages/EditProfile";
 import { Projects } from "@/pages/Projects";
+import { SelectUserRepo } from "@/pages/SelectUserRepo";
 
 export const ROUTES = createBrowserRouter([
     {
@@ -23,6 +24,14 @@ export const ROUTES = createBrowserRouter([
                 element: <Guard> <Projects/> </Guard>
             },
             {
+                path: "/projects/repos",
+                element: <Guard> <SelectUserRepo/> </Guard>
+            },
+            {
+                path: "/projects/repos/:repoName",
+                element: <Guard>  <NewProject/> </Guard>
+            },
+            {
                 path: "/profile/edit",
                 element: <Guard> <EditProfile /> </Guard>
             },
@@ -34,10 +43,6 @@ export const ROUTES = createBrowserRouter([
                 path: "/users/:useraname/:projectId",
                 element: <Project />
             },
-            {
-                path: "/projects/new",
-                element: <Guard>  <NewProject/> </Guard>
-            }
         ],
         element: <Layout />
     },
