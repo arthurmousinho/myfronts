@@ -31,11 +31,11 @@ export function useProject() {
 
     const { getSavedToken } = useToken();
 
+    const token = getSavedToken();
     const navigate = useNavigate();
 
     async function saveProject(data: newProjectData) {
         try {
-            const token = getSavedToken();
             await axios.post(
                 `${API}/projects`, 
                 data,
@@ -62,7 +62,6 @@ export function useProject() {
 
     async function getAllProjects() {
         try {
-            const token = getSavedToken();
             const response = await axios.get(
                 `${API}/projects`,
                 {
@@ -80,7 +79,6 @@ export function useProject() {
 
     async function deleteProject(id: string) {
         try {
-            const token = getSavedToken();
             await axios.delete(
                 `${API}/projects/${id}`, 
                 {
@@ -94,6 +92,22 @@ export function useProject() {
         }
     }
 
-    return { getProjectById, saveProject, deleteProject, getAllProjects }
+    async function editProject(id: string, data: newProjectData) {
+        try {
+            await axios.put(
+                `${API}/projects/${id}`,
+                data,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            )
+        } catch (error) {
+            console.error("Erro ao atualizar o projeto")
+        }
+    }
+
+    return { getProjectById, saveProject, deleteProject, getAllProjects, editProject }
 
 }

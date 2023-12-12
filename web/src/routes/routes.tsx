@@ -10,6 +10,7 @@ import { Guard } from "./guard";
 import { EditProfile } from "@/pages/EditProfile";
 import { Projects } from "@/pages/Projects";
 import { SelectUserRepo } from "@/pages/SelectUserRepo";
+import { EditProject } from "@/pages/EditProject";
 
 export const ROUTES = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ export const ROUTES = createBrowserRouter([
             {
                 path: "/projects/repos/:repoName",
                 element: <Guard>  <NewProject/> </Guard>
+            },
+            {
+                path: "/projects/edit/:id",
+                element: <Guard>  <EditProject/> </Guard>
             },
             {
                 path: "/profile/edit",

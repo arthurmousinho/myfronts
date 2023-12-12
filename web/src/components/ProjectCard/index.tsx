@@ -39,18 +39,18 @@ export function ProjectCard(props: ProjectCardProps) {
                         {props.description}
                     </p>
                     <div className="flex item-center gap-8">
-                        <div className="flex items-center gap-2 text-muted-foreground cursor-pointer hover:text-gray-100 transition-colors">
+                        <Link to={`/projects/edit/${props.id}`} className="flex items-center gap-2 text-muted-foreground cursor-pointer hover:text-gray-100 transition-colors">
                             <Edit2 size={20} />
                             <span>Editar</span>
-                        </div>
-                        <button className="flex items-center gap-2 text-muted-foreground cursor-pointer hover:text-red-500 transition-colors" onClick={props.deleteProjectCallback}>
-                            <Trash size={20} />
-                            <span>Excluir</span>
-                        </button> 
+                        </Link>
                         <Link to={`/users/${username}/${props.id}`} target="_blank" className="flex items-center gap-2 text-muted-foreground cursor-pointer hover:text-gray-100 transition-colors">
                             <LinkIcon size={20} />
                             <span>Link</span>
                         </Link>
+                        <button className="flex items-center gap-2 text-muted-foreground cursor-pointer hover:text-red-500 transition-colors" onClick={props.deleteProjectCallback}>
+                            <Trash size={20} />
+                            <span>Excluir</span>
+                        </button>
                     </div>
                 </div>
             </div>

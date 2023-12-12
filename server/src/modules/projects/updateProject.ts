@@ -11,7 +11,17 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
         id: z.string().uuid(),
     })
 
+    const decoded: tokenInfos = Object(await request.jwtDecode());
+    const userId = decoded.sub;
+
     const { id } = paramsSchema.parse(request.params);
+
+    await prisma.project.findUniqueOrThrow({
+        where: {
+            id,
+            userId,
+        }
+    });
 
     const bodySchema = z.object({
         title: z.string(),
@@ -24,13 +34,7 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
 
     const body = bodySchema.parse(request.body);
 
-    await prisma.project.findUniqueOrThrow({
-        where: {
-            id
-        }
-    });
-
-    const updatedProject = await prisma.project.update({
+    await prisma.project.update({
         where: {
             id,
         },
@@ -44,5 +48,5 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
         }
     });
 
-    reply.status(200).send(updatedProject);
+    reply.status(200);
 }
