@@ -77,17 +77,19 @@ export function useUsers() {
 
     async function deleteUser() {
         try {
-            const userId = decodeToken(getSavedToken())?.sub;
+            const token = getSavedToken();
+            const userId = decodeToken(token)?.sub;
             await axios.delete(`${API}/users/user/${userId}`, 
                 {
                     headers: {
-                        'Authorization': `Bearer ${getSavedToken()}`,
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 } 
             )
+            alert("Usário excluido com sucesso");
         } catch(error) {
-            alert("Erro ao excluir usuário")
+            alert("Erro ao excluir usuário");
         }
     }
 

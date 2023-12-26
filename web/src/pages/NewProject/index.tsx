@@ -26,7 +26,7 @@ export function NewProject() {
     const [repo, setRepo] = useState<GithubRepositoryData>();
 
 
-    const { getImageURL, getNewImageUuid } = useFirebaseStorage();
+    const { saveImage, getNewUIID } = useFirebaseStorage();
     const { saveProject } = useProject();
     const { getRepoInfos } = useGithub();
     const { repoName } = useParams();
@@ -94,25 +94,24 @@ export function NewProject() {
             return;
         }
         
-        const imageUIID = getNewImageUuid();
-        const imageUrlFromFirebase = await getImageURL(imgFile, imageUIID);
-
-        if(imageUrlFromFirebase) {
+        const newUUID = getNewUIID();
+        const imageURL = await saveImage(imgFile, title, newUUID);
+        
+        if (imageURL) {
             const data: newProjectData = {
-                title: title,
-                imageURL: imageUrlFromFirebase,     
-                description: description,  
+                title,
+                imageURL,     
+                description, 
                 repositoryURL: repoURL,
-                imageUUID: imageUIID,
-                projectURL: projectURL,  
-                techs: techs,
+                imageUUID: newUUID,
+                projectURL,  
+                techs,
             }
+            navigate('/projects', { replace: true })
             saveProject(data);
             resetFields();
         }
-
-        navigate('/projects', { replace: true })
-
+        
     }
 
     async function loadRepoInfos() {

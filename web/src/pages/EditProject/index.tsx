@@ -28,7 +28,7 @@ export function EditProject() {
     const navigate = useNavigate();
     const { id } = useParams();
     const { getProjectById, editProject } = useProject();
-    const { getImageURL, getNewImageUuid, deleteImage } = useFirebaseStorage();
+    const { deleteImage, getNewUIID, saveImage } = useFirebaseStorage();
 
 
     useMemo(() => {
@@ -86,8 +86,8 @@ export function EditProject() {
 
  
         if (project && previewURL != project.imageURL && imgFile) {
-            const newImageUUID = getNewImageUuid()
-            const newImageURL = await getImageURL(imgFile, newImageUUID);
+            const newImageUUID = getNewUIID()
+            const newImageURL = await saveImage(imgFile, project.title, newImageUUID);
             if (newImageURL) {
                 const newProject: newProjectData = {
                     title: title,
@@ -99,7 +99,7 @@ export function EditProject() {
                     imageUUID: newImageUUID,
                 }
                 editProject(project.id, newProject);
-                deleteImage(project?.imageUUID);
+                deleteImage(project?.imageUUID, project.title);
             }
         } 
         else if (project) {
