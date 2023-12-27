@@ -87,7 +87,6 @@ export function useUsers() {
                     }
                 } 
             )
-            alert("Usário excluido com sucesso");
         } catch(error) {
             alert("Erro ao excluir usuário");
         }

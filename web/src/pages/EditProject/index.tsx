@@ -84,7 +84,6 @@ export function EditProject() {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
- 
         if (project && previewURL != project.imageURL && imgFile) {
             const newImageUUID = getNewUIID()
             const newImageURL = await saveImage(imgFile, project.title, newImageUUID);

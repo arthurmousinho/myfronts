@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { getUserProfile } from "./getUserProfile";
 import { getUserById } from "./getUserById";
 import { UpdateUser } from "./updateUser";
-import { deleteUser } from "./deleteUserData";
+import { deleteUser } from "./deleteUser";
 
 export async function usersRoutes(app: FastifyInstance) {
 

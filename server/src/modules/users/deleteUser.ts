@@ -9,7 +9,7 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply) {
 
     const paramsSchema = z.object({
         id: z.string(),
-    })
+    });
 
     const { id } = paramsSchema.parse(request.params);
 
@@ -20,15 +20,15 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply) {
         reply.status(401).send(); 
     } 
 
-    await prisma.user.delete({
-        where: {
-            id
-        }
-    });
-
     await prisma.project.deleteMany({
         where: {
             userId: id
+        }
+    })
+
+    await prisma.user.delete({
+        where: {
+            id
         }
     })
 

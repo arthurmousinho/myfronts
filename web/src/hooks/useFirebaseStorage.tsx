@@ -1,11 +1,13 @@
 import {v4 as uuidV4} from "uuid";
 import { useToken } from "./useToken";
-import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/services/firebase";
+import { ProjectProps, useProject } from "./useProject";
 
 export function useFirebaseStorage() {
  
     const { decodeToken, getSavedToken } = useToken();
+    const { getAllProjects } = useProject();
     const username = decodeToken(getSavedToken())?.username;
 
     function getNewUIID() {
@@ -37,11 +39,17 @@ export function useFirebaseStorage() {
 
     async function deleteAllUserImages() {
         try {
-            const path = `images/${username}`
-            const imgRef = ref(storage, path);
-            await deleteObject(imgRef);
-        } catch(error) {
-            console.error("Erro ao excluir a todas as imagens do usuário")
+          const storage = getStorage();
+          const allUserProjects: ProjectProps[] = await getAllProjects();
+          await Promise.all(
+            allUserProjects.map(async (project) => {
+                const path = `images/${username}/${project.title}/${project.imageUUID}`;
+                const imgRef = ref(storage, path);
+                await deleteObject(imgRef);
+            })
+          )
+        } catch (error) {
+          console.error("Erro ao excluir todas as imagens do usuário");
         }
     }
 

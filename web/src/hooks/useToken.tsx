@@ -15,7 +15,7 @@ const API = import.meta.env.VITE_API_BASE_URL;
 
 export function useToken() {
 
-    const [cookies, setCookie, removeCookie] = useCookies();
+    const [, setCookie, removeCookie] = useCookies();
 
     async function getUserToken(code: string) {
         const response = await axios.post(`${API}/auth`, 
