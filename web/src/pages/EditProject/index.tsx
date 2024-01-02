@@ -86,7 +86,7 @@ export function EditProject() {
 
         if (project && previewURL != project.imageURL && imgFile) {
             const newImageUUID = getNewUIID()
-            const newImageURL = await saveImage(imgFile, project.title, newImageUUID);
+            const newImageURL = await saveImage(imgFile, newImageUUID);
             if (newImageURL) {
                 const newProject: newProjectData = {
                     title: title,
@@ -98,7 +98,7 @@ export function EditProject() {
                     imageUUID: newImageUUID,
                 }
                 editProject(project.id, newProject);
-                deleteImage(project?.imageUUID, project.title);
+                deleteImage(project?.imageUUID);
             }
         } 
         else if (project) {
@@ -114,7 +114,7 @@ export function EditProject() {
             editProject(project.id, newProject);
         }
 
-        navigate("/projects", { replace: true });
+        navigate("/projects");
     }
 
     useEffect(() => {

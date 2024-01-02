@@ -126,11 +126,10 @@ export function EditProfile() {
                         <Label htmlFor="description" className="text-muted-foreground text-base">
                             Username
                         </Label>
-                        <Input id="repo" type="text" placeholder="Username" required
+                        <Input type="text" placeholder="Username" required
                            defaultValue={user?.username}
                            onChange={event => setNewUsername(event.target.value)}
                         />
-                        
                     </div>
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="repo" className="text-muted-foreground text-base">

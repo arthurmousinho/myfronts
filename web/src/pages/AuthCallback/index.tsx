@@ -7,7 +7,7 @@ export function AuthCallback() {
 
     const [searchParams] = useSearchParams();
     const [loading, setLoading] = useState(true);
-    
+
     const { getUserToken } = useToken();
 
     async function auth() {
@@ -28,7 +28,7 @@ export function AuthCallback() {
                 loading ? (
                     <Loading message="Autenticando..."/>
                 ) : (
-                    <Navigate to={'/profile/edit'} />
+                    <Navigate to={"/projects"} />
                 )
             }
         </div>

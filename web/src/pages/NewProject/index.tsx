@@ -95,7 +95,7 @@ export function NewProject() {
         }
         
         const newUUID = getNewUIID();
-        const imageURL = await saveImage(imgFile, title, newUUID);
+        const imageURL = await saveImage(imgFile, newUUID);
         
         if (imageURL) {
             const data: newProjectData = {
@@ -107,7 +107,7 @@ export function NewProject() {
                 projectURL,  
                 techs,
             }
-            navigate('/projects', { replace: true })
+            navigate('/projects');
             saveProject(data);
             resetFields();
         }

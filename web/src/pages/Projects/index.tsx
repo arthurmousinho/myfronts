@@ -28,7 +28,7 @@ export function Projects() {
         const wantToDelete = confirm(`Tem certeza que deseja excluir o projeto ${project.title}? Essa ação não pode ser desfeita`)
         if (wantToDelete) {
             await deleteProject(project.id);
-            await deleteImage(project.imageUUID, project.title);
+            await deleteImage(project.imageUUID);
             const remainingProjects = projects?.filter(p => p.id != project.id);
             if (remainingProjects) {
                 setProjects([...remainingProjects]);

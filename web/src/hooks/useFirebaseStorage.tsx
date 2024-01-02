@@ -1,22 +1,19 @@
 import {v4 as uuidV4} from "uuid";
-import { useToken } from "./useToken";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/services/firebase";
 import { ProjectProps, useProject } from "./useProject";
 
 export function useFirebaseStorage() {
  
-    const { decodeToken, getSavedToken } = useToken();
     const { getAllProjects } = useProject();
-    const username = decodeToken(getSavedToken())?.username;
 
     function getNewUIID() {
         return uuidV4();
     }
 
-    async function saveImage(imageFile: File, projectTitle: string, imageUUID: string) {
+    async function saveImage(imageFile: File, imageUUID: string) {
         try {
-            const path = `images/${username}/${projectTitle}/${imageUUID}`;
+            const path = `images/${imageUUID}`;
             const uploadRef = ref(storage, path);
             const snapshot = await uploadBytes(uploadRef, imageFile);
             return await getDownloadURL(snapshot.ref);
@@ -26,9 +23,9 @@ export function useFirebaseStorage() {
         }
     }
 
-    async function deleteImage(imageUUID: string, projectTitle: string) {
+    async function deleteImage(imageUUID: string) {
         try {
-            const path = `images/${projectTitle}/${projectTitle}/${imageUUID}`;
+            const path = `images/${imageUUID}`;
             const imgRef = ref(storage, path);
             await deleteObject(imgRef);
         } catch(error) {
@@ -42,7 +39,7 @@ export function useFirebaseStorage() {
           const allUserProjects: ProjectProps[] = await getAllProjects();
           await Promise.all(
             allUserProjects.map(async (project) => {
-                const path = `images/${username}/${project.title}/${project.imageUUID}`;
+                const path = `images/${project.imageUUID}`;
                 const imgRef = ref(storage, path);
                 await deleteObject(imgRef);
             })
@@ -52,6 +49,7 @@ export function useFirebaseStorage() {
         }
     }
 
+ 
     return { deleteImage, deleteAllUserImages, saveImage, getNewUIID }
 
 }

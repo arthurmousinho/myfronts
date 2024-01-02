@@ -15,12 +15,11 @@ export interface GithubRepositoryData {
 export function useGithub() {
 
     const { getAllProjects } = useProject();
-    const { decodeToken, getSavedToken } = useToken();
-
-    const username = decodeToken(getSavedToken())?.username
-
+    const { decodeToken, getSavedToken } = useToken()
+    
     async function getRepos() {
         try {
+            const username = decodeToken(getSavedToken())?.username
             const userProjects: ProjectProps[] = await getAllProjects();
             const reposUrlAlreadyConnected = userProjects.map(project => project.repositoryURL);
             const response = await axios.get(`${GITHUB_API}/users/${username}/repos?sort=pushed`)
@@ -33,6 +32,7 @@ export function useGithub() {
 
     async function getRepoInfos(name: string) {
         try {
+            const username = decodeToken(getSavedToken())?.username
             const response = await axios.get(`${GITHUB_API}/repos/${username}/${name}`);
             const repo: GithubRepositoryData = response.data;
             return repo;
