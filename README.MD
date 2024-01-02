@@ -1,10 +1,18 @@
 # myFronts
 
-## Technologies Diagram
+## Features
+- [x] **GitHub OAuth:** Integration with GitHub for authentications.
+- [x] **User Account Update:** Functionality to update user account informations.
+- [x] **User Account Deletion:** Option to delete the user account.
+- [x] **New Project Creation:** Ability to add a new project.
+- [x] **Project Removal:** Functionality to delete a created project.
+- [x] **Project Update:** Capability to edit information of an existing project.
+- [x] **Individual Project Page:** View dedicated pages for each project.
+- [x] **User Profile Page:** Display user profile information and details.
+
 ![techs-diagram](./.github/techs-diagram.png)
 
-## GitHub OAuth 
-- Reference: [NLW Spacetime Aula 3:](https://github.com/rocketseat-education/nlw-12-spacetime-ignite)
+Reference: [NLW Spacetime Aula 3:](https://github.com/rocketseat-education/nlw-12-spacetime-ignite)
 ![github-oauth](./.github/github-oauth.png)
 
 ## Running Guide
