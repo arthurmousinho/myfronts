@@ -53,6 +53,15 @@ export function EditProfile() {
         )
     }
 
+    function validFields() {
+        const fields = [newName, newUsername, newGithubURL, newBio];
+        const validation =  fields.every(field => field?.trim() != "");
+        if (!validation) {
+            return false;
+        } 
+        return true;
+    }
+
     async function handleSubmit(event: FormEvent) {
 
         event.preventDefault();
@@ -64,17 +73,22 @@ export function EditProfile() {
             linkedinURL: newLinkedinURL,
             bio: newBio
         };
-    
-       const editedUser =  await editUser(newUserInfos);
+        
+        if (!validFields()) {
+            alert("Existem campos que devem ser preenchidos");
+            return;
+        }
+        
+        const editedUser =  await editUser(newUserInfos);
+        const needToLoginAgain = (user?.name != newName || user?.username != newUsername);
 
         if (editedUser) {
             alert("Usuário editado com sucesso")
-        }
-
-        if (user?.name != newName || user?.username != newUsername) {
-            alert("Faca login novamente")
-            deleteToken();
-        }
+            if (needToLoginAgain) {
+                alert("Faca login novamente")
+                deleteToken();
+            }
+        } 
 
     }
 

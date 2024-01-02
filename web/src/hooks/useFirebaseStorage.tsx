@@ -28,8 +28,7 @@ export function useFirebaseStorage() {
 
     async function deleteImage(imageUUID: string, projectTitle: string) {
         try {
-            const title = projectTitle.toLowerCase().replace(/\s/g, '');
-            const path = `images/${username}/${title}/${imageUUID}`;
+            const path = `images/${projectTitle}/${projectTitle}/${imageUUID}`;
             const imgRef = ref(storage, path);
             await deleteObject(imgRef);
         } catch(error) {

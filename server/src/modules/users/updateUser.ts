@@ -24,19 +24,23 @@ export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
         name: z.string(),
         username: z.string(),
         bio: z.string(),
-        githubURL: z.string().url(),
-        linkedinURL: z.string().url(),
+        githubURL: z.string(),
+        linkedinURL: z.string(),
     })
 
     const body = bodySchema.parse(request.body);
 
-    await prisma.user.findUniqueOrThrow({
+    const userFound = await prisma.user.findUniqueOrThrow({
         where: {
             id: decoded.sub,
             username: decoded.username,
             name: decoded.name,
         }
     });
+
+    if (!userFound) {
+        reply.status(404).send();
+    } 
 
     const updatedUser = await prisma.user.update({
         where: {
@@ -52,5 +56,4 @@ export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
     });
 
     reply.status(200).send(updatedUser);
-
 }

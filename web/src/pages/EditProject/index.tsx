@@ -114,7 +114,7 @@ export function EditProject() {
             editProject(project.id, newProject);
         }
 
-        navigate("/projects");
+        navigate("/projects", { replace: true });
     }
 
     useEffect(() => {
