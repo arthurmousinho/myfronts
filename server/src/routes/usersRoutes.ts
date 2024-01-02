@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
-import { getUserProfile } from "./getUserProfile";
-import { getUserById } from "./getUserById";
-import { UpdateUser } from "./updateUser";
-import { deleteUser } from "./deleteUser";
+import { getUserProfile } from "../controllers/users/getUserProfile";
+import { getUserById } from "../controllers/users/getUserById";
+import { UpdateUser } from "../controllers/users/updateUser";
+import { deleteUser } from "../controllers/users/deleteUser";
 
 export async function usersRoutes(app: FastifyInstance) {
 

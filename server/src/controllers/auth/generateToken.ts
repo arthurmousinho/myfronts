@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { app } from "../../server";
-import { GithubUser, getGithubUserByCode } from "./github/getGithubUserByCode";
+import { GithubUser, getGithubUserByCode } from "../../services/github/getGithubUserByCode";
 import { createUserByGithubUser } from "../users/createUserByGithubUser";
 
 export async function generateToken(request: FastifyRequest, reply: FastifyReply) {

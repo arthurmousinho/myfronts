@@ -4,9 +4,9 @@ import fastify from "fastify";
 import cors from "@fastify/cors";
 import jwt from "@fastify/jwt";
 
-import { projectsRoutes } from "./modules/projects/routes";
-import { authRoutes } from "./modules/auth/routes";
-import { usersRoutes } from "./modules/users/routes";
+import { projectsRoutes } from "./routes/projectsRoutes";
+import { authRoutes } from "./routes/authRoutes";
+import { usersRoutes } from "./routes/usersRoutes";
 
 export const app = fastify();
 
