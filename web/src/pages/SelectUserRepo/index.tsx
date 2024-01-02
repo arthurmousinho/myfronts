@@ -1,7 +1,9 @@
 import { Loading } from "@/components/Loading";
 import { RepoCard } from "@/components/RepoCard";
 import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export function SelectUserRepo() {
 
@@ -31,9 +33,15 @@ export function SelectUserRepo() {
     return (
         <div className="w-full flex items-center justify-center mb-96">
              <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <h1 className="text-3xl font-bold text-gray-300">
-                    Selecione um repositório
-                </h1>
+                <header className="w-full flex justify-between items-center">
+                    <h1 className="text-3xl font-bold text-gray-300">
+                        Selecione um repositório
+                    </h1>
+                    <Link to={'/projects/new'} className="flex items-center gap-2 text-muted-foreground hover:underline hover:text-primary-foreground transition-colors">
+                        Pular
+                        <ArrowRight size={20} />
+                    </Link>
+                </header>
                 <div className="w-full flex flex-col gap-2">
                    {
                         repos?.map(repo => {

@@ -33,6 +33,10 @@ export const ROUTES = createBrowserRouter([
                 element: <Guard>  <NewProject/> </Guard>
             },
             {
+                path: "/projects/new",
+                element: <Guard>  <NewProject/> </Guard>
+            },
+            {
                 path: "/projects/edit/:id",
                 element: <Guard>  <EditProject/> </Guard>
             },

@@ -1,4 +1,4 @@
-# myFronts
+# myFronts.dev
 
 ## Features
 - [x] **GitHub OAuth:** Integration with GitHub for authentications.

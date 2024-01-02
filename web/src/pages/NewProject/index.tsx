@@ -126,6 +126,8 @@ export function NewProject() {
                 setRepoURL(repoInfos.html_url);
                 setLoading(false);
             }
+        } else {
+            setLoading(false);
         }
 
     }
@@ -145,9 +147,11 @@ export function NewProject() {
         <div className="w-full flex items-center justify-center mb-96">
 
             <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <h1 className="text-3xl font-bold text-gray-300">
-                    Adicionar Projeto
-                </h1>
+                <header>
+                    <h1 className="text-3xl font-bold text-gray-300">
+                        Adicionar Projeto
+                    </h1>
+                </header>
 
                 <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-2 text-base">
