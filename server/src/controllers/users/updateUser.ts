@@ -24,7 +24,6 @@ export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
         name: z.string(),
         username: z.string(),
         bio: z.string(),
-        githubURL: z.string(),
         linkedinURL: z.string(),
     })
 
@@ -49,7 +48,6 @@ export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
         data: {
             name: body.name,
             username: body.username,
-            githubURL: body.githubURL,
             linkedinURL: body.linkedinURL,
             bio: body.bio, 
         }

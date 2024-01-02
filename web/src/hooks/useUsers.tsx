@@ -29,7 +29,6 @@ export interface User {
 export interface EditUserData {
     name: string | undefined;
     username: string | undefined;
-    githubURL: string | undefined;
     linkedinURL: string | undefined;
     bio: string | undefined;
 }

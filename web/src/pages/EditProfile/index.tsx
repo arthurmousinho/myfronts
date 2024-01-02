@@ -19,8 +19,7 @@ export function EditProfile() {
     const { deleteAllUserImages } = useFirebaseStorage();
     
     const [newName, setNewName] = useState<string | undefined>();
-    const [newUsername, setNewUsername] = useState<string | undefined>();
-    const [newGithubURL, setNewGithubURL] = useState<string | undefined>();
+    const [newUsername, setNewUsername] = useState<string | undefined>()
     const [newLinkedinURL, setNewLinkedinURL] = useState<string | undefined>();
     const [newBio, setNewBio] = useState<string | undefined>();
 
@@ -33,7 +32,6 @@ export function EditProfile() {
                 setUser(userInfos);
                 setNewName(userInfos.name);
                 setNewUsername(userInfos.username);
-                setNewGithubURL(userInfos.githubURL);
                 setNewLinkedinURL(userInfos.linkedinURL);
                 setNewBio(userInfos.bio);
                 setLoading(false);
@@ -54,7 +52,7 @@ export function EditProfile() {
     }
 
     function validFields() {
-        const fields = [newName, newUsername, newGithubURL, newBio];
+        const fields = [newName, newUsername, newBio];
         const validation =  fields.every(field => field?.trim() != "");
         if (!validation) {
             return false;
@@ -69,7 +67,6 @@ export function EditProfile() {
         const newUserInfos: EditUserData = {
             name: newName,
             username: newUsername,
-            githubURL: newGithubURL,
             linkedinURL: newLinkedinURL,
             bio: newBio
         };
@@ -80,7 +77,7 @@ export function EditProfile() {
         }
         
         const editedUser =  await editUser(newUserInfos);
-        const needToLoginAgain = (user?.name != newName || user?.username != newUsername);
+        const needToLoginAgain = (user?.name != newName || user?.username != newUsername || user?.githubURL);
 
         if (editedUser) {
             alert("Usuário editado com sucesso")
@@ -132,12 +129,12 @@ export function EditProfile() {
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="repo" className="text-muted-foreground text-base">
+                        <Label className="text-muted-foreground text-base">
                             URL do Github
                         </Label>
                         <Input id="repo" type="url" placeholder="https://..." 
                            defaultValue={user?.githubURL} 
-                           onChange={event => setNewGithubURL(event.target.value)}
+                           disabled
                         />
                     </div>
                     <div className="flex flex-col gap-2">

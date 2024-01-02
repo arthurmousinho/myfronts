@@ -22,7 +22,8 @@ export async function generateToken(request: FastifyRequest, reply: FastifyReply
       {
         name: user.name,
         avatarURL: user.avatarURL,
-        username: user.username
+        username: user.username,
+        githubURL: user.githubURL,
       },
       {
         sub: user.id,

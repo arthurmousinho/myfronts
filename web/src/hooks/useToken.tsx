@@ -5,6 +5,7 @@ import axios from "axios";
 export interface TokenInfos {
     name: string;
     avatarURL: string;
+    githubURL: string;
     username: string;
     sub: string;
     iat: number;
