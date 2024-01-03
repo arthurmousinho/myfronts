@@ -124,6 +124,7 @@ export function NewProject() {
                 setTitle(repoInfos.name);
                 setDescription(repoInfos.description)
                 setRepoURL(repoInfos.html_url);
+                repoInfos.languages && setTechs(repoInfos.languages);
                 setLoading(false);
             }
         } else {

@@ -10,6 +10,7 @@ export interface GithubRepositoryData {
     name: string;
     html_url: string;
     description: string;
+    languages?: string[];
 }
 
 export function useGithub() {
@@ -31,13 +32,24 @@ export function useGithub() {
         }
     }
 
-    async function getRepoInfos(name: string) {
+    async function getRepoInfos(repoName: string) {
         try {
-            const response = await axios.get(`${GITHUB_API}/repos/${username}/${name}`);
-            const repo: GithubRepositoryData = response.data;
-            return repo;
+            const response = await axios.get(`${GITHUB_API}/repos/${username}/${repoName}`);
+            const languages = await getRepoLanguages(repoName);
+            const repoInfos: GithubRepositoryData = {...response.data, languages};
+            return repoInfos;
         } catch (error) {
             console.error("Erro ao buscar os dados do repositório")
+        }
+    }
+
+    async function getRepoLanguages(repoName: string) {
+        try {
+            const response = await axios.get(`${GITHUB_API}/repos/${username}/${repoName}/languages`);
+            const languagesArray = Object.keys(response.data); 
+            return languagesArray;
+        } catch (error) {
+            console.error("Erro ao buscar as linguagens do repositório")
         }
     }
 
