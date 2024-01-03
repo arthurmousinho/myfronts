@@ -32,6 +32,7 @@ model Project {
   repositoryURL String
   projectURL    String
   techs         String[]
+  likes         Int
 
-  user User   @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }

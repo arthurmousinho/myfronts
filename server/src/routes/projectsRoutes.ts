@@ -4,6 +4,7 @@ import { getProjectById } from "../controllers/projects/getProjectById";
 import { createProject } from "../controllers/projects/createProject";
 import { updateProject } from "../controllers/projects/updateProject";
 import { deleteProject } from "../controllers/projects/deleteProject";
+import { likeProject } from "../controllers/projects/likeProject";
 
 export async function projectsRoutes(app: FastifyInstance) {
 
@@ -15,6 +16,8 @@ export async function projectsRoutes(app: FastifyInstance) {
 
     app.put('/projects/:id', updateProject);
 
+    app.put('/projects/like/:id', likeProject);
+    
     app.delete('/projects/:id', deleteProject);
 
 }
