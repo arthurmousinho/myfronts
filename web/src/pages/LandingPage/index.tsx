@@ -1,23 +1,20 @@
-import { GithubIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { SignIn } from "@/components/SignIn";
 
 export function LandingPage() {
+
     return (
-        <div className="w-full h-screen flex flex-col items-center pt-40 gap-6 select-none">
-            <h1 className="font-bold text-[3.5rem] text-gray-200">
+        <div 
+            className="w-[90vw] md:w-full md:h-screen flex flex-col items-left md:items-center pt-20 md:pt-40 gap-6 select-none px-3 md:px-0"
+        >
+            <h1 className="font-bold text-[2rem] md:text-[3.5rem] text-gray-200 text-left md:text-center">
                 Mostre seus projetos Front-end para o mundo
             </h1>
             <p className="text-muted-foreground text-lg">
                 Crie seu portifolio online para seus principais projetos e compartilhe com quem quiser
             </p>
-            <Link to={''} 
-                className="bg-zinc-default text-md text-muted-foreground hover:text-muted flex justify-center rounded items-center gap-2 h-12 w-[150px]
-                    hover:bg-zinc-900 transition-colors
-                "
-            >
-                <GithubIcon size={20}/>
-                Vamos lá
-            </Link>
+            <div className="md:hidden visible">
+                <SignIn />
+            </div>
         </div>
     )
 }
