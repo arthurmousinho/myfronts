@@ -128,8 +128,8 @@ export function EditProfile() {
                            onChange={event => setNewUsername(event.target.value)}
                         />
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <Label className="text-muted-foreground text-base">
+                    <div className="flex flex-col gap-2 cursor-not-allowed">
+                        <Label className="text-muted-foreground text-base cursor-not-allowed">
                             URL do Github
                         </Label>
                         <Input id="repo" type="url" placeholder="https://..." 
