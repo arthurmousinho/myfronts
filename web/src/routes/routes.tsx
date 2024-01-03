@@ -11,6 +11,7 @@ import { EditProfile } from "@/pages/EditProfile";
 import { Projects } from "@/pages/Projects";
 import { SelectUserRepo } from "@/pages/SelectUserRepo";
 import { EditProject } from "@/pages/EditProject";
+import { Trending } from "@/pages/Trending";
 
 export const ROUTES = createBrowserRouter([
     {
@@ -18,7 +19,7 @@ export const ROUTES = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <LandingPage />
+                element: <LandingPage />,
             },
             {
                 path: "/projects",
@@ -52,6 +53,10 @@ export const ROUTES = createBrowserRouter([
                 path: "/users/:useraname/:projectId",
                 element: <Project />
             },
+            {
+                path: "/trending",
+                element: <Trending />
+            }
         ],
         element: <Layout />
     },

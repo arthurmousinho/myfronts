@@ -1,11 +1,12 @@
 import { Badge } from "@/components/Badge";
+import { Button } from "@/components/Button";
 import { Loading } from "@/components/Loading";
 import { UserCard } from "@/components/UserCard";
 import { ProjectProps, useProject } from "@/hooks/useProject";
 import { useUsers } from "@/hooks/useUsers";
-import { Github, LinkIcon } from "lucide-react";
+import { Github, LinkIcon, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface SimpleUserProps {
     name: string;
@@ -88,19 +89,23 @@ export function Project() {
                     </div>
                 </section>
                 <section className="flex flex-col gap-2">
-                    <h2 className="text-2xl font-bold text-gray-300">
-                        Links Úteis
-                    </h2>
                     <div className="flex items-center gap-6">
-                        <a href={project?.repositoryURL} className="flex items-center gap-2 text-muted-foreground hover:text-muted" target="_blank">
+                        <button className="flex items-center gap-2 text-muted-foreground hover:text-gray-200 transition-colors">
+                            <ThumbsUp size={20} />
+                            <span>Gostei</span>
+                        </button>
+                        <a href={project?.repositoryURL} className="flex items-center gap-2 text-muted-foreground hover:text-gray-200 transition-colors" target="_blank">
                             <Github size={20} />
                             Repositório
                         </a>
-
-                        <a href={project?.projectURL} className="flex items-center gap-2 text-muted-foreground hover:text-muted" target="_blank">
-                            <LinkIcon size={20} />
-                            Link do Projeto
-                        </a>
+                        {
+                            project?.projectURL && (
+                                <a href={project.projectURL} className="flex items-center gap-2 text-muted-foreground hover:text-gray-200 transition-colors" target="_blank">
+                                    <LinkIcon size={20} />
+                                    Link do Projeto
+                                </a>
+                            )
+                        }
                     </div>
                 </section>
             </div>

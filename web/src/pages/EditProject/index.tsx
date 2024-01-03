@@ -30,7 +30,6 @@ export function EditProject() {
     const { getProjectById, editProject } = useProject();
     const { deleteImage, getNewUIID, saveImage } = useFirebaseStorage();
 
-
     useMemo(() => {
         if (imgFile) {
             setPreviewURL(URL.createObjectURL(imgFile));
@@ -114,7 +113,7 @@ export function EditProject() {
             editProject(project.id, newProject);
         }
 
-        navigate("/projects");
+        navigate(`/projects`, { state: false });
     }
 
     useEffect(() => {
@@ -165,7 +164,7 @@ export function EditProject() {
                         <Label htmlFor="project" className="text-muted-foreground text-base">
                             URL do projeto
                         </Label>
-                        <Input id="project" type="url" placeholder="https://..." required
+                        <Input id="project" type="url" placeholder="https://..."
                             onChange={event => setProjectURL(event.target.value)} 
                             defaultValue={ projectURL }
                         />

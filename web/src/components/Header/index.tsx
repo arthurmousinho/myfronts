@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { Separator } from "../ui/separator"
-import { Folder, LogOut, User } from "lucide-react"
+import { Flame, Folder, LogOut, User } from "lucide-react"
 import { UserCard } from "../UserCard"
 import { useToken } from "@/hooks/useToken"
 import { SignIn } from "../SignIn"
@@ -26,22 +26,28 @@ export function Header() {
             {
                 hasToken() ? (
                     <nav className="flex items-center gap-8">
-                        <div 
-                                className="flex gap-2 items-center justify-center text-muted-foreground hover:text-gray-300 transition-colors"
+                        <Link  
+                            to={'/trending'}
+                            className="flex gap-1 items-center justify-center text-muted-foreground hover:text-gray-300 transition-colors"
+                        >
+                            <Flame size={20} />
+                            Em Alta
+                        </Link>
+                        <Link  
+                            to={'/projects'}
+                            className="flex gap-1 items-center justify-center text-muted-foreground hover:text-gray-300 transition-colors"
                         >
                             <Folder size={20} />
-                            <Link to={'/projects'} className="text-base">
-                                Projetos
-                            </Link> 
-                        </div>
+                            Projetos
+                        </Link>
                         <Link to={`/profile/edit`}
-                            className="flex gap-2 items-center justify-center text-muted-foreground hover:text-gray-300 first-line:transition-colors"
+                            className="flex gap-1 items-center justify-center text-muted-foreground hover:text-gray-300 first-line:transition-colors"
                         >
                             <User size={20} />
                             Conta 
                         </Link>
                         <button onClick={handleSignOut} 
-                            className="flex gap-2 items-center justify-center text-muted-foreground hover:text-red-500 transition-colors"
+                            className="flex gap-1 items-center justify-center text-muted-foreground hover:text-red-500 transition-colors"
                         >
                             <LogOut size={20} />
                             <span className="text-base cursor-pointer">
