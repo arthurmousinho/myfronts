@@ -2,6 +2,7 @@ import { Loading } from "@/components/Loading";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectProps, useProject } from "@/hooks/useProject";
 import { User, useUsers } from "@/hooks/useUsers";
+import { Flame } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface ProjectsWithUsername extends ProjectProps {
@@ -49,7 +50,8 @@ export function TrendingProjects() {
         <div className="w-full flex items-center justify-center mb-96">
             <div className="w-[1000px] flex flex-col gap-4 items-start justify-center rounded p-4">
                 <header>
-                    <h1 className="text-3xl font-bold text-gray-300">
+                    <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-300">
+                        <Flame size={35} />
                         Em Alta
                     </h1>
                 </header>

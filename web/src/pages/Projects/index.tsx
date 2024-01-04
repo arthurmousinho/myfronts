@@ -2,7 +2,7 @@ import { Loading } from "@/components/Loading";
 import { ProjectCard } from "@/components/ProjectCard";
 import { useFirebaseStorage } from "@/hooks/useFirebaseStorage";
 import { ProjectProps, useProject } from "@/hooks/useProject"
-import { Plus } from "lucide-react";
+import { Folder, Plus } from "lucide-react";
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 
@@ -51,7 +51,8 @@ export function Projects() {
 
 
             <div className="w-[1000px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <h1 className="text-3xl font-bold text-gray-300 text-left">
+                <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-300 text-left">
+                    <Folder size={35} />
                     Meus Projetos
                 </h1>
 

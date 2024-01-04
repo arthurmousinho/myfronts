@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import { useFirebaseStorage } from "@/hooks/useFirebaseStorage"
 import { useToken } from "@/hooks/useToken"
 import { EditUserData, User, useUsers } from "@/hooks/useUsers"
-import { Frown, Save } from "lucide-react"
+import { Frown, Save, UserIcon } from "lucide-react"
 import { FormEvent, useEffect, useState } from "react"
 
 export function EditProfile() {
@@ -105,8 +105,9 @@ export function EditProfile() {
     return (
         <div className="w-full flex flex-col gap-12 items-center justify-center mb-96">
             <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <h1 className="text-3xl font-bold text-gray-300">
-                    Meus Dados
+                <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-300">
+                    <UserIcon size={35} />
+                    Minha Conta
                 </h1>
 
                 <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
