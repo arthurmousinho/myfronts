@@ -19,7 +19,6 @@ export function TrendingProjects() {
 
     async function loadTrendingProjects() {
         const projects: ProjectProps[] = await getTrendingProjects();
-    
         const projectsWithUsername = await Promise.all(
             projects.map(async (project) => {
                 const projectUsername = await getProjectUsername(project.userId);

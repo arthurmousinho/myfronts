@@ -6,6 +6,11 @@ export async function getTrendingProjects(request: FastifyRequest, reply: Fastif
     await request.jwtVerify();
 
     const trendingProjects = await prisma.project.findMany({
+        where: {
+            likes: {
+                gte: 1
+            }
+        },
         orderBy: {
             likes: "desc"
         }
