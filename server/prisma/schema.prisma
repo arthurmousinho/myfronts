@@ -33,6 +33,7 @@ model Project {
   projectURL    String
   techs         String[]
   likes         Int
+  likedBy       String[]
 
   user User @relation(fields: [userId], references: [id])
 }

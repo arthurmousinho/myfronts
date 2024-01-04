@@ -16,7 +16,7 @@ export async function projectsRoutes(app: FastifyInstance) {
 
     app.put('/projects/:id', updateProject);
 
-    app.put('/projects/like/:id', likeProject);
+    app.patch('/projects/like/:id', likeProject);
     
     app.delete('/projects/:id', deleteProject);
 

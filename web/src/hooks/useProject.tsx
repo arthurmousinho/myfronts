@@ -15,6 +15,8 @@ export interface ProjectProps {
     projectURL: string;
     techs: string[];
     imageUUID: string;
+    likes: number;
+    likedBy: string[];
 }
 
 export interface newProjectData {
@@ -108,6 +110,29 @@ export function useProject() {
         }
     }
 
-    return { getProjectById, saveProject, deleteProject, getAllProjects, editProject }
+    async function likeProject(id: string) {
+        try {
+            await axios.patch(
+                `${API}/projects/like/${id}`,
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            )
+        } catch (error) {
+            console.error("Erro durante o LIKE no projeto");
+        }
+    }
+
+    return { 
+        getProjectById, 
+        saveProject, 
+        deleteProject, 
+        getAllProjects, 
+        editProject, 
+        likeProject
+    }
 
 }

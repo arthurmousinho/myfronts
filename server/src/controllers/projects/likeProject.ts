@@ -1,10 +1,16 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { prisma } from "../../lib/prisma";
+import { tokenInfos } from "../../server";
 
 export async function likeProject(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
+
+    const decoded: tokenInfos = Object(await request.jwtDecode());
+    const userId = decoded.sub;
+
+    console.log("like request by: " + userId)
 
     const paramsSchema = z.object({
         id: z.string().uuid(),
@@ -12,15 +18,17 @@ export async function likeProject(request: FastifyRequest, reply: FastifyReply) 
 
     const { id } = paramsSchema.parse(request.params);
 
+    await prisma.user.findUniqueOrThrow({
+        where: {
+            id: userId
+        }
+    })
+
     const project = await prisma.project.findUniqueOrThrow({
         where: {
             id
         }
     });
-
-    if (!project) {
-        reply.status(404).send();
-    }
 
     const currentLikesAmount = project.likes;
 
@@ -30,6 +38,7 @@ export async function likeProject(request: FastifyRequest, reply: FastifyReply) 
         },
         data: {
             likes: currentLikesAmount + 1,
+            likedBy: [...project.likedBy, userId],
         }
     })
 
