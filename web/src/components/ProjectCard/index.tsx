@@ -11,6 +11,7 @@ interface ProjectCardProps {
     controls?: boolean;
     id?: string;
     deleteProjectCallback?: () => void;
+    targetBlank?: boolean;
 }
 
 export function ProjectCard(props: ProjectCardProps) {
@@ -58,7 +59,7 @@ export function ProjectCard(props: ProjectCardProps) {
     }
 
     return (
-        <Link to={props.to} className="flex flex-col gap-4 bg-zinc-default rounded transition-transform">
+        <Link to={props.to} target={props.targetBlank ? "_blank" : "_parent"} className="flex flex-col gap-4 bg-zinc-default rounded transition-transform">
             <img src={props.imageURL} alt="" 
                 className="w-full h-48 object-cover"
             />

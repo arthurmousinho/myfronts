@@ -126,13 +126,31 @@ export function useProject() {
         }
     }
 
+    async function getTrendingProjects() {
+        try {
+            const response = await axios.get(
+                `${API}/projects/trending`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            )
+            const trendingProjects = response.data;
+            return trendingProjects;
+        } catch (error) {
+            console.error("Erro ao buscar os projetos em alta");
+        }
+    }
+
     return { 
         getProjectById, 
         saveProject, 
         deleteProject, 
         getAllProjects, 
         editProject, 
-        likeProject
+        likeProject,
+        getTrendingProjects
     }
 
 }
