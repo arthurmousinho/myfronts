@@ -41,7 +41,7 @@ export function NewProject() {
     }, [imgFile])
 
     function validFields() {
-        const fields = [title, previewURL, description, repoURL, projectURL];
+        const fields = [title, previewURL, description, repoURL];
         return fields.every(field => field.trim() !== "");
     }
 
@@ -107,7 +107,7 @@ export function NewProject() {
                 projectURL,  
                 techs,
             }
-            navigate('/projects');
+            navigate('/projects', { state: false });
             saveProject(data);
             resetFields();
         }
@@ -186,7 +186,7 @@ export function NewProject() {
                         <Label htmlFor="project" className="text-muted-foreground text-base">
                             URL do projeto
                         </Label>
-                        <Input id="project" type="url" placeholder="https://..." required
+                        <Input id="project" type="url" placeholder="https://..." 
                             onChange={event => setProjectURL(event.target.value)} value={projectURL}
                         />
                     </div>

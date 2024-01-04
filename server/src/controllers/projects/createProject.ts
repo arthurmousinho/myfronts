@@ -32,6 +32,7 @@ export async function createProject(request: FastifyRequest, reply: FastifyReply
             repositoryURL: body.repositoryURL,
             projectURL: body.projectURL,
             techs: body.techs,
+            likes: 0,
         }
     });
 

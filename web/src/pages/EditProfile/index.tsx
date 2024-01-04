@@ -111,19 +111,19 @@ export function EditProfile() {
 
                 <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-2 text-base">
-                        <Label htmlFor="title" className="text-muted-foreground text-base">
+                        <Label htmlFor="name" className="text-muted-foreground text-base">
                             Nome
                         </Label>
-                        <Input id="title" placeholder="Username" required
+                        <Input id="name" placeholder="Username" required
                             defaultValue={user?.name}
                             onChange={event => setNewName(event.target.value)}
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="description" className="text-muted-foreground text-base">
+                        <Label htmlFor="username" className="text-muted-foreground text-base">
                             Username
                         </Label>
-                        <Input type="text" placeholder="Username" required
+                        <Input id="username" type="text" placeholder="Username" required
                            defaultValue={user?.username}
                            onChange={event => setNewUsername(event.target.value)}
                         />
@@ -132,25 +132,25 @@ export function EditProfile() {
                         <Label className="text-muted-foreground text-base cursor-not-allowed">
                             URL do Github
                         </Label>
-                        <Input id="repo" type="url" placeholder="https://..." 
+                        <Input type="url" placeholder="https://..." 
                            defaultValue={user?.githubURL} 
                            disabled
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="project" className="text-muted-foreground text-base">
+                        <Label htmlFor="linkedinURL" className="text-muted-foreground text-base">
                             URL do Linkedin
                         </Label>
-                        <Input id="project" type="url" placeholder="https://..."
+                        <Input id="linkedinURL" type="url" placeholder="https://..."
                             defaultValue={user?.linkedinURL}
                             onChange={event => setNewLinkedinURL(event.target.value)}
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <Label htmlFor="description" className="text-muted-foreground text-base">
+                        <Label htmlFor="bio" className="text-muted-foreground text-base">
                             Bio
                         </Label>
-                        <Textarea id="description" placeholder="Bio" required
+                        <Textarea id="bio" placeholder="Bio" required
                             defaultValue={user?.bio}
                             onChange={event => setNewBio(event.target.value)}
                         />

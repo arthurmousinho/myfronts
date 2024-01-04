@@ -15,6 +15,8 @@ export interface ProjectProps {
     projectURL: string;
     techs: string[];
     imageUUID: string;
+    likes: number;
+    likedBy: string[];
 }
 
 export interface newProjectData {
@@ -108,6 +110,47 @@ export function useProject() {
         }
     }
 
-    return { getProjectById, saveProject, deleteProject, getAllProjects, editProject }
+    async function likeProject(id: string) {
+        try {
+            await axios.patch(
+                `${API}/projects/like/${id}`,
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            )
+        } catch (error) {
+            console.error("Erro durante o LIKE no projeto");
+        }
+    }
+
+    async function getTrendingProjects() {
+        try {
+            const response = await axios.get(
+                `${API}/projects/trending`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            )
+            const trendingProjects = response.data;
+            return trendingProjects;
+        } catch (error) {
+            console.error("Erro ao buscar os projetos em alta");
+        }
+    }
+
+    return { 
+        getProjectById, 
+        saveProject, 
+        deleteProject, 
+        getAllProjects, 
+        editProject, 
+        likeProject,
+        getTrendingProjects
+    }
 
 }

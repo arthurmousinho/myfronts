@@ -50,7 +50,7 @@ export function Profile() {
     return (
         <div className="w-full h-full flex flex-col gap-4 items-center justify-center mb-96">
 
-            <header className="flex items-center justify-between gap-4  w-[1000px] bg-zinc-default py-6 px-10 rounded">
+            <header className="flex items-center justify-between gap-4 w-[1000px] bg-zinc-default py-6 px-10 rounded">
                 <div className="flex items-center gap-4">
                     <img src={user?.avatarURL} className="w-[120px] rounded-full" />
                     <div className="flex flex-col items-start justify-start">

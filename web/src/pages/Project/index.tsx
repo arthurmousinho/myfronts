@@ -2,8 +2,9 @@ import { Badge } from "@/components/Badge";
 import { Loading } from "@/components/Loading";
 import { UserCard } from "@/components/UserCard";
 import { ProjectProps, useProject } from "@/hooks/useProject";
+import { useToken } from "@/hooks/useToken";
 import { useUsers } from "@/hooks/useUsers";
-import { Github, LinkIcon } from "lucide-react";
+import { Github, LinkIcon, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -18,28 +19,40 @@ export function Project() {
     const [isLoading, setIsLoading] = useState(true);
     const [ownerUser, setOwnerUser] = useState<SimpleUserProps>();
     const [project, setProject] = useState<ProjectProps>();
+    const [canLike, setCanLike] = useState<boolean>();
     
     const navigate = useNavigate();
 
-    const { getProjectById } = useProject();
+    const { getProjectById, likeProject } = useProject();
     const { getUserInfosById } = useUsers();
+    const { decodeToken, getSavedToken } = useToken();
 
     const projectId = useParams().projectId;
   
+    async function handleLike() {
+        if(canLike ) {
+            projectId && await likeProject(projectId);
+            setCanLike(false);
+            project && setProject({ ...project, likes: project.likes + 1 });
+        }
+    }
 
     async function loadProject() {
-        if (projectId) {
-            const projectFound = await getProjectById(projectId);
+        const userId = decodeToken(getSavedToken())?.sub;
+
+        if (projectId && userId) {
+            const projectFound: ProjectProps = await getProjectById(projectId);
             setProject(projectFound);
 
             const ownerUser = await getUserInfosById(projectFound.userId);
             setOwnerUser(ownerUser);
-            
+
+            setCanLike(!projectFound.likedBy.includes(userId));
+
             setIsLoading(false);
         }
         navigate('')
     }
-
   
     useEffect(() => {
         loadProject();
@@ -88,19 +101,27 @@ export function Project() {
                     </div>
                 </section>
                 <section className="flex flex-col gap-2">
-                    <h2 className="text-2xl font-bold text-gray-300">
-                        Links Úteis
-                    </h2>
                     <div className="flex items-center gap-6">
-                        <a href={project?.repositoryURL} className="flex items-center gap-2 text-muted-foreground hover:text-muted" target="_blank">
+                        <button 
+                            className={`flex items-center gap-2 ${canLike && "text-muted-foreground hover:text-gray-200"} transition-colors ${!canLike && "cursor-not-allowed text-gray-200"} `} 
+                            onClick={handleLike} 
+                            disabled={!canLike}
+                        >
+                            <ThumbsUp size={20} />
+                            <span>{project?.likes}</span>
+                        </button>
+                        <a href={project?.repositoryURL} className="flex items-center gap-2 text-muted-foreground hover:text-gray-200 transition-colors" target="_blank">
                             <Github size={20} />
                             Repositório
                         </a>
-
-                        <a href={project?.projectURL} className="flex items-center gap-2 text-muted-foreground hover:text-muted" target="_blank">
-                            <LinkIcon size={20} />
-                            Link do Projeto
-                        </a>
+                        {
+                            project?.projectURL && (
+                                <a href={project.projectURL} className="flex items-center gap-2 text-muted-foreground hover:text-gray-200 transition-colors" target="_blank">
+                                    <LinkIcon size={20} />
+                                    Link do Projeto
+                                </a>
+                            )
+                        }
                     </div>
                 </section>
             </div>
