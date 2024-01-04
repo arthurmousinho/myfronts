@@ -5,13 +5,13 @@ import { User, useUsers } from "@/hooks/useUsers";
 import { Flame } from "lucide-react";
 import { useEffect, useState } from "react";
 
-interface ProjectsWithUsername extends ProjectProps {
+interface ProjectWithUsername extends ProjectProps {
     username: string;
 }
 
 export function TrendingProjects() {
 
-    const [trendingProjects, setTrendingProjects] = useState<ProjectsWithUsername[]>();
+    const [trendingProjects, setTrendingProjects] = useState<ProjectWithUsername[]>();
     const [loading, setLoading] = useState(true);
 
     const { getTrendingProjects } = useProject();
@@ -19,14 +19,14 @@ export function TrendingProjects() {
 
     async function loadTrendingProjects() {
         const projects: ProjectProps[] = await getTrendingProjects();
-
+    
         const projectsWithUsername = await Promise.all(
             projects.map(async (project) => {
-                const username = await getProjectUsername(project.userId);
-                return { ...project, username }; 
+                const projectUsername = await getProjectUsername(project.userId);
+                return { ...project, username: projectUsername } as ProjectWithUsername;
             })
         );
-        
+    
         setTrendingProjects(projectsWithUsername);
         setLoading(false);
     }
@@ -66,6 +66,7 @@ export function TrendingProjects() {
                                     key={project.id}
                                     to={`/users/${project.username}/${project.id}`}
                                     targetBlank={true}
+                                    likes={project.likes}
                                 />
                             );
                         })

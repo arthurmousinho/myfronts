@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Edit2, LinkIcon, Trash } from "lucide-react";
+import { Edit2, LinkIcon, ThumbsUp, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useToken } from "@/hooks/useToken";
 
@@ -12,6 +12,7 @@ interface ProjectCardProps {
     id?: string;
     deleteProjectCallback?: () => void;
     targetBlank?: boolean;
+    likes?: number;
 }
 
 export function ProjectCard(props: ProjectCardProps) {
@@ -58,6 +59,7 @@ export function ProjectCard(props: ProjectCardProps) {
         )
     }
 
+
     return (
         <Link to={props.to} target={props.targetBlank ? "_blank" : "_parent"} className="flex flex-col gap-4 bg-zinc-default rounded transition-transform">
             <img src={props.imageURL} alt="" 
@@ -70,6 +72,14 @@ export function ProjectCard(props: ProjectCardProps) {
                 <p className="text-base leading-relaxed text-muted-foreground line-clamp-4">
                     {props.description}
                 </p>
+                {
+                   props.likes  && (
+                    <div className="flex items-center gap-2 text-base font-normal text-muted-foreground mt-2">
+                        <ThumbsUp size={15} />
+                        { props.likes }
+                    </div>
+                   )
+                }
             </div>
         </Link>
     )
