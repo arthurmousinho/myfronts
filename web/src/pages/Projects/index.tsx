@@ -49,16 +49,15 @@ export function Projects() {
     return (
         <div className="flex items-center justify-center mb-96">
 
-
-            <div className="w-[1000px] flex flex-col gap-4 items-start justify-center rounded p-4">
+            <div className="w-[100vw] md:w-[1000px] flex flex-col gap-4 items-start justify-center rounded p-4">
                 <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-300 text-left">
                     <Folder size={35} />
                     Meus Projetos
                 </h1>
 
-                <div className="w-full grid grid-cols-3 gap-4 min-h-[400px]">
+                <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[400px]">
                     <Link to={"/projects/repos"} 
-                        className="bg-zinc-default text-gray-400 hover:text-muted transition-all flex items-center flex-col justify-center gap-2 rounded border border-zinc-800" 
+                        className="bg-zinc-default text-gray-400 hover:text-muted transition-all flex md:flex-col items-center flex-row py-2 md:py-0 justify-center gap-2 rounded border border-zinc-800" 
                     >
                         <Plus size={40} />
                         Adicionar projeto
@@ -82,8 +81,6 @@ export function Projects() {
                 </div>
 
             </div>
-
-
 
         </div>
     )
