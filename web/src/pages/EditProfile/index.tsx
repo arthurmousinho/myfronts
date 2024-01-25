@@ -1,4 +1,5 @@
 import { Button } from "@/components/Button"
+import { Heading } from "@/components/Heading"
 import { Input } from "@/components/Input"
 import { Loading } from "@/components/Loading"
 import { Textarea } from "@/components/Textarea"
@@ -6,7 +7,7 @@ import { Label } from "@/components/ui/label"
 import { useFirebaseStorage } from "@/hooks/useFirebaseStorage"
 import { useToken } from "@/hooks/useToken"
 import { EditUserData, User, useUsers } from "@/hooks/useUsers"
-import { Frown, Save, UserIcon } from "lucide-react"
+import { Frown, Save, Trash2, UserIcon } from "lucide-react"
 import { FormEvent, useEffect, useState } from "react"
 
 export function EditProfile() {
@@ -104,11 +105,11 @@ export function EditProfile() {
 
     return (
         <div className="w-full flex flex-col gap-12 items-center justify-center mb-96">
-            <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-300">
+            <div className="w-[100vw] md:w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
+                <Heading>
                     <UserIcon size={35} />
                     Minha Conta
-                </h1>
+                </Heading>
 
                 <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-2 text-base">
@@ -163,10 +164,11 @@ export function EditProfile() {
                     </Button>
                 </form>
             </div>
-            <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <h1 className="text-3xl font-bold text-gray-300">
+            <div className="w-[100vw] md:w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
+                <Heading>
+                    <Trash2 size={35} />
                     Excluir Conta
-                </h1>
+                </Heading>
 
                 <Button onClick={handleDeleteUser}>
                     <Frown size={20} className="text-red-500"/>
