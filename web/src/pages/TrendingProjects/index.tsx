@@ -47,14 +47,14 @@ export function TrendingProjects() {
 
     return (
         <div className="w-full flex items-center justify-center mb-96">
-            <div className="w-[1000px] flex flex-col gap-4 items-start justify-center rounded p-4">
+            <div className="w-[100vw] md:w-[1000px] flex flex-col gap-4 items-start justify-center rounded p-4">
                 <header>
                     <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-300">
                         <Flame size={35} />
                         Em Alta
                     </h1>
                 </header>
-                <div className="w-[1000px] grid grid-cols-3 gap-4">
+                <div className="md:w-[1000px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {
                         trendingProjects?.map(project => {
                             return (

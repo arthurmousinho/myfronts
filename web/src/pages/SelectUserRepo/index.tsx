@@ -32,9 +32,9 @@ export function SelectUserRepo() {
 
     return (
         <div className="w-full flex items-center justify-center mb-96">
-             <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
+             <div className="w-[100vw] md:w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
                 <header className="w-full flex justify-between items-center">
-                    <h1 className="text-3xl font-bold text-gray-300">
+                    <h1 className="text-xl md:text-3xl font-bold text-gray-300">
                         Selecione um repositório
                     </h1>
                     <Link to={'/projects/new'} className="flex items-center gap-2 text-muted-foreground hover:text-gray-200 transition-colors">

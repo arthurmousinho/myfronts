@@ -1,3 +1,4 @@
+import { Heading } from "@/components/Heading";
 import { Loading } from "@/components/Loading";
 import { ProjectCard } from "@/components/ProjectCard";
 import { useFirebaseStorage } from "@/hooks/useFirebaseStorage";
@@ -50,10 +51,11 @@ export function Projects() {
         <div className="flex items-center justify-center mb-96">
 
             <div className="w-[100vw] md:w-[1000px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-300 text-left">
+                
+                <Heading>
                     <Folder size={35} />
                     Meus Projetos
-                </h1>
+                </Heading>
 
                 <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[400px]">
                     <Link to={"/projects/repos"} 
