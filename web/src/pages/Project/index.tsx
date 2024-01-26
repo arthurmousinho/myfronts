@@ -66,8 +66,8 @@ export function Project() {
 
     return (
         <div className="flex items-center justify-center mb-96">
-            <div className="w-[800px] flex flex-col gap-8">
-                <header className="w-full flex items-center justify-between">
+            <div className="w-[95vw] md:w-[800px] flex flex-col gap-8">
+                <header className="w-full flex flex-col gap-2 md:gap-0 md:flex-row items-start md:items-center justify-between">
                     <h1 className="text-[2.5rem] font-bold text-gray-200">
                         {project?.title}
                     </h1>
