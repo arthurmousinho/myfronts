@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useToken } from "./useToken";
+import { useToast } from "@/components/ui/use-toast";
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -32,6 +33,7 @@ export interface newProjectData {
 export function useProject() {
 
     const { getSavedToken } = useToken();
+    const { toast } = useToast();
 
     const token = getSavedToken();
     const navigate = useNavigate();
@@ -48,8 +50,15 @@ export function useProject() {
                     }
                 }    
             );
+            toast({
+                description: `Projeto ${data.title} salvo com sucesso!`,        
+            })
+            navigate('/projects', { state: false });
         } catch (error) {
-            alert("Erro ao salvar o projeto");
+            toast({
+                variant: "destructive",
+                description: `Erro ao salvar o projeto ${data.title}, tente novamente.`,        
+            })
         }
     }
 

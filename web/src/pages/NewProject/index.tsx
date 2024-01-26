@@ -9,7 +9,7 @@ import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
 import { newProjectData, useProject } from "@/hooks/useProject";
 import { FileImage, PlusIcon, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export function NewProject() {
 
@@ -30,8 +30,6 @@ export function NewProject() {
     const { saveProject } = useProject();
     const { getRepoInfos } = useGithub();
     const { repoName } = useParams();
-
-    const navigate = useNavigate();
 
     const previewURL = useMemo(() => {
         if (!imgFile) {
@@ -96,7 +94,8 @@ export function NewProject() {
         
         const newUUID = getNewUIID();
         const imageURL = await saveImage(imgFile, newUUID);
-        
+
+
         if (imageURL) {
             const data: newProjectData = {
                 title,
@@ -107,7 +106,6 @@ export function NewProject() {
                 projectURL,  
                 techs,
             }
-            navigate('/projects', { state: false });
             saveProject(data);
             resetFields();
         }

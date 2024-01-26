@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Separator } from "../ui/separator";
 import { UserCard } from "../UserCard";
 
-
 export function Menu() {
 
     const { deleteToken, decodeToken, getSavedToken } = useToken();
@@ -67,8 +66,10 @@ export function Menu() {
                     <User size={20} />
                     Conta 
                 </Link>
-                <button onClick={handleSignOut} 
+
+                <button 
                     className="flex gap-1 items-center justify-center text-muted-foreground hover:text-red-500 transition-colors"
+                    onClick={handleSignOut}
                 >
                     <LogOut size={20} />
                     <span className="text-base cursor-pointer">
