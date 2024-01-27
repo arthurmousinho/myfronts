@@ -7,6 +7,7 @@ import jwt from "@fastify/jwt";
 import { projectsRoutes } from "./routes/projectsRoutes";
 import { authRoutes } from "./routes/authRoutes";
 import { usersRoutes } from "./routes/usersRoutes";
+import { storageRoutes } from "./routes/storageRoutes";
 
 export const app = fastify();
 
@@ -21,6 +22,7 @@ app.register(jwt, {
 app.register(projectsRoutes);
 app.register(authRoutes);
 app.register(usersRoutes);
+app.register(storageRoutes);
 
 const PORT = process.env.PORT ?? 3333;
 
