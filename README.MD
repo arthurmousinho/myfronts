@@ -45,6 +45,8 @@ npm run dev
 - [Bard](https://bard.google.com/)
 - [React Js com TypeScript do zero ao avançado na pratica: Matheus Fraga](https://www.udemy.com/course/react-js-typescript/)
 - [Estratégias de autenticação, JWT, OAuth, qual usar? | Podcast FalaDev #21](https://www.youtube.com/watch?v=mZrt5R9eZzM)
+- [How to set up Prisma with a local Docker Postgres container](https://medium.com/nerd-for-tech/how-to-set-up-prisma-with-a-local-docker-postgres-container-9e0958d08544)
+- [criando back-end de um app de upload (node, typescript, prisma, cloudflare)](https://www.twitch.tv/videos/2030389139)
 
 ### UI
 - [NextJs](https://nextjs.org/)
