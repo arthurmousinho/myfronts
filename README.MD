@@ -9,17 +9,23 @@ Reference: [NLW Spacetime Aula 3:](https://github.com/rocketseat-education/nlw-1
 
 ### Web
 ```
+cd web
 npm install
 npm run dev
 ```
-
 
 ### Server
 ```
+cd server
 npm install
 npm run dev
 ```
 
+### Database (Docker)
+```
+cd server
+docker compose up -d
+```
 
 ## References
 
@@ -31,6 +37,7 @@ npm run dev
 - [jwt-decode](https://github.com/auth0/jwt-decode)
 - [uuid](https://github.com/uuidjs/uuid)
 - [firebase-storage](https://firebase.google.com/docs/storage?hl=pt-br)
+- [Firebase Admin SDK](https://firebase.google.com/docs/admin/setup?hl=pt-br)
 - [JWT utils for Fastify](https://github.com/fastify/fastify-jwt)
 
 ### Content
