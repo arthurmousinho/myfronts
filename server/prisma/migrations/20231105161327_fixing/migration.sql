@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Project" ALTER COLUMN "techs" SET NOT NULL,
-ALTER COLUMN "techs" SET DATA TYPE TEXT;
