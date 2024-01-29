@@ -2,7 +2,8 @@ import { FastifyReply, FastifyRequest } from "fastify"
 import { getPresignedBucketUrl } from "../../services/firebase/getPresignedBucketUrl";
 import { z } from "zod";
 
-export async function getPresignedUrl(request: FastifyRequest, reply: FastifyReply) {
+export async function getUploadUrl(request: FastifyRequest, reply: FastifyReply) {
+
     await request.jwtVerify();
 
     const bodySchema = z.object({
@@ -13,6 +14,6 @@ export async function getPresignedUrl(request: FastifyRequest, reply: FastifyRep
 
     const presignedUrl = await getPresignedBucketUrl(imageUUID);
 
-    reply.send({ presignedUrl })
+    reply.send({ url: presignedUrl })
 
 }

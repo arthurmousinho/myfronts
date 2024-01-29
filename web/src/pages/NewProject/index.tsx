@@ -4,9 +4,9 @@ import { Input } from "@/components/Input";
 import { Loading } from "@/components/Loading";
 import { Textarea } from "@/components/Textarea";
 import { Label } from "@/components/ui/label";
-import { useFirebaseStorage } from "@/hooks/useFirebaseStorage";
 import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
 import { newProjectData, useProject } from "@/hooks/useProject";
+import { useStorage } from "@/hooks/useStorage";
 import { FileImage, PlusIcon, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -25,11 +25,11 @@ export function NewProject() {
     const [loading, setLoading] = useState(true);
     const [repo, setRepo] = useState<GithubRepositoryData>();
 
-
-    const { saveImage, getNewUIID } = useFirebaseStorage();
     const { saveProject } = useProject();
     const { getRepoInfos } = useGithub();
     const { repoName } = useParams();
+
+    const { uploadImage, getNewUIID } = useStorage()
 
     const previewURL = useMemo(() => {
         if (!imgFile) {
@@ -93,8 +93,7 @@ export function NewProject() {
         }
         
         const newUUID = getNewUIID();
-        const imageURL = await saveImage(imgFile, newUUID);
-
+        const imageURL = await uploadImage(imgFile, newUUID);
 
         if (imageURL) {
             const data: newProjectData = {

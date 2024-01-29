@@ -1,27 +1,10 @@
-import {v4 as uuidV4} from "uuid";
-import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getStorage, ref } from "firebase/storage";
 import { storage } from "@/services/firebase";
 import { ProjectProps, useProject } from "./useProject";
 
 export function useFirebaseStorage() {
- 
+    
     const { getAllProjects } = useProject();
-
-    function getNewUIID() {
-        return uuidV4();
-    }
-
-    async function saveImage(imageFile: File, imageUUID: string) {
-        try {
-            const path = `images/${imageUUID}`;
-            const uploadRef = ref(storage, path);
-            const snapshot = await uploadBytes(uploadRef, imageFile);
-            return await getDownloadURL(snapshot.ref);
-        } catch(error) {
-            alert("Erro ao salvar imagem no firebase");
-            console.error(error);
-        }
-    }
 
     async function deleteImage(imageUUID: string) {
         try {
@@ -50,6 +33,6 @@ export function useFirebaseStorage() {
     }
 
  
-    return { deleteImage, deleteAllUserImages, saveImage, getNewUIID }
+    return { deleteImage, deleteAllUserImages }
 
 }

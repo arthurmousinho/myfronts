@@ -6,6 +6,7 @@ import { Textarea } from "@/components/Textarea"
 import { Label } from "@/components/ui/label"
 import { useFirebaseStorage } from "@/hooks/useFirebaseStorage"
 import { ProjectProps, newProjectData, useProject } from "@/hooks/useProject"
+import { useStorage } from "@/hooks/useStorage"
 import { FileImage, PlusIcon, Save, X } from "lucide-react"
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
@@ -28,7 +29,9 @@ export function EditProject() {
     const navigate = useNavigate();
     const { id } = useParams();
     const { getProjectById, editProject } = useProject();
-    const { deleteImage, getNewUIID, saveImage } = useFirebaseStorage();
+    const { deleteImage } = useFirebaseStorage();
+
+    const { uploadImage, getNewUIID } = useStorage();
 
     useMemo(() => {
         if (imgFile) {
@@ -85,7 +88,7 @@ export function EditProject() {
 
         if (project && previewURL != project.imageURL && imgFile) {
             const newImageUUID = getNewUIID()
-            const newImageURL = await saveImage(imgFile, newImageUUID);
+            const newImageURL = await uploadImage(imgFile, newImageUUID);
             if (newImageURL) {
                 const newProject: newProjectData = {
                     title: title,

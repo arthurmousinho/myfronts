@@ -2,6 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useToken } from "./useToken";
 import { useToast } from "@/components/ui/use-toast";
+import { useStorate } from "./useStorage";
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -78,7 +79,7 @@ export function useProject() {
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/'
                     }
                 }    
             );
@@ -98,6 +99,9 @@ export function useProject() {
                     }
                 }
             );
+            toast({
+                description: `Projeto excluído com sucesso!`,        
+            })
         } catch (error) {
             alert("Erro ao deletar o projeto");
         }
@@ -114,6 +118,9 @@ export function useProject() {
                     }
                 }
             )
+            toast({
+                description: `Projeto editado com sucesso!`,        
+            })
         } catch (error) {
             console.error("Erro ao atualizar o projeto")
         }
