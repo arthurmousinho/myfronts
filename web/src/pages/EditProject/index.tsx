@@ -4,7 +4,6 @@ import { Input } from "@/components/Input"
 import { Loading } from "@/components/Loading"
 import { Textarea } from "@/components/Textarea"
 import { Label } from "@/components/ui/label"
-import { useFirebaseStorage } from "@/hooks/useFirebaseStorage"
 import { ProjectProps, newProjectData, useProject } from "@/hooks/useProject"
 import { useStorage } from "@/hooks/useStorage"
 import { FileImage, PlusIcon, Save, X } from "lucide-react"
@@ -29,7 +28,7 @@ export function EditProject() {
     const navigate = useNavigate();
     const { id } = useParams();
     const { getProjectById, editProject } = useProject();
-    const { deleteImage } = useFirebaseStorage();
+    const { deleteImage } = useStorage();
 
     const { uploadImage, getNewUIID } = useStorage();
 
@@ -99,8 +98,8 @@ export function EditProject() {
                     imageURL: newImageURL,
                     imageUUID: newImageUUID,
                 }
-                editProject(project.id, newProject);
-                deleteImage(project?.imageUUID);
+                await editProject(project.id, newProject);
+                await deleteImage(project?.imageUUID);
             }
         } 
         else if (project) {

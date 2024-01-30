@@ -30,7 +30,7 @@ export function Project() {
     const projectId = useParams().projectId;
   
     async function handleLike() {
-        if(canLike ) {
+        if(canLike) {
             projectId && await likeProject(projectId);
             setCanLike(false);
             project && setProject({ ...project, likes: project.likes + 1 });

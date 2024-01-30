@@ -4,6 +4,7 @@ import { Input } from "@/components/Input";
 import { Loading } from "@/components/Loading";
 import { Textarea } from "@/components/Textarea";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
 import { newProjectData, useProject } from "@/hooks/useProject";
 import { useStorage } from "@/hooks/useStorage";
@@ -21,13 +22,15 @@ export function NewProject() {
     const [tech, setTech] = useState("");
     const [techs, setTechs] = useState<string[]>([]);
 
-
     const [loading, setLoading] = useState(true);
+    const [canSubmit, setCanSubmit] = useState<boolean>(true);
+
     const [repo, setRepo] = useState<GithubRepositoryData>();
 
     const { saveProject } = useProject();
     const { getRepoInfos } = useGithub();
     const { repoName } = useParams();
+    const { toast } = useToast();
 
     const { uploadImage, getNewUIID } = useStorage()
 
@@ -41,16 +44,6 @@ export function NewProject() {
     function validFields() {
         const fields = [title, previewURL, description, repoURL];
         return fields.every(field => field.trim() !== "");
-    }
-
-    function resetFields() {
-        setTitle("");
-        setImgFile(null);
-        setDescription("");
-        setRepoURL("");
-        setProjectURL("");
-        setTech("");
-        setTechs([]);
     }
 
     function handleAddTech() {
@@ -83,19 +76,30 @@ export function NewProject() {
         event.preventDefault();
 
         if (!validFields || techs.length === 0) {
-            alert("Preencha todos os campos");
+            toast({
+                variant: "destructive",
+                description: "Preencha todos os campos",        
+            })
             return;
         } 
 
         if (imgFile == null) {
-            alert("Adicione uma imagem do projeto");
+            toast({
+                variant: "destructive",
+                description: "Adicione uma imagem do projeto",        
+            })
             return;
         }
         
-        const newUUID = getNewUIID();
-        const imageURL = await uploadImage(imgFile, newUUID);
+        if (canSubmit) {
+            setCanSubmit(false);
+            const newUUID = getNewUIID();
+            const imageURL = await uploadImage(imgFile, newUUID);
 
-        if (imageURL) {
+            if (!imageURL) {
+                return;
+            }
+
             const data: newProjectData = {
                 title,
                 imageURL,     
@@ -105,14 +109,12 @@ export function NewProject() {
                 projectURL,  
                 techs,
             }
-            saveProject(data);
-            resetFields();
+            await saveProject(data);
         }
-        
+
     }
 
     async function loadRepoInfos() {
-
         if (repoName) {
             const repoInfos = await getRepoInfos(repoName); 
             setRepo(repoInfos);
@@ -127,7 +129,6 @@ export function NewProject() {
         } else {
             setLoading(false);
         }
-
     }
 
     useEffect(() => {
