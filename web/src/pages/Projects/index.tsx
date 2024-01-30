@@ -1,8 +1,8 @@
 import { Heading } from "@/components/Heading";
 import { Loading } from "@/components/Loading";
 import { ProjectCard } from "@/components/ProjectCard";
-import { useFirebaseStorage } from "@/hooks/useFirebaseStorage";
 import { ProjectProps, useProject } from "@/hooks/useProject"
+import { useStorage } from "@/hooks/useStorage";
 import { Folder, Plus } from "lucide-react";
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
@@ -11,11 +11,10 @@ export function Projects() {
 
     const { getAllProjects } = useProject();
     const { deleteProject } = useProject();
-    const { deleteImage } = useFirebaseStorage();
+    const { deleteImage } = useStorage();
 
     const [projects, setProjects] = useState<ProjectProps[]>();
     const [loading, setLoading] = useState(true);
-
 
     async function getProjects() {
         const projects: ProjectProps[] = await getAllProjects(); 

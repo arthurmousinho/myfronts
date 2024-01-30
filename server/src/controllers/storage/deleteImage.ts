@@ -6,13 +6,14 @@ export async function deleteImage(request: FastifyRequest, reply: FastifyReply) 
 
     await request.jwtVerify();
 
-    const bodySchema = z.object({
-        imageUUID: z.string()
-    })
+    const paramsSchema = z.object({
+        imageUUID: z.string().uuid(),
+    });
 
-    const { imageUUID } = bodySchema.parse(request.body);
+    const { imageUUID } = paramsSchema.parse(request.params);
 
     await deleteImageByUUID(imageUUID);
+    
     reply.status(204).send();
- 
+
 }

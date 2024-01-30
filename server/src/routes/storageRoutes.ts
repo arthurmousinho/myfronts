@@ -6,6 +6,6 @@ export async function storageRoutes(app: FastifyInstance) {
     
     app.post('/storage/get-upload-url', getUploadUrl);
 
-    app.delete('/storage/delete', deleteImage)
+    app.delete('/storage/delete/:imageUUID', deleteImage)
 
 }

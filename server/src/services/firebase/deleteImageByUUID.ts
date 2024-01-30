@@ -2,7 +2,7 @@ import { storage } from "../../lib/firebase";
 
 export async function deleteImageByUUID(imageUUID: string) {
     try {
-        const filePath = `images/${imageUUID}.png`;
+        const filePath = `images/${imageUUID}`;
         const file = storage.bucket().file(filePath);
         await file.delete();
     } catch (error) {
