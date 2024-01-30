@@ -8,7 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
 import { newProjectData, useProject } from "@/hooks/useProject";
 import { useStorage } from "@/hooks/useStorage";
-import { FileImage, PlusIcon, X } from "lucide-react";
+import { FileImage, Loader2, PlusIcon, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -234,9 +234,18 @@ export function NewProject() {
                             )
                         }
                     </div>
-                    <Button>
-                        <PlusIcon size={20} />
-                        Adicionar
+                    <Button >
+                        {
+                            canSubmit ? 
+                            <>
+                                <PlusIcon size={20} />
+                                Adicionar
+                            </> :
+                            <>
+                                <Loader2 size={20} className="text-gray-400 animate-spin" />
+                                Salvando...
+                            </>
+                        }
                     </Button>
                 </form>
             </div>
