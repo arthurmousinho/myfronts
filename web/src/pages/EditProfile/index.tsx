@@ -4,7 +4,7 @@ import { Input } from "@/components/Input"
 import { Loading } from "@/components/Loading"
 import { Textarea } from "@/components/Textarea"
 import { Label } from "@/components/ui/label"
-import { useFirebaseStorage } from "@/hooks/useFirebaseStorage"
+import { useStorage } from "@/hooks/useStorage"
 import { useToken } from "@/hooks/useToken"
 import { EditUserData, User, useUsers } from "@/hooks/useUsers"
 import { Frown, Save, Trash2, UserIcon } from "lucide-react"
@@ -17,7 +17,7 @@ export function EditProfile() {
 
     const { getUserInfos, editUser, deleteUser } = useUsers();
     const { getSavedToken, decodeToken, deleteToken, hasToken } = useToken();
-    const { deleteAllUserImages } = useFirebaseStorage();
+    const { deleteAllUserImages } = useStorage();
     
     const [newName, setNewName] = useState<string | undefined>();
     const [newUsername, setNewUsername] = useState<string | undefined>()

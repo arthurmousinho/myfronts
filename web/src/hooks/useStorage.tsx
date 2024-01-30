@@ -8,7 +8,7 @@ const API = import.meta.env.VITE_API_BASE_URL;
 
 export function useStorage() {
 
-    const { getSavedToken } = useToken();
+    const { getSavedToken, decodeToken } = useToken();
 
     async function getUploadURL(imageUUID: string) {
         const token = getSavedToken();
@@ -66,10 +66,28 @@ export function useStorage() {
         }
     }
 
+    async function deleteAllUserImages() {
+        const token = getSavedToken()
+        const userId = decodeToken(token)?.sub;
+        try {
+            await axios.delete(
+                `${API}/storage/deleteAll/${userId}`, 
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            );
+        } catch (error) {
+            console.error("Erro durante ao deletar todas as imagens do usuário")
+        }
+    }
+
     return { 
         uploadImage,
         getNewUIID,
-        deleteImage
+        deleteImage,
+        deleteAllUserImages
     }
 
 }
