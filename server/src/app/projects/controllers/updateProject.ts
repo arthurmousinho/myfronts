@@ -30,6 +30,7 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
         repositoryURL: z.string(),
         projectURL: z.string(),  
         techs: z.string().array(),
+        imageUUID: z.string(),
     })
 
     const body = bodySchema.parse(request.body);
@@ -45,6 +46,7 @@ export async function updateProject(request: FastifyRequest, reply: FastifyReply
             repositoryURL: body.repositoryURL,
             projectURL: body.projectURL,
             techs: body.techs,
+            imageUUID: body.imageUUID
         }
     });
 

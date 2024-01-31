@@ -6,13 +6,14 @@ import { Textarea } from "@/components/Textarea"
 import { Label } from "@/components/ui/label"
 import { ProjectProps, newProjectData, useProject } from "@/hooks/useProject"
 import { useStorage } from "@/hooks/useStorage"
-import { FileImage, PlusIcon, Save, X } from "lucide-react"
+import { FileImage, Loader2, PlusIcon, Save, X } from "lucide-react"
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 export function EditProject() {
 
     const [project, setProject] = useState<ProjectProps>();
+    const [canSubmit, setCanSubmit] = useState<boolean>(true);
 
     const [loading, setLoading] = useState(true);
     const [previewURL, setPreviewURL] = useState("");
@@ -25,12 +26,10 @@ export function EditProject() {
     const [tech, setTech] = useState("");
     const [techs, setTechs] = useState<string[]>([]);
 
-    const navigate = useNavigate();
+
     const { id } = useParams();
     const { getProjectById, editProject } = useProject();
-    const { deleteImage } = useStorage();
-
-    const { uploadImage, getNewUIID } = useStorage();
+    const { uploadImage, getNewUIID, deleteImage } = useStorage();
 
     useMemo(() => {
         if (imgFile) {
@@ -42,6 +41,7 @@ export function EditProject() {
     async function loadProject() {
         if (id) {
             const projectInfos: ProjectProps = await getProjectById(id);
+            console.table(projectInfos)
             if(projectInfos) {
                 setProject(projectInfos);
 
@@ -82,27 +82,45 @@ export function EditProject() {
         setTechs(currentTechs);
     }
 
+    async function editProjectWhenImageHasChanged() {
+
+        if (!project || !imgFile) {
+            return;
+        }
+
+        const newImageUUID = getNewUIID()
+        const newImageURL = await uploadImage(imgFile, newImageUUID);
+
+        if (!newImageURL) {
+            return;
+        }
+
+        const newProject: newProjectData = {
+            title: title,
+            description: description,
+            repositoryURL: repoURL,
+            projectURL: projectURL,
+            techs: techs,
+            imageURL: newImageURL,
+            imageUUID: newImageUUID,
+        }
+        await deleteImage(project.imageUUID);
+        await editProject(project.id, newProject);
+    }
+
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        if (project && previewURL != project.imageURL && imgFile) {
-            const newImageUUID = getNewUIID()
-            const newImageURL = await uploadImage(imgFile, newImageUUID);
-            if (newImageURL) {
-                const newProject: newProjectData = {
-                    title: title,
-                    description: description,
-                    repositoryURL: repoURL,
-                    projectURL: projectURL,
-                    techs: techs,
-                    imageURL: newImageURL,
-                    imageUUID: newImageUUID,
-                }
-                await editProject(project.id, newProject);
-                await deleteImage(project?.imageUUID);
-            }
+        if (!project || !canSubmit) {
+            return;
+        }
+
+        setCanSubmit(false);
+        const imageProjectHasUpdated = previewURL != project.imageURL && imgFile;
+        if (imageProjectHasUpdated) {
+            editProjectWhenImageHasChanged();
         } 
-        else if (project) {
+        else {
             const newProject: newProjectData  = {
                 title: title,
                 description: description,
@@ -114,8 +132,6 @@ export function EditProject() {
             }
             editProject(project.id, newProject);
         }
-
-        navigate(`/projects`, { state: false });
     }
 
     useEffect(() => {
@@ -218,8 +234,17 @@ export function EditProject() {
                         }
                     </div>
                     <Button>
-                        <Save size={20} />
-                        Salvar Alterações
+                        {
+                            canSubmit ? 
+                            <>
+                                <Save size={20} />
+                                Salvar Alterações
+                            </> :
+                            <>
+                                <Loader2 size={20} className="text-gray-400 animate-spin" />
+                                Salvando...
+                            </>
+                        }
                     </Button>
                 </form>
             </div>

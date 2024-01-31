@@ -51,7 +51,6 @@ export function useStorage() {
 
     async function deleteImage(imageUUID: string) {
         const token = getSavedToken();
-
         try {
             await axios.delete(
                 `${API}/storage/delete/${imageUUID}`, 

@@ -120,6 +120,7 @@ export function useProject() {
             toast({
                 description: `Projeto editado com sucesso!`,        
             })
+            navigate(`/projects`, { state: false });
         } catch (error) {
             console.error("Erro ao atualizar o projeto")
         }
