@@ -1,14 +1,6 @@
 import axios from "axios";
 import { z } from "zod";
-
-export interface GithubUser {
-    id: number,
-    login: string,
-    bio: string,
-    name: string,
-    avatar_url: string,
-    html_url: string
-}
+import { GithubUser } from "../interfaces/GithubUser.interface";
 
 export async function  getGithubUserByCode(code: string) {
 
@@ -28,7 +20,6 @@ export async function  getGithubUserByCode(code: string) {
     );
 
     const { access_token } = response.data;
-
 
     const userResponse = await axios.get('https://api.github.com/user', {
         headers: {

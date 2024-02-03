@@ -1,5 +1,5 @@
 import { prisma } from "../../../lib/prisma";
-import { GithubUser } from "./getGithubUserByCode.service";
+import { GithubUser } from "../interfaces/GithubUser.interface";
 
 export async function createUserByGithubUser(githubUser: GithubUser) {
 

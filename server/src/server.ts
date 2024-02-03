@@ -12,7 +12,7 @@ import { storageRoutes } from "./app/storage/storage.routes";
 export const app = fastify();
 
 app.register(cors, {
-    origin: true,
+    origin: 'http://localhost:5173',
 })
 
 app.register(jwt, {
