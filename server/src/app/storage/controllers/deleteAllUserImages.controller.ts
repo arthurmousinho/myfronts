@@ -1,14 +1,17 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { prisma } from "../../../lib/prisma";
-import { deleteImageByUUID } from "../services/deleteImageByUUID.service";
 import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
+import { storageService } from "../storage.service";
 
 export async function deleteAllUserImage(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 
+    const { deleteImageByUUID } = storageService();
+
     const decoded: TokenInfos = Object(await request.jwtDecode());
+    const username = decoded.username;
 
     const paramsSchema = z.object({
         userId: z.string().uuid(),
@@ -30,7 +33,7 @@ export async function deleteAllUserImage(request: FastifyRequest, reply: Fastify
     const UUIDs = projects.map(project => project.imageUUID);
 
     await Promise.all(UUIDs.map(async (uuid) => {
-        await deleteImageByUUID(uuid);
+        await deleteImageByUUID(uuid, username);
     }));
 
     reply.status(204).send();
