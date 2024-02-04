@@ -1,11 +1,14 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { prisma } from "../../../lib/prisma";
 import { z } from "zod";
 import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
+import { projectService } from "../projects.service";
+import { ProjectData } from "../interfaces/ProjectData";
 
 export async function createProject(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
+
+    const { createProject } = projectService();
 
     const decoded: TokenInfos = Object(await request.jwtDecode());
     const userId = decoded.sub;
@@ -22,19 +25,19 @@ export async function createProject(request: FastifyRequest, reply: FastifyReply
 
     const body = bodySchema.parse(request.body);
 
-    const createProject = await prisma.project.create({
-        data: {
-            userId: userId,
-            title: body.title,
-            imageUUID: body.imageUUID,
-            imageURL: body.imageURL,
-            description: body.description,
-            repositoryURL: body.repositoryURL,
-            projectURL: body.projectURL,
-            techs: body.techs,
-            likes: 0,
-        }
-    });
+    const newProject: ProjectData = {
+        userId: userId,
+        title: body.title,
+        imageUUID: body.imageUUID,
+        imageURL: body.imageURL,
+        description: body.description,
+        repositoryURL: body.repositoryURL,
+        projectURL: body.projectURL,
+        techs: body.techs,
+        likes: 0,
+    }
+
+    await createProject(newProject);
 
     reply.status(201).send(createProject);
 }

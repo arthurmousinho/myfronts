@@ -1,11 +1,13 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { prisma } from "../../../lib/prisma";
 import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
+import { projectService } from "../projects.service";
 
 export async function deleteProject(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
+
+    const { deleteProject } = projectService();
 
     const paramsSchema = z.object({
         id: z.string().uuid(),
@@ -16,22 +18,7 @@ export async function deleteProject(request: FastifyRequest, reply: FastifyReply
     const decoded: TokenInfos = Object(await request.jwtDecode());
     const userId = decoded.sub;
 
-    const project = await prisma.project.findUniqueOrThrow({
-        where: {
-            id,
-            userId,
-        }
-    });
-
-    if (!project) {
-        reply.status(404).send();
-    }
-
-    await prisma.project.delete({
-        where: {
-            id
-        }
-    })
+    await deleteProject(id, userId);
 
     reply.status(200).send();
 }

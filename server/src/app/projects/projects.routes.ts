@@ -1,11 +1,11 @@
 import { FastifyInstance } from "fastify";
-import { getAllProjects } from "./controllers/getAllProjects";
-import { getProjectById } from "./controllers/getProjectById";
-import { getTrendingProjects } from "./controllers/getTrendingProjects";
-import { createProject } from "./controllers/createProject";
-import { updateProject } from "./controllers/updateProject";
-import { likeProject } from "./controllers/likeProject";
-import { deleteProject } from "./controllers/deleteProject";
+import { getAllProjects } from "./controllers/getAllProjects.controller";
+import { getProjectById } from "./controllers/getProjectById.controller";
+import { getTrendingProjects } from "./controllers/getTrendingProjects.controller";
+import { createProject } from "./controllers/createProject.controller";
+import { updateProject } from "./controllers/updateProject.controller";
+import { likeProject } from "./controllers/likeProject.controller";
+import { deleteProject } from "./controllers/deleteProject.controller";
 
 export async function projectsRoutes(app: FastifyInstance) {
 
