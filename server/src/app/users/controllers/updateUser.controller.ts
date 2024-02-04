@@ -1,14 +1,14 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { prisma } from "../../../lib/prisma";
 import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
+import { userService } from "../users.service";
 
-export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
+export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 
     const paramsSchema = z.object({
-        id: z.string(),
+        id: z.string().uuid(),
     })
 
     const { id } = paramsSchema.parse(request.params);
@@ -28,30 +28,15 @@ export async function UpdateUser(request: FastifyRequest, reply: FastifyReply) {
     })
 
     const body = bodySchema.parse(request.body);
+    const { updateUser } = userService();
 
-    const userFound = await prisma.user.findUniqueOrThrow({
-        where: {
-            id: decoded.sub,
-            username: decoded.username,
-            name: decoded.name,
-        }
-    });
-
-    if (!userFound) {
-        reply.status(404).send();
-    } 
-
-    const updatedUser = await prisma.user.update({
-        where: {
-            id
-        },
-        data: {
-            name: body.name,
-            username: body.username,
-            linkedinURL: body.linkedinURL,
-            bio: body.bio, 
-        }
-    });
+    const updatedUser = await updateUser({
+        id,
+        username: body.username,
+        bio: body.bio,
+        linkedinURL: body.linkedinURL,
+        name: body.name,
+    })
 
     reply.status(200).send(updatedUser);
 }

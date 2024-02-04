@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { prisma } from "../../../lib/prisma";
-import { getUserProjects } from "../../projects/services/getUserProjects";
+import { userService } from "../users.service";
 
 export async function getUserProfile(request: FastifyRequest, reply: FastifyReply) {
     const paramsSchema = z.object({
@@ -9,24 +8,9 @@ export async function getUserProfile(request: FastifyRequest, reply: FastifyRepl
     });
 
     const { username } = paramsSchema.parse(request.params);
+    const { getUserProfile } = userService();
 
-    const user = await prisma.user.findFirst({
-        where: {
-            username: username,
-        }
-    });
+    const userProfile = await getUserProfile(username);
 
-    if (!user) {
-        reply.status(404).send();
-        return;
-    };
-
-    const projects = await getUserProjects(user.id);
-    const data = {
-        ...user,
-        projects: projects
-    };
-
-    reply.status(200).send(data);
-
+    reply.status(200).send(userProfile);
 }

@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface"; 
 import { z } from "zod";
 import { prisma } from "../../../lib/prisma";
+import { userService } from "../users.service";
 
 export async function deleteUser(request: FastifyRequest, reply: FastifyReply) {
 
@@ -20,16 +21,7 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply) {
         reply.status(401).send(); 
     } 
 
-    await prisma.project.deleteMany({
-        where: {
-            userId: id
-        }
-    })
+    const { deleteUser } = userService();
 
-    await prisma.user.delete({
-        where: {
-            id
-        }
-    })
-
+    await deleteUser(id);
 }

@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { prisma } from "../../../lib/prisma";
+import { userService } from "../users.service";
 
 export async function getUserById(request: FastifyRequest, reply: FastifyReply) {
     const paramsSchema = z.object({
@@ -8,12 +8,9 @@ export async function getUserById(request: FastifyRequest, reply: FastifyReply) 
     });
 
     const { id } = paramsSchema.parse(request.params);
-
-    const user = await prisma.user.findUniqueOrThrow({
-        where: {
-            id,
-        }
-    });
+    const { getUserById } = userService();
+    
+    const user = await getUserById(id);
 
     reply.status(200).send(user);
 }

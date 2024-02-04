@@ -19,7 +19,6 @@ export function projectService() {
         });
     }
 
-
     async function deleteProject(projectId: string, userId: string) {
         await prisma.project.findUniqueOrThrow({
             where: {
@@ -33,6 +32,21 @@ export function projectService() {
                 id: projectId
             }
         })
+    }
+
+
+    async function deleteAllUserProjects(userId: string) {
+        await prisma.project.findFirstOrThrow({
+            where: {
+                userId
+            }
+        })
+
+        await prisma.project.deleteMany({
+            where: {
+                userId,
+            }
+        });
     }
 
 
@@ -124,6 +138,7 @@ export function projectService() {
         });
     }
 
+
     return {
         createProject,
         deleteProject,
@@ -131,7 +146,8 @@ export function projectService() {
         getProjectById,
         getTrendingProjects,
         likeProject,
-        updateProject
+        updateProject,
+        deleteAllUserProjects
     }
 
 }
