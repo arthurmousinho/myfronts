@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
 import { storageService } from "../storage.service";
+import { TokenInfos } from "../../users/interfaces/TokenInfos.interface";
 
-export async function getUploadUrl(request: FastifyRequest, reply: FastifyReply) {
+export async function getUploadUrlController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 
@@ -16,6 +16,7 @@ export async function getUploadUrl(request: FastifyRequest, reply: FastifyReply)
     const { imageUUID } = bodySchema.parse(request.body);
 
     const decoded: TokenInfos = Object(await request.jwtDecode());
+    
     const username = decoded.username;
 
     const presignedUrl = await getSignedUrl(imageUUID, username);

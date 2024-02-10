@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { storageService } from "../storage.service";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
+import { TokenInfos } from "../../users/interfaces/TokenInfos.interface";
 
-export async function deleteImage(request: FastifyRequest, reply: FastifyReply) {
+export async function deleteImageController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 

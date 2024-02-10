@@ -1,10 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { prisma } from "../../../lib/prisma";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
 import { storageService } from "../storage.service";
+import { TokenInfos } from "../../users/interfaces/TokenInfos.interface";
 
-export async function deleteAllUserImage(request: FastifyRequest, reply: FastifyReply) {
+export async function deleteAllUserImageController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 
