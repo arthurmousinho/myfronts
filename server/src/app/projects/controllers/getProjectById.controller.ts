@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { projectService } from "../projects.service";
 
-export async function getProjectById(request: FastifyRequest, reply: FastifyReply) {
+export async function getProjectByIdController(request: FastifyRequest, reply: FastifyReply) {
 
     const paramsSchema = z.object({
         id: z.string().uuid(),
@@ -15,4 +15,5 @@ export async function getProjectById(request: FastifyRequest, reply: FastifyRepl
     const project = await getProjectById(id);
 
     reply.status(200).send(project);
+    
 }

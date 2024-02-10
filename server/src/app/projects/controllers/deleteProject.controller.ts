@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
 import { projectService } from "../projects.service";
+import { TokenInfos } from "../../users/interfaces/TokenInfos.interface";
 
-export async function deleteProject(request: FastifyRequest, reply: FastifyReply) {
+export async function deleteProjectController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 
@@ -16,9 +16,11 @@ export async function deleteProject(request: FastifyRequest, reply: FastifyReply
     const { id } = paramsSchema.parse(request.params);
 
     const decoded: TokenInfos = Object(await request.jwtDecode());
+
     const userId = decoded.sub;
 
     await deleteProject(id, userId);
 
     reply.status(200).send();
+    
 }

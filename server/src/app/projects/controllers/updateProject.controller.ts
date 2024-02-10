@@ -1,11 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { prisma } from "../../../lib/prisma";
 import { z } from "zod";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
 import { projectService } from "../projects.service";
 import { ProjectData } from "../interfaces/ProjectData";
+import { TokenInfos } from "../../users/interfaces/TokenInfos.interface";
 
-export async function updateProject(request: FastifyRequest, reply: FastifyReply) {
+export async function updateProjectController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify()
 

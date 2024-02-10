@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
 import { projectService } from "../projects.service";
+import { TokenInfos } from "../../users/interfaces/TokenInfos.interface";
 
-export async function getAllProjects(request: FastifyRequest, reply: FastifyReply) {
+export async function getAllProjectsController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 

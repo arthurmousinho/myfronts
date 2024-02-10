@@ -1,10 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
 import { projectService } from "../projects.service";
 import { ProjectData } from "../interfaces/ProjectData";
+import { TokenInfos } from "../../users/interfaces/TokenInfos.interface";
 
-export async function createProject(request: FastifyRequest, reply: FastifyReply) {
+export async function createProjectController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 

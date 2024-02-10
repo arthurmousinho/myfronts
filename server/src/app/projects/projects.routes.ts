@@ -1,26 +1,26 @@
 import { FastifyInstance } from "fastify";
-import { getAllProjects } from "./controllers/getAllProjects.controller";
-import { getProjectById } from "./controllers/getProjectById.controller";
-import { getTrendingProjects } from "./controllers/getTrendingProjects.controller";
-import { createProject } from "./controllers/createProject.controller";
-import { updateProject } from "./controllers/updateProject.controller";
-import { likeProject } from "./controllers/likeProject.controller";
-import { deleteProject } from "./controllers/deleteProject.controller";
+import { getAllProjectsController } from "./controllers/getAllProjects.controller";
+import { getProjectByIdController } from "./controllers/getProjectById.controller";
+import { getTrendingProjectsController } from "./controllers/getTrendingProjects.controller";
+import { createProjectController } from "./controllers/createProject.controller";
+import { updateProjectController } from "./controllers/updateProject.controller";
+import { likeProjectController } from "./controllers/likeProject.controller";
+import { deleteProjectController } from "./controllers/deleteProject.controller";
 
 export async function projectsRoutes(app: FastifyInstance) {
 
-    app.get('/projects', getAllProjects);
+    app.get('/projects', getAllProjectsController);
 
-    app.get('/projects/:id', getProjectById);
+    app.get('/projects/:id', getProjectByIdController);
 
-    app.get('/projects/trending', getTrendingProjects);
+    app.get('/projects/trending', getTrendingProjectsController);
 
-    app.post('/projects', createProject);
+    app.post('/projects', createProjectController);
 
-    app.put('/projects/:id', updateProject);
+    app.put('/projects/:id', updateProjectController);
 
-    app.patch('/projects/like/:id', likeProject);
+    app.patch('/projects/like/:id', likeProjectController);
     
-    app.delete('/projects/:id', deleteProject);
+    app.delete('/projects/:id', deleteProjectController);
 
 }
