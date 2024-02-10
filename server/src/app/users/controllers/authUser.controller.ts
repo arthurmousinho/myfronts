@@ -17,7 +17,7 @@ export async function authUserController(request: FastifyRequest,) {
 
   const user = await createUserByGithubUser(githubUser);
 
-  const token = generateUserToken(user);
+  const token = await generateUserToken(user);
   
   return { token };
 

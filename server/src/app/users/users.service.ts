@@ -73,6 +73,7 @@ export function userService() {
         return updatedUser;
     }
 
+
     async function createUserByGithubUser(githubUser: GithubUser) {
 
         let user = await prisma.user.findUnique({
@@ -115,6 +116,7 @@ export function userService() {
         return token;
     }
 
+    
     async function getGithubUserByCode(code: string) {
 
         const response = await axios.post(

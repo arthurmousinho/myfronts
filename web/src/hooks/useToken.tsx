@@ -19,7 +19,7 @@ export function useToken() {
     const [, setCookie, removeCookie] = useCookies();
 
     async function getUserToken(code: string) {
-        const response = await axios.post(`${API}/auth`, 
+        const response = await axios.post(`${API}/users/auth`, 
             { code }, 
             {
                 headers: {
@@ -27,6 +27,8 @@ export function useToken() {
                 }
             }
         );
+
+        console.log(response.data)
 
         const { token } = response.data;
      
