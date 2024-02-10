@@ -8,9 +8,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
 import { newProjectData, useProject } from "@/hooks/useProject";
 import { useStorage } from "@/hooks/useStorage";
-import { FileImage, Loader2, PlusIcon, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, FileImage, Loader2, PlusIcon, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export function NewProject() {
 
@@ -146,10 +146,14 @@ export function NewProject() {
         <div className="w-full flex items-center justify-center mb-96">
 
             <div className="w-[650px] flex flex-col gap-4 items-start justify-center rounded p-4">
-                <header>
+                <header className="w-full flex justify-between items-center">
                     <h1 className="text-3xl font-bold text-gray-300">
                         Adicionar Projeto
                     </h1>
+                    <Link to={'/projects/repos'} className="flex items-center gap-2 text-muted-foreground hover:text-gray-200   transition-colors">
+                        <ArrowLeft size={20} />
+                        Conectar repositório
+                    </Link>
                 </header>
 
                 <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
