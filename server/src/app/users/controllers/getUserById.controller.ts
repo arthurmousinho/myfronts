@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { userService } from "../users.service";
 
-export async function getUserById(request: FastifyRequest, reply: FastifyReply) {
+export async function getUserByIdController(request: FastifyRequest, reply: FastifyReply) {
     const paramsSchema = z.object({
         id: z.string().uuid(),
     });

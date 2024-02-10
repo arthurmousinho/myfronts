@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface";
 import { userService } from "../users.service";
+import { TokenInfos } from "../interfaces/TokenInfos.interface";
 
-export async function updateUser(request: FastifyRequest, reply: FastifyReply) {
+export async function updateUserController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 

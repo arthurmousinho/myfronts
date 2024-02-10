@@ -1,20 +1,20 @@
 import { FastifyInstance } from "fastify";
-import { getUserProfile } from "./controllers/getUserProfile.controller";
-import { getUserById } from "./controllers/getUserById.controller";
-import { updateUser } from "./controllers/updateUser.controller";
-import { deleteUser } from "./controllers/deleteUser.controller";
+import { getUserProfileController } from "./controllers/getUserProfile.controller";
+import { getUserByIdController } from "./controllers/getUserById.controller";
+import { updateUserController } from "./controllers/updateUser.controller";
+import { deleteUserController } from "./controllers/deleteUser.controller";
 import { authUserController } from "./controllers/authUser.controller";
 
 export async function usersRoutes(app: FastifyInstance) {
 
-    app.get("/users/profile/:username", getUserProfile);
+    app.get("/users/profile/:username", getUserProfileController);
 
-    app.get("/users/user/:id", getUserById);
+    app.get("/users/user/:id", getUserByIdController);
 
     app.post("/users/auth", authUserController)
 
-    app.put('/users/user/:id', updateUser);
+    app.put('/users/user/:id', updateUserController);
 
-    app.delete('/users/user/:id', deleteUser);
+    app.delete('/users/user/:id', deleteUserController);
 
 }

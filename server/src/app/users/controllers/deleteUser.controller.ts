@@ -1,10 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { TokenInfos } from "../../auth/interfaces/TokenInfos.interface"; 
 import { z } from "zod";
-import { prisma } from "../../../lib/prisma";
 import { userService } from "../users.service";
+import { TokenInfos } from "../interfaces/TokenInfos.interface";
 
-export async function deleteUser(request: FastifyRequest, reply: FastifyReply) {
+export async function deleteUserController(request: FastifyRequest, reply: FastifyReply) {
 
     await request.jwtVerify();
 
