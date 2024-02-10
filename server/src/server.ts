@@ -5,7 +5,6 @@ import cors from "@fastify/cors";
 import jwt from "@fastify/jwt";
 
 import { projectsRoutes } from "./app/projects/projects.routes";
-import { authRoutes } from "./app/auth/auth.routes";
 import { usersRoutes } from "./app/users/users.routes";
 import { storageRoutes } from "./app/storage/storage.routes";
 
@@ -15,12 +14,13 @@ app.register(cors, {
     origin: 'http://localhost:5173',
 })
 
-app.register(jwt, {
-    secret: 'sfojvndsujadsn',
+const JWT_SECRET = process.env.JWT_SECRET;
+
+JWT_SECRET && app.register(jwt, {
+    secret: JWT_SECRET,
 })
 
 app.register(projectsRoutes);
-app.register(authRoutes);
 app.register(usersRoutes);
 app.register(storageRoutes);
 
