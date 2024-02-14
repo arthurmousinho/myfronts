@@ -8,7 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
 import { newProjectData, useProject } from "@/hooks/useProject";
 import { useStorage } from "@/hooks/useStorage";
-import { ArrowLeft, ArrowRight, FileImage, Loader2, PlusIcon, X } from "lucide-react";
+import { ArrowLeft, FileImage, Loader2, PlusIcon, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
