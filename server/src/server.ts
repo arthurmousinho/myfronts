@@ -1,41 +1,54 @@
-import "dotenv/config";
-
-import fastify from "fastify";
+import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import cors from "@fastify/cors";
 import jwt from "@fastify/jwt";
 
-import { projectsRoutes } from "./routes/projectsRoutes";
-import { authRoutes } from "./routes/authRoutes";
-import { usersRoutes } from "./routes/usersRoutes";
+import { FastifyInstance } from "fastify";
+import { JwtService } from "./security/jwt.service";
 
-export const app = fastify();
+export class Server {
 
-app.register(cors, {
-    origin: true,
-})
+    private jwtService: JwtService;
+    private fastifyApp: FastifyInstance;
 
-app.register(jwt, {
-    secret: 'sfojvndsujadsn',
-})
+    private PORT: number = 3333;
+    private ADDRESS: string = `http://locahost:${this.PORT}/`
 
-app.register(projectsRoutes);
-app.register(authRoutes);
-app.register(usersRoutes);
+    constructor() {
+        this.jwtService = new JwtService();
 
-const PORT = process.env.PORT ?? 3333;
+        this.fastifyApp = fastify();
+        
+        this.setRegisters();
+        this.setRoutes();
+    }
 
-app.listen({
-    port: 3333
-}).then(() => {
-    console.log(`app runnig on http://localhost:${PORT}/`)
-})
+    private setRegisters() {
+        this.fastifyApp.register(cors, {
+            origin: true,
+        });
 
-export interface tokenInfos {
-    name: string;
-    avatarURL: string;
-    username: string;
-    githubURL: string;
-    sub: string;
-    iat: number;
-    exp: number;
+        this.fastifyApp.register(jwt, {
+            secret: this.jwtService.getSecret(),
+        });
+    }
+
+    private setRoutes() {
+        this.fastifyApp.get('/', (request: FastifyRequest, reply: FastifyReply) => {
+            reply.status(200).send({
+                status: reply.statusCode,
+                message: 'Hello, World!'
+            });
+        })
+    }
+
+    public run() {
+        this.fastifyApp
+            .listen({ port: this.PORT })
+            .then(
+                () => {
+                    console.log(`Server is running: ${this.ADDRESS}`);
+                }
+            );
+    }
+
 }

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx src/server.ts",
+    "dev": "tsx src/app.ts",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio"
   },
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.10",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "prisma": "^5.6.0",
     "tsx": "^3.14.0",
     "typescript": "^5.2.2"
