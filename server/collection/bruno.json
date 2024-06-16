@@ -1,9 +1,0 @@
-{
-  "version": "1",
-  "name": "myfronts",
-  "type": "collection",
-  "ignore": [
-    "node_modules",
-    ".git"
-  ]
-}

@@ -4,6 +4,7 @@ import jwt from "@fastify/jwt";
 
 import { FastifyInstance } from "fastify";
 import { JwtService } from "./security/jwt.service";
+import { UserRoutes } from "./routes/user.routes";
 
 export class Server {
 
@@ -11,7 +12,7 @@ export class Server {
     private fastifyApp: FastifyInstance;
 
     private PORT: number = 3333;
-    private ADDRESS: string = `http://locahost:${this.PORT}/`
+    private ADDRESS: string = `http://locahost:${this.PORT}/`;
 
     constructor() {
         this.jwtService = new JwtService();
@@ -20,6 +21,10 @@ export class Server {
         
         this.setRegisters();
         this.setRoutes();
+    }
+
+    public getfastifyApp() {
+        return this.fastifyApp;
     }
 
     private setRegisters() {
@@ -39,6 +44,8 @@ export class Server {
                 message: 'Hello, World!'
             });
         })
+
+        this.fastifyApp.register(UserRoutes);
     }
 
     public run() {
