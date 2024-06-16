@@ -53,4 +53,21 @@ export class UserService {
         return { token };
     }
 
+    public async getUserByUsername(username: string) {
+        const user = prisma.user.findUnique({
+            where: {
+                username
+            },
+            include: {
+                projects: true
+            }
+        });
+
+        if (!user) {
+            throw new Error('No user found');
+        }
+
+        return user;
+    }
+
 }

@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { UserService } from "../services/user.service";
-import { authUserBodySchema } from "../security/validations/user.schema";
+import { authUserBodySchema, getUserProfileParamSchema } from "../security/validations/user.schema";
 import { z } from "zod";
 
 export class UserController {
@@ -27,6 +27,16 @@ export class UserController {
             reply.status(200).send(authResponse);
         } catch (error) {
             reply.status(500).send(error);
+        }
+    }
+
+    public async getProfile(request: FastifyRequest, reply: FastifyReply) {
+        try {
+            const { username } = request.body as z.infer<typeof getUserProfileParamSchema>;
+            const userProfile = await this.service.getUserByUsername(username);
+            reply.status(200).send(userProfile);
+        } catch (error) {
+            reply.status(404).send(error);
         }
     }
 
