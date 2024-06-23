@@ -14,7 +14,7 @@ export class PayloadValidationMiddleware {
                 done();
             } catch (error: any) {
                 const errorMessage = `Invalid ${key}`;
-                reply.status(400).send({ statusCode: error.statusCode, message: errorMessage });
+                reply.status(400).send({ statusCode: 400, message: errorMessage });
             }
         }
     }

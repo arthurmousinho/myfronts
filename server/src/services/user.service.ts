@@ -1,7 +1,7 @@
 import { prisma } from "../../prisma";
 import { JwtService } from "../security/jwt.service";
 import { GithubService } from "./github.service";
-import { GithubUserType } from "./types/GithubUser.type";
+import { GithubUserType } from "./types/User.type";
 
 export class UserService {
 

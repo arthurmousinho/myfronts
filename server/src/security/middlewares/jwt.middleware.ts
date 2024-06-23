@@ -15,7 +15,7 @@ export class JwtValidationMiddleware {
                 await this.jwtService.verify(request);
             } catch (error: any) {
                 const errorMessage = "Invalid token";
-                reply.status(400).send({ statusCode: error.statusCode, message: errorMessage });
+                reply.status(403).send({ statusCode: 403, message: errorMessage });
             }
         }
     }

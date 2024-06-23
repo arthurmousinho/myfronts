@@ -5,6 +5,7 @@ import jwt from "@fastify/jwt";
 import { FastifyInstance } from "fastify";
 import { JwtService } from "./security/jwt.service";
 import { UserRoutes } from "./routes/user.routes";
+import { ProjectRoutes } from "./routes/project.routes";
 
 export class Server {
 
@@ -46,6 +47,7 @@ export class Server {
         })
 
         this.fastifyApp.register(UserRoutes);
+        this.fastifyApp.register(ProjectRoutes);
     }
 
     public run() {

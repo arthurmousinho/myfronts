@@ -45,6 +45,7 @@ npm run dev
 - [Bard](https://bard.google.com/)
 - [React Js com TypeScript do zero ao avançado na pratica: Matheus Fraga](https://www.udemy.com/course/react-js-typescript/)
 - [Estratégias de autenticação, JWT, OAuth, qual usar? | Podcast FalaDev #21](https://www.youtube.com/watch?v=mZrt5R9eZzM)
+- [Zod image validation](https://gist.github.com/AndersonNascimentoDosSantos/b3b8f760f3a431fe9e0ee440f5b0e2d4)
 
 ### UI
 - [NextJs](https://nextjs.org/)
