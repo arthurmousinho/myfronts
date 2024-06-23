@@ -1,41 +1,24 @@
 import fastify, { FastifyReply, FastifyRequest } from "fastify";
-import cors from "@fastify/cors";
-import jwt from "@fastify/jwt";
-
 import { FastifyInstance } from "fastify";
-import { JwtService } from "./security/jwt.service";
 import { UserRoutes } from "./routes/user.routes";
 import { ProjectRoutes } from "./routes/project.routes";
+import { setSecurityRegisters } from "./security/fastify/securityRegisters";
 
 export class Server {
 
-    private jwtService: JwtService;
     private fastifyApp: FastifyInstance;
 
     private PORT: number = 3333;
     private ADDRESS: string = `http://locahost:${this.PORT}/`;
 
     constructor() {
-        this.jwtService = new JwtService();
-
         this.fastifyApp = fastify();
-        
-        this.setRegisters();
+        setSecurityRegisters(this.fastifyApp);
         this.setRoutes();
     }
 
     public getfastifyApp() {
         return this.fastifyApp;
-    }
-
-    private setRegisters() {
-        this.fastifyApp.register(cors, {
-            origin: true,
-        });
-
-        this.fastifyApp.register(jwt, {
-            secret: this.jwtService.getSecret(),
-        });
     }
 
     private setRoutes() {

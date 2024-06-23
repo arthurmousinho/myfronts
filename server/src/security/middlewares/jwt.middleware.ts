@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest, HookHandlerDoneFunction } from "fastify";
-import { JwtService } from "../jwt.service";
+import { JwtService } from "../services/jwt.service";
 
 export class JwtValidationMiddleware {
 

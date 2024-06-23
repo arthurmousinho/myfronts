@@ -1,7 +1,8 @@
 import 'dotenv/config'
 import { FastifyRequest } from 'fastify';
-import { fastifyApp } from '../app';
+import { fastifyApp } from '../../app';
 import { User } from '@prisma/client';
+import { TokenType } from '../../services/types/token.type';
 
 export class JwtService {
 
@@ -27,6 +28,11 @@ export class JwtService {
             }
         );
         return token;
+    }
+
+    public async decode(request: FastifyRequest) {
+        const decoded = await request.jwtDecode();
+        return Object(decoded) as TokenType;
     }
 
 }
