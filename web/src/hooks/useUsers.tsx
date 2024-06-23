@@ -40,7 +40,7 @@ export function useUsers() {
 
     async function getUserInfos(username: string) {
         try {
-            const response = await axios.get(`${API}/users/profile/${username}`);
+            const response = await axios.get(`${API}/user/${username}`);
             return response.data;
         } catch(error) {
             navigate('/');

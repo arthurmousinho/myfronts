@@ -1,17 +1,18 @@
-import linkedinIcon from "../../assets/linkedin-icon.svg";
-import githubIcon from "../../assets/github-icon.svg";
-import { ProjectCard } from "@/components/ProjectCard";
+import defaultUserBanner from "../../assets/default-user-banner.png";
 import { useEffect, useState } from "react";
 import { User, useUsers } from "@/hooks/useUsers";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@/components/Loading";
 import { ProjectProps } from "@/hooks/useProject";
+import { Button } from "@/components/Button";
+import { Github, Linkedin } from "lucide-react";
+import { ProjectCard } from "@/components/ProjectCard";
 
 export function Profile() {
 
-    const [isLoading, setIsLoading] = useState(true);    
-    const [user, setUser] = useState<User>();
-    const [projects, setProjects] = useState<ProjectProps[]>()
+    const [ isLoading, setIsLoading ] = useState(true);    
+    const [ user, setUser ] = useState<User>();
+    const [ projects, setProjects ] = useState<ProjectProps[]>()
 
     const navigate = useNavigate();
 
@@ -49,33 +50,42 @@ export function Profile() {
 
     return (
         <div className="w-full h-full flex flex-col gap-4 items-center justify-center mb-96">
-
-            <header className="flex items-center justify-between gap-4 w-[1000px] bg-zinc-default py-6 px-10 rounded">
-                <div className="flex items-center gap-4">
-                    <img src={user?.avatarURL} className="w-[120px] rounded-full" />
-                    <div className="flex flex-col items-start justify-start">
-                        <h1 className="font-bold text-[2rem] text-gray-300 text-left">
-                            { user?.name }
-                        </h1>
-                        <span className="text-base text-muted-foreground text-left max-w-[95%]">
-                            { user?.bio }
-                        </span>
+            
+            <header className="w-[800px] bg-zinc-default pb-4">
+                <div className="w-full relative">
+                    <img 
+                        src={defaultUserBanner}
+                        className="bg-zinc-default h-[200px] w-full rounded border-b
+                        border-zinc-800"
+                    />
+                    <div 
+                        className="bg-zinc-default p-2 rounded-full absolute bottom-[-50px] left-[40px]"
+                    >
+                        <img 
+                            src={user?.avatarURL} 
+                            alt={user?.username} 
+                            className="rounded-full w-[100px]"
+                        />
                     </div>
+                    <nav className="absolute right-[40px] flex flex-col gap-2 mt-2">
+                        <a className="w-[50px]" href={user?.githubURL} target="_blank">
+                            <Button>
+                                <Github />    
+                            </Button>
+                        </a>
+                    </nav>
                 </div>
+                <div className="mt-12 pl-[40px]">
+                    <h1 className="font-bold text-[2rem] text-gray-300 text-left">
+                        { user?.name }
+                    </h1>
+                    <span className="text-base text-muted-foreground text-left max-w-[95%]">
+                        { user?.bio }
+                    </span>
+                </div>
+            </header>  
 
-                <nav className="flex flex-col gap-4">
-                    <a href={user?.githubURL} target="_blank" className="w-[150px] flex items-center justify-start pl-4 gap-2 bg-zinc-800 transition-colors py-2 rounded hover:bg-zinc-700 ">
-                        <img src={githubIcon} alt="" className="w-5 h-5" />
-                        GitHub
-                    </a>
-                    <a href={user?.linkedinURL} target="_blank" className="w-[150px] flex items-center justify-start pl-4 gap-2 bg-zinc-800 transition-colors py-2 rounded hover:bg-zinc-700">
-                        <img src={linkedinIcon} alt="" className="w-5 h-5" />
-                        LinkedIN
-                    </a>
-                </nav>
-            </header>      
-
-            <div className="w-[1000px] grid grid-cols-3 gap-4">
+            <div className="w-[95vw] md:w-[1000px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {
                     hasProject() ? (
                         projects?.map(project => {
@@ -92,8 +102,7 @@ export function Profile() {
                         </span>
                     )
                 }
-
-            </div>        
+            </div> 
 
         </div>
     )
