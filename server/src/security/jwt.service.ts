@@ -13,7 +13,7 @@ export class JwtService {
         return request.jwtVerify();
     }
 
-    generate(user: User) {
+    public generate(user: User) {
         const token = fastifyApp.jwt.sign(
             {
               name: user.name,
@@ -24,7 +24,7 @@ export class JwtService {
             {
               sub: user.id,
               expiresIn: '10 days',
-            },
+            }
         );
         return token;
     }

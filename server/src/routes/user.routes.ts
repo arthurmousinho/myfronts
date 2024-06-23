@@ -4,11 +4,12 @@ import { PayloadValidationMiddleware } from "../security/middlewares/payload.mid
 import { authUserBodySchema, getUserProfileParamSchema } from "../security/validations/user.schema";
 import { JwtValidationMiddleware } from "../security/middlewares/jwt.middleware";
 
-const controller = new UserController();
-const payloadValidationMiddleware = new PayloadValidationMiddleware();
-const jwtValidationMiddleware = new JwtValidationMiddleware();
 
 export async function UserRoutes(app: FastifyInstance) {
+
+    const controller = new UserController();
+    const payloadValidationMiddleware = new PayloadValidationMiddleware();
+    const jwtValidationMiddleware = new JwtValidationMiddleware();
 
     app.get(
         '/user', 
@@ -24,14 +25,13 @@ export async function UserRoutes(app: FastifyInstance) {
         '/user/auth', 
         {
             preHandler: [ 
-                jwtValidationMiddleware.validateJwt(),
                 payloadValidationMiddleware.validateBody(authUserBodySchema)
             ] 
         },
         controller.auth
     );
 
-    app.post(
+    app.get(
         '/user/:username', 
         {
             preHandler: [ 

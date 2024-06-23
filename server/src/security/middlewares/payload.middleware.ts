@@ -1,28 +1,30 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest, HookHandlerDoneFunction } from "fastify";
 import { ZodSchema } from "zod";
 
 export class PayloadValidationMiddleware {
 
-    validateBody(schema: ZodSchema) {
-        return (request: FastifyRequest, reply: FastifyReply) => {
+    private validatePayload(schema: ZodSchema, key: 'body' | 'params') {
+        return (request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction) => {
             try {
-                schema.parse(request.body);
+                if (key == 'body') {
+                    schema.parse(request.body);
+                } else {
+                    schema.parse(request.params);
+                }
+                done();
             } catch (error: any) {
-                const errorMessage = "Invalid body";
+                const errorMessage = `Invalid ${key}`;
                 reply.status(400).send({ statusCode: error.statusCode, message: errorMessage });
             }
         }
     }
 
+    validateBody(schema: ZodSchema) {
+        return this.validatePayload(schema, 'body');
+    }
+
     validateParam(schema: ZodSchema) {
-        return (request: FastifyRequest, reply: FastifyReply) => {
-            try {
-                schema.parse(request.params);
-            } catch (error: any) {
-                const errorMessage = "Invalid param";
-                reply.status(400).send({ statusCode: error.statusCode, message: errorMessage });
-            }
-        }
+        return this.validatePayload(schema, 'params');
     }
 
 }

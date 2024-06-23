@@ -19,11 +19,11 @@ export function useToken() {
     const [, setCookie, removeCookie] = useCookies();
 
     async function getUserToken(code: string) {
-        const response = await axios.post(`${API}/auth`, 
+        const response = await axios.post(`${API}/user/auth`, 
             { code }, 
             {
                 headers: {
-                "Content-Type": "application/json"
+                    "Content-Type": "application/json"
                 }
             }
         );
