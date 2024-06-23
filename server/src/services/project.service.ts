@@ -1,5 +1,5 @@
 import { prisma } from "../../prisma";
-import { ProjectType } from "./types/project.type";
+import { ProjectType } from "../types/project.type";
 
 export class ProjectService {
 

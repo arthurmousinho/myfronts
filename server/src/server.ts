@@ -2,18 +2,37 @@ import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import { FastifyInstance } from "fastify";
 import { UserRoutes } from "./routes/user.routes";
 import { ProjectRoutes } from "./routes/project.routes";
-import { setSecurityRegisters } from "./security/fastify/securityRegisters";
+import { JwtService } from "./security/services/jwt.service";
+
+import cors from "@fastify/cors";
+import jwt from "@fastify/jwt";
+import helmet from "@fastify/helmet"
 
 export class Server {
 
     private fastifyApp: FastifyInstance;
+    private jwtService: JwtService;
 
     private PORT: number = 3333;
     private ADDRESS: string = `http://locahost:${this.PORT}/`;
 
     constructor() {
         this.fastifyApp = fastify();
-        setSecurityRegisters(this.fastifyApp);
+        this.jwtService = new JwtService();
+        
+        this.fastifyApp.register(cors, {
+            origin: true,
+        });
+        
+        this.fastifyApp.register(jwt, {
+            secret: this.jwtService.getSecret(),
+        });
+    
+        this.fastifyApp.register(
+            helmet, 
+            { global: true }
+        );
+
         this.setRoutes();
     }
 
@@ -22,20 +41,12 @@ export class Server {
     }
 
     private setRoutes() {
-        this.fastifyApp.get('/', (request: FastifyRequest, reply: FastifyReply) => {
-            reply.status(200).send({
-                status: reply.statusCode,
-                message: 'Hello, World!'
-            });
-        })
-
         this.fastifyApp.register(UserRoutes);
         this.fastifyApp.register(ProjectRoutes);
     }
 
-    public run() {
-        this.fastifyApp
-            .listen({ port: this.PORT })
+    public async run() {
+        this.fastifyApp.listen({ port: this.PORT })
             .then(
                 () => {
                     console.log(`Server is running: ${this.ADDRESS}`);

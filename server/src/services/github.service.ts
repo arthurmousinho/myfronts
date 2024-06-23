@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GithubUserType } from "./types/user.type";
+import { GithubUserType } from "../types/user.type";
 
 export class GithubService {
 

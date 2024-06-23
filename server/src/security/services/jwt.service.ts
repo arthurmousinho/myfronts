@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { FastifyRequest } from 'fastify';
 import { fastifyApp } from '../../app';
 import { User } from '@prisma/client';
-import { TokenType } from '../../services/types/token.type';
+import { TokenType } from '../../types/token.type';
 
 export class JwtService {
 
