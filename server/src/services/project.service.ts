@@ -3,7 +3,7 @@ import { ProjectType } from "../types/project.type";
 
 export class ProjectService {
 
-    public createNewProject(project: ProjectType) {
+    public async createNewProject(project: ProjectType) {
         prisma.project.create({
             data: {
                 userId: project.userId,
@@ -17,6 +17,18 @@ export class ProjectService {
                 likedBy: []
             }
         })
+    }
+
+    public async getProjectsByUserId(userId: string) {
+        const projects = await prisma.project.findMany({
+            where: {
+                userId
+            },
+            include: {
+                image: true
+            }
+        });
+        return projects;
     }
 
 }

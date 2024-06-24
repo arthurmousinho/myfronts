@@ -23,7 +23,7 @@ export function Profile() {
         if (username) {
             const userInfos = await getUserInfos(username);
             setUser(userInfos);
-            setProjects([...userInfos.projects,...userInfos.projects,...userInfos.projects]);
+            setProjects(userInfos.projects);
             setIsLoading(false);
             return;
         }

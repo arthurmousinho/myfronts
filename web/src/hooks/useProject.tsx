@@ -67,11 +67,10 @@ export function useProject() {
     async function getAllProjects() {
         try {
             const response = await axios.get(
-                `${API}/projects`,
+                `${API}/project`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
                     }
                 }    
             );

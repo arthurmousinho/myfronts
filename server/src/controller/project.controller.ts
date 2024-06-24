@@ -12,6 +12,9 @@ export class ProjectController {
     constructor() {
         this.service = new ProjectService();
         this.jwtService = new JwtService();
+
+        this.create = this.create.bind(this);
+        this.getUserProjects = this.getUserProjects.bind(this);
     }
 
     public async create(request: FastifyRequest, reply: FastifyReply) {
@@ -21,7 +24,14 @@ export class ProjectController {
         const userId = tokenDecoded.sub;
 
         // TODO: UPLOAD IMAGE TO FIREBASE BUCKET
-        // TODO: CREATE NEW PROJECT (this.service.createNewProject())
+        // TODO: CREATE NEW PROJECT (await this.service.createNewProject())
+    }
+
+    public async getUserProjects(request: FastifyRequest, reply: FastifyReply) {
+        const tokenDecoded = await this.jwtService.decode(request);
+        const userId = tokenDecoded.sub;
+        const projects = await this.service.getProjectsByUserId(userId);
+        reply.status(200).send(projects);
     }
 
 }

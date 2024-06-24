@@ -21,4 +21,14 @@ export async function ProjectRoutes(app: FastifyInstance) {
         controller.create
     )
 
+    app.get(
+        '/project',
+        { 
+            preHandler: [ 
+                jwtValidationMiddleware.validateJwt(),
+            ] 
+        },
+        controller.getUserProjects
+    )
+
 }

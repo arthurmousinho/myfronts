@@ -12,9 +12,8 @@ export function Projects() {
     const { deleteProject } = useProject();
     const { deleteImage } = useFirebaseStorage();
 
-    const [projects, setProjects] = useState<ProjectProps[]>();
-    const [loading, setLoading] = useState(true);
-
+    const [ projects, setProjects ] = useState<ProjectProps[]>();
+    const [ loading, setLoading ] = useState(true);
 
     async function getProjects() {
         const projects: ProjectProps[] = await getAllProjects(); 
@@ -69,7 +68,7 @@ export function Projects() {
                                     key={project.id}
                                     title={project.title} 
                                     description={project.description}
-                                    imageURL={project.imageURL}
+                                    imageURL={project.image.url}
                                     id={project.id}
                                     to={""}
                                     controls={true}
