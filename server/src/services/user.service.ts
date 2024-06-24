@@ -59,7 +59,11 @@ export class UserService {
                 username
             },
             include: {
-                projects: true
+                projects: {
+                    include: {
+                        image: true
+                    }
+                },
             }
         });
 

@@ -9,7 +9,9 @@ export interface ProjectProps {
     userId: string;
     title: string;
     createdAt: string;
-    imageURL: string;
+    image: {
+        url: string;
+    };
     description: string;
     repositoryURL: string;
     projectURL: string;

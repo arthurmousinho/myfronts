@@ -17,7 +17,7 @@ interface ProjectCardProps {
 export function ProjectCard(props: ProjectCardProps) {
 
     const { decodeToken, getSavedToken } = useToken();
-    const [username, setUsername] = useState<string>();
+    const [ username, setUsername ] = useState<string>();
 
     useEffect(() => {
         const usernameFromToken = decodeToken(getSavedToken())?.username;

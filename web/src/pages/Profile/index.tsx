@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "@/components/Loading";
 import { ProjectProps } from "@/hooks/useProject";
 import { Button } from "@/components/Button";
-import { Github, Linkedin } from "lucide-react";
+import { Github } from "lucide-react";
 import { ProjectCard } from "@/components/ProjectCard";
 
 export function Profile() {
@@ -23,7 +23,7 @@ export function Profile() {
         if (username) {
             const userInfos = await getUserInfos(username);
             setUser(userInfos);
-            setProjects(userInfos.projects);
+            setProjects([...userInfos.projects,...userInfos.projects,...userInfos.projects]);
             setIsLoading(false);
             return;
         }
@@ -51,7 +51,7 @@ export function Profile() {
     return (
         <div className="w-full h-full flex flex-col gap-4 items-center justify-center mb-96">
             
-            <header className="w-[800px] bg-zinc-default pb-4">
+            <header className="w-[1000px] bg-zinc-default pb-4">
                 <div className="w-full relative">
                     <img 
                         src={defaultUserBanner}
@@ -91,8 +91,11 @@ export function Profile() {
                         projects?.map(project => {
                             return (
                                 <ProjectCard 
-                                    key={project.title} title={project.title} description={project.description} 
-                                    imageURL={project.imageURL} to={project.id}
+                                    key={project.title} 
+                                    title={project.title} 
+                                    description={project.description} 
+                                    imageURL={project.image.url} 
+                                    to={project.id}
                                 />
                             )
                         })
