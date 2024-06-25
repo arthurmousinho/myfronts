@@ -29,8 +29,8 @@ export class ProjectController {
 
     public async getUserProjects(request: FastifyRequest, reply: FastifyReply) {
         const tokenDecoded = await this.jwtService.decode(request);
-        const userId = tokenDecoded.sub;
-        const projects = await this.service.getProjectsByUserId(userId);
+        const username = tokenDecoded.username;
+        const projects = await this.service.getProjectsByUsername(username);
         reply.status(200).send(projects);
     }
 

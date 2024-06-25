@@ -1,7 +1,8 @@
-import fastify, { FastifyReply, FastifyRequest } from "fastify";
+import fastify from "fastify";
 import { FastifyInstance } from "fastify";
 import { UserRoutes } from "./routes/user.routes";
 import { ProjectRoutes } from "./routes/project.routes";
+import { GithubRoutes } from "./routes/github.routes";
 import { JwtService } from "./security/services/jwt.service";
 
 import cors from "@fastify/cors";
@@ -43,6 +44,7 @@ export class Server {
     private setRoutes() {
         this.fastifyApp.register(UserRoutes);
         this.fastifyApp.register(ProjectRoutes);
+        this.fastifyApp.register(GithubRoutes);
     }
 
     public async run() {

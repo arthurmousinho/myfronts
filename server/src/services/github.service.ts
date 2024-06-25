@@ -1,12 +1,22 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { GithubUserType } from "../types/user.type";
+import { ProjectService } from "./project.service";
+import { ProjectType } from "../types/project.type";
 
 export class GithubService {
 
+    private BASE_API_URL = 'https://api.github.com';
+    private ACCESS_TOKEN_REQUEST_URL = 'https://github.com/login/oauth/access_token';
+
+    private projectService: ProjectService;
+
+    constructor() {
+        this.projectService = new ProjectService();
+    }
+
     private async getAccessToken(code: string) {
-        const REQUEST_URL = 'https://github.com/login/oauth/access_token'
         const response = await axios.post(
-            REQUEST_URL,
+            this.ACCESS_TOKEN_REQUEST_URL,
             null,
             {
                 params: {
@@ -37,6 +47,27 @@ export class GithubService {
 
         const githubUser: GithubUserType = userResponse.data;
         return githubUser;
+    }
+
+    public async getReposByUsername(username: string) {
+        try {
+            const response = await axios.get(
+                `${this.BASE_API_URL}/users/${username}/repos?sort=pushed`
+            );
+
+            const allUserRepos = response.data;
+
+            const userProjects = await this.projectService.getProjectsByUsername(username);
+            const reposUrlAlreadyConnected = userProjects.map(
+                project => project.repositoryURL
+            );
+
+            return allUserRepos.filter(
+                (repo: any) => !reposUrlAlreadyConnected.includes(repo.html_url)
+            );
+        } catch (error) {
+            throw new Error('Error during get user repos fetching')
+        }
     }
 
 }

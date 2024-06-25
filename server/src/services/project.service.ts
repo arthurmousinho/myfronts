@@ -19,10 +19,10 @@ export class ProjectService {
         })
     }
 
-    public async getProjectsByUserId(userId: string) {
+    public async getProjectsByUsername(username: string) {
         const projects = await prisma.project.findMany({
             where: {
-                userId
+                user: { username }
             },
             include: {
                 image: true
