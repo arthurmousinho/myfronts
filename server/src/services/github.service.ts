@@ -66,7 +66,25 @@ export class GithubService {
                 (repo: any) => !reposUrlAlreadyConnected.includes(repo.html_url)
             );
         } catch (error) {
-            throw new Error('Error during get user repos fetching')
+            throw new Error('Error during get user repos fetching');
+        }
+    }
+
+    public async getUserRepoInfos(params: { username: string, repoName: string }) {
+        try {
+            const [ repoInfoReponse, languagesResponse ] = await Promise.all([
+                axios.get(
+                    `${this.BASE_API_URL}/repos/${params.username}/${params.repoName}`
+                ),
+                axios.get(
+                    `${this.BASE_API_URL}/repos/${params.username}/${params.repoName}/languages`
+                )
+            ]);
+            const infos = repoInfoReponse.data;
+            const languages = Object.keys(languagesResponse.data);
+            return {...infos, languages};
+        } catch (error) {
+            throw new Error('Error during get user repo infos fetching');
         }
     }
 
