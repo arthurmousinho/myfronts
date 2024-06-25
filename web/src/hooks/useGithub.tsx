@@ -1,8 +1,7 @@
 import axios from "axios";
-import { ProjectProps, useProject } from "./useProject";
 import { useToken } from "./useToken";
 
-const GITHUB_API = import.meta.env.VITE_GITHUB_API_URL;
+const API = import.meta.env.VITE_API_BASE_URL;
 
 export interface GithubRepositoryData {
     id: number;
@@ -15,18 +14,22 @@ export interface GithubRepositoryData {
 
 export function useGithub() {
 
-    const { getAllProjects } = useProject();
-    const { decodeToken, getSavedToken } = useToken()
+    const { getSavedToken } = useToken();
 
-    const username = decodeToken(getSavedToken())?.githubURL.split('/').pop();
-    
+    const token = getSavedToken();
+
     async function getRepos() {
         try {
-            const userProjects: ProjectProps[] = await getAllProjects();
-            const reposUrlAlreadyConnected = userProjects.map(project => project.repositoryURL);
-            const response = await axios.get(`${GITHUB_API}/users/${username}/repos?sort=pushed`)
-            const repos: GithubRepositoryData[] = response.data;
-            return repos.filter(repo => !reposUrlAlreadyConnected.includes(repo.html_url));
+            const response = await axios.get(
+                `${API}/github/repos`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }    
+            );
+
+            return response.data as GithubRepositoryData;
         } catch (error) {
             console.error("Erro ao buscar os repositórios do usuário")
         }
@@ -34,26 +37,21 @@ export function useGithub() {
 
     async function getRepoInfos(repoName: string) {
         try {
-            const response = await axios.get(`${GITHUB_API}/repos/${username}/${repoName}`);
-            const languages = await getRepoLanguages(repoName);
-            const repoInfos: GithubRepositoryData = {...response.data, languages};
-            return repoInfos;
+            const response = await axios.get(
+                `${API}/github/repos/${repoName}`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }    
+            );
+            return response.data as GithubRepositoryData;
         } catch (error) {
             console.error("Erro ao buscar os dados do repositório")
         }
     }
 
-    async function getRepoLanguages(repoName: string) {
-        try {
-            const response = await axios.get(`${GITHUB_API}/repos/${username}/${repoName}/languages`);
-            const languagesArray = Object.keys(response.data); 
-            return languagesArray;
-        } catch (error) {
-            console.error("Erro ao buscar as linguagens do repositório")
-        }
-    }
-
-
+  
     return { getRepos, getRepoInfos }
 
 }

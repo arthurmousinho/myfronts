@@ -1,7 +1,6 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { GithubUserType } from "../types/user.type";
 import { ProjectService } from "./project.service";
-import { ProjectType } from "../types/project.type";
 
 export class GithubService {
 
