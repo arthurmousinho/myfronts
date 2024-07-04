@@ -1,18 +1,14 @@
-import { ImageType } from "./image.type";
-
 export type ProjectType = {
-    id?: string;
-    createdAt?: Date;
-    image?: ImageType;
+    id?: string
+    title: string
+    description: string
+    repositoryURL: string
+    projectURL: string
+    techs: string[]
+    likes: number
+    likedBy: string[]
+    createdAt?: Date
 
-    userId: string;
-    imageId: string;
-
-    title: string;
-    description: string;
-    repositoryURL: string;
-    projectURL: string;
-    techs: string[];
-    likes: number;
-    likedBy: string[];
+    userId: string
+    imageId: string
 }

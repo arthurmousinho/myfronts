@@ -23,12 +23,11 @@ export interface ProjectProps {
 
 export interface newProjectData {
     title: string;
-    imageURL: string;     
+    image: File;     
     description: string;  
     repositoryURL: string;
     projectURL: string;  
     techs: string[];
-    imageUUID: string;
 }
 
 export function useProject() {
@@ -39,14 +38,25 @@ export function useProject() {
     const navigate = useNavigate();
 
     async function saveProject(data: newProjectData) {
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('image', data.image);
+        formData.append('description', data.description);
+        formData.append('repositoryURL', data.repositoryURL);
+        formData.append('projectURL', data.projectURL);
+        
+        data.techs.map((tech, index) => {
+            formData.append(`techs[${index}]`, tech);
+        });
+    
         try {
             await axios.post(
-                `${API}/projects`, 
-                data,
+                `${API}/project`, 
+                formData,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'multipart/form-data'
                     }
                 }    
             );

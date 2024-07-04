@@ -3,19 +3,9 @@ import { ProjectType } from "../types/project.type";
 
 export class ProjectService {
 
-    public async createNewProject(project: ProjectType) {
-        prisma.project.create({
-            data: {
-                userId: project.userId,
-                imageId: project.imageId,
-                title: project.title,
-                description: project.description,
-                repositoryURL: project.repositoryURL,
-                projectURL: project.projectURL,
-                techs: project.techs,
-                likes: 0,
-                likedBy: []
-            }
+    public async createNewProject(projectData: ProjectType) {
+        await prisma.project.create({
+            data: projectData
         })
     }
 

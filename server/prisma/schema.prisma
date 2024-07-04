@@ -38,9 +38,9 @@ model Project {
 }
 
 model Image {
-  id        String   @id @default(uuid())
+  id        String   @id
   url       String
   createdAt DateTime @default(now())
 
-  project Project?
+  Project   Project?
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useToken } from "./useToken";
+import { useNavigate } from "react-router-dom";
 
 const API = import.meta.env.VITE_API_BASE_URL;
 
@@ -17,6 +18,7 @@ export function useGithub() {
     const { getSavedToken } = useToken();
 
     const token = getSavedToken();
+    const navigate = useNavigate();
 
     async function getRepos() {
         try {
@@ -28,10 +30,10 @@ export function useGithub() {
                     }
                 }    
             );
-
-            return response.data as GithubRepositoryData;
+            return response.data as GithubRepositoryData[];
         } catch (error) {
-            console.error("Erro ao buscar os repositórios do usuário")
+            navigate('/projects/new')
+            console.error("Erro ao buscar os repositórios do usuário");
         }
     }
 

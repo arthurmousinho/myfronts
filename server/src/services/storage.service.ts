@@ -1,6 +1,9 @@
 import 'dotenv/config';
 import admin from 'firebase-admin';
-
+import { MultipartFile } from '@fastify/multipart';
+import fs from 'fs';
+import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 export class StorageService {
     
     private bucket: any;
@@ -21,12 +24,36 @@ export class StorageService {
         this.bucket = admin.storage().bucket();
     }
     
-    public async uploadImage(params: {username: string, imageFile: File,}) {
+    public async uploadImage(params: { username: string, imageFile: MultipartFile }) {
         try {
-            const filePath = `images/${params.username}/${params.imageFile.name}`;
-            await this.bucket.upload(filePath);
+            const { username, imageFile } = params;
+            
+            const tmpDir = path.resolve(__dirname, '../../tmp');
+            const tempFilePath = path.join(tmpDir, imageFile.filename);
+            const buffer = await imageFile.toBuffer();
+            
+            fs.writeFileSync(tempFilePath, buffer);
+
+            const imageUUID = uuidv4();
+            const destination = `images/${username}/${imageUUID}/${imageFile.filename}`;
+            const file = this.bucket.file(destination);
+
+            await this.bucket.upload(tempFilePath, {
+                destination,
+                metadata: {
+                    contentType: imageFile.mimetype
+                }
+            });
+
+            fs.unlinkSync(tempFilePath);
+
+            await file.makePublic();
+            const url = file.publicUrl();
+
+            return { imageUUID, url }
         } catch (error) {
-            throw new Error('Error during image file upload')
+            console.error(error);
+            throw new Error('Error during image file upload');
         }
     }
 

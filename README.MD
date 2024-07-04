@@ -1,9 +1,9 @@
 # myFronts.dev
 
-![techs-diagram](./.github/techs-diagram.png)
+![techs-diagram](./docs/techs-diagram.png)
 
 Reference: [NLW Spacetime Aula 3:](https://github.com/rocketseat-education/nlw-12-spacetime-ignite)
-![github-oauth](./.github/github-oauth.png)
+![github-oauth](./docs/github-oauth.png)
 
 ## Running Guide
 

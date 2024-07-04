@@ -4,29 +4,25 @@ import { Input } from "@/components/Input";
 import { Loading } from "@/components/Loading";
 import { Textarea } from "@/components/Textarea";
 import { Label } from "@/components/ui/label";
-import { useFirebaseStorage } from "@/hooks/useFirebaseStorage";
 import { GithubRepositoryData, useGithub } from "@/hooks/useGithub";
-import { newProjectData, useProject } from "@/hooks/useProject";
+import { useProject } from "@/hooks/useProject";
 import { FileImage, PlusIcon, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export function NewProject() {
 
-    const [title, setTitle] = useState("");
-    const [imgFile, setImgFile] = useState<File | null>(null);
-    const [description, setDescription] = useState("");
-    const [repoURL, setRepoURL] = useState("");
-    const [projectURL, setProjectURL] = useState("");
-    const [tech, setTech] = useState("");
-    const [techs, setTechs] = useState<string[]>([]);
+    const [ title, setTitle ] = useState("");
+    const [ imgFile, setImgFile ] = useState<File | null>(null);
+    const [ description, setDescription ] = useState("");
+    const [ repoURL, setRepoURL ] = useState("");
+    const [ projectURL, setProjectURL ] = useState("");
+    const [ tech, setTech ] = useState("");
+    const [ techs, setTechs ] = useState<string[]>([])
 
+    const [ loading, setLoading ] = useState(true);
+    const [ repo, setRepo ] = useState<GithubRepositoryData>();
 
-    const [loading, setLoading] = useState(true);
-    const [repo, setRepo] = useState<GithubRepositoryData>();
-
-
-    const { saveImage, getNewUIID } = useFirebaseStorage();
     const { saveProject } = useProject();
     const { getRepoInfos } = useGithub();
     const { repoName } = useParams();
@@ -94,24 +90,18 @@ export function NewProject() {
             return;
         }
         
-        const newUUID = getNewUIID();
-        const imageURL = await saveImage(imgFile, newUUID);
         
-        if (imageURL) {
-            const data: newProjectData = {
-                title,
-                imageURL,     
-                description, 
-                repositoryURL: repoURL,
-                imageUUID: newUUID,
-                projectURL,  
-                techs,
-            }
-            navigate('/projects', { state: false });
-            saveProject(data);
-            resetFields();
+        const data = {
+            title,
+            image: imgFile,     
+            description, 
+            repositoryURL: repoURL,
+            projectURL,  
+            techs,
         }
-        
+        //navigate('/projects', { state: false });
+        saveProject(data);
+        resetFields();
     }
 
     async function loadRepoInfos() {
@@ -226,7 +216,13 @@ export function NewProject() {
                                         <FileImage size={20} />
                                         Imagem do Projeto
                                     </label>
-                                    <input type="file" className="hidden" id="image" onChange={handleFile}/>
+                                    <input 
+                                        type="file" 
+                                        className="hidden" 
+                                        id="image" 
+                                        accept="image/jpeg, image/png"
+                                        onChange={handleFile} 
+                                    />
                                 </>
                             ) : (
                                 <div className="relative">

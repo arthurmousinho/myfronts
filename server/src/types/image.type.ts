@@ -1,5 +1,5 @@
 export type ImageType = {
-    id?: string;
+    id: string;
     createdAt?: string;
     url: string;
 }

@@ -1,13 +1,15 @@
 import fastify from "fastify";
+
+import cors from "@fastify/cors";
+import jwt from "@fastify/jwt";
+import helmet from "@fastify/helmet";
+import multipart from '@fastify/multipart';
+
 import { FastifyInstance } from "fastify";
 import { UserRoutes } from "./routes/user.routes";
 import { ProjectRoutes } from "./routes/project.routes";
 import { GithubRoutes } from "./routes/github.routes";
 import { JwtService } from "./security/services/jwt.service";
-
-import cors from "@fastify/cors";
-import jwt from "@fastify/jwt";
-import helmet from "@fastify/helmet"
 
 export class Server {
 
@@ -22,7 +24,7 @@ export class Server {
         this.jwtService = new JwtService();
         
         this.fastifyApp.register(cors, {
-            origin: true,
+            origin: ['http://localhost:5173'],
         });
         
         this.fastifyApp.register(jwt, {
@@ -32,6 +34,11 @@ export class Server {
         this.fastifyApp.register(
             helmet, 
             { global: true }
+        );
+
+        this.fastifyApp.register(
+            multipart,
+            { attachFieldsToBody: true }
         );
 
         this.setRoutes();
